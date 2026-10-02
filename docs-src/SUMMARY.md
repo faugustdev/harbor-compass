@@ -17,6 +17,7 @@
 - [Requisitos Funcionales](./04-requirements/functional-requirements.md)
 - [Requisitos No Funcionales](./04-requirements/non-functional.md)
 - [Especificación Figma](./04-requirements/figma-base-spec.md)
+- [Flujos UI Completos](./04-requirements/ui-flows-complete.md)
 
 ## Historias de Usuario
 

@@ -1,0 +1,533 @@
+<!DOCTYPE HTML>
+<html lang="es" class="navy" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Prestador (Comercio) - Harbor Compass</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Documentación interna">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Intro</a></li><li class="chapter-item expanded affix "><li class="part-title">Producto</li><li class="chapter-item expanded "><a href="../../01-product-brief.html"><strong aria-hidden="true">1.</strong> Product Brief</a></li><li class="chapter-item expanded affix "><li class="part-title">Arquitectura</li><li class="chapter-item expanded "><a href="../../02-architecture.html"><strong aria-hidden="true">2.</strong> Arquitectura Técnica</a></li><li class="chapter-item expanded "><a href="../../03-tech-stack.html"><strong aria-hidden="true">3.</strong> Stack Tecnológico</a></li><li class="chapter-item expanded "><a href="../../05-data-model.html"><strong aria-hidden="true">4.</strong> Modelo de Datos</a></li><li class="chapter-item expanded affix "><li class="part-title">Requisitos</li><li class="chapter-item expanded "><a href="../../04-requirements/functional-requirements.html"><strong aria-hidden="true">5.</strong> Requisitos Funcionales</a></li><li class="chapter-item expanded "><a href="../../04-requirements/non-functional.html"><strong aria-hidden="true">6.</strong> Requisitos No Funcionales</a></li><li class="chapter-item expanded "><a href="../../04-requirements/figma-base-spec.html"><strong aria-hidden="true">7.</strong> Especificación Figma</a></li><li class="chapter-item expanded "><a href="../../04-requirements/ui-flows-complete.html"><strong aria-hidden="true">8.</strong> Flujos UI Completos</a></li><li class="chapter-item expanded "><a href="../../04-requirements/user-stories/US-cliente-final.html"><strong aria-hidden="true">9.</strong> Cliente Final</a></li><li class="chapter-item expanded "><a href="../../04-requirements/user-stories/US-prestador.html" class="active"><strong aria-hidden="true">10.</strong> Prestador (Comercio)</a></li><li class="chapter-item expanded "><a href="../../04-requirements/user-stories/US-operador-transporte.html"><strong aria-hidden="true">11.</strong> Operador de Transporte</a></li><li class="chapter-item expanded "><a href="../../04-requirements/user-stories/US-admin.html"><strong aria-hidden="true">12.</strong> Admin VIPPO</a></li><li class="chapter-item expanded "><a href="../../04-requirements/use-cases/UC-01-cashin.html"><strong aria-hidden="true">13.</strong> UC-01 CashIn</a></li><li class="chapter-item expanded "><a href="../../04-requirements/use-cases/UC-02-pago-offline.html"><strong aria-hidden="true">14.</strong> UC-02 Pago Offline NFC</a></li><li class="chapter-item expanded "><a href="../../04-requirements/use-cases/UC-05-sync.html"><strong aria-hidden="true">15.</strong> UC-05 Sync Online</a></li><li class="chapter-item expanded affix "><li class="part-title">API</li><li class="chapter-item expanded "><a href="../../06-api-contract.html"><strong aria-hidden="true">16.</strong> Contrato de API</a></li><li class="chapter-item expanded affix "><li class="part-title">Operación</li><li class="chapter-item expanded "><a href="../../07-time-estimate.html"><strong aria-hidden="true">17.</strong> Estimación de Tiempo</a></li><li class="chapter-item expanded "><a href="../../08-questions-for-vippo.html"><strong aria-hidden="true">18.</strong> Preguntas para VIPPO</a></li><li class="chapter-item expanded affix "><li class="part-title">Decisiones</li><li class="chapter-item expanded "><a href="../../09-decisions/ADR-001-multiplatform.html"><strong aria-hidden="true">19.</strong> ADR-001 Kotlin Multiplatform</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Harbor Compass</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass/edit/main/docs-src/04-requirements/user-stories/US-prestador.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="historias-de-usuario-prestador-comercio"><a class="header" href="#historias-de-usuario-prestador-comercio">Historias de Usuario: Prestador (Comercio)</a></h1>
+<blockquote>
+<p>Prestador = comercio afiliado que usa el POS app ViCheck para cobrar a sus clientes.</p>
+</blockquote>
+<hr />
+<h2 id="us-p-001--onboarding-comercio"><a class="header" href="#us-p-001--onboarding-comercio">US-P-001 — Onboarding comercio</a></h2>
+<p><strong>HU-100 [P0]</strong> Como nuevo prestador, quiero registrarme como comercio en ViCheck, para empezar a cobrar con la app POS.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Formulario: RIF, razón social, dirección, contacto</li>
+<li><input disabled="" type="checkbox"/>
+Datos bancarios (banco + número de cuenta)</li>
+<li><input disabled="" type="checkbox"/>
+Validación con VIPPO (RIF válido, banco válido)</li>
+<li><input disabled="" type="checkbox"/>
+Tenant creado en estado <code>active</code></li>
+</ul>
+<hr />
+<p><strong>HU-101 [P0]</strong> Como prestador, quiero configurar mi branding (logo, color), para personalizar la experiencia de mis clientes.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Settings → Branding</li>
+<li><input disabled="" type="checkbox"/>
+Subir logo (PNG/SVG, ≤ 2MB)</li>
+<li><input disabled="" type="checkbox"/>
+Elegir color primario (paleta)</li>
+<li><input disabled="" type="checkbox"/>
+Preview de cómo se ve en la app del cliente</li>
+</ul>
+<hr />
+<p><strong>HU-102 [P1]</strong> Como prestador, quiero configurar mi fee por transacción, para saber cuánto se me cobra por usar ViCheck.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Settings → Fees</li>
+<li><input disabled="" type="checkbox"/>
+Ver fee actual configurado por VIPPO</li>
+<li><input disabled="" type="checkbox"/>
+(Admin) Cambiar fee por excepción</li>
+</ul>
+<hr />
+<h2 id="us-p-002--pos-cobro"><a class="header" href="#us-p-002--pos-cobro">US-P-002 — POS Cobro</a></h2>
+<p><strong>HU-110 [P0]</strong> Como prestador, quiero cobrar a un cliente acercando su tag NFC al POS, para hacer la venta rápido.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Pantalla POS principal con monto</li>
+<li><input disabled="" type="checkbox"/>
+Botón "Cobrar con NFC"</li>
+<li><input disabled="" type="checkbox"/>
+Pantalla "Acerca el tag del cliente"</li>
+<li><input disabled="" type="checkbox"/>
+Animación cuando detecta tag</li>
+<li><input disabled="" type="checkbox"/>
+Validación del cliente (existe, que tenga saldo)</li>
+<li><input disabled="" type="checkbox"/>
+Confirmación con cliente (PIN si monto ≥ umbral)</li>
+<li><input disabled="" type="checkbox"/>
+Notificación de éxito</li>
+</ul>
+<hr />
+<p><strong>HU-111 [P0]</strong> Como prestador, quiero cobrar a un cliente escaneando mi QR desde su celular, para cobrar sin NFC.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+POS genera QR dinámico (dChip) cada 30s</li>
+<li><input disabled="" type="checkbox"/>
+Cliente escanea el QR desde su app</li>
+<li><input disabled="" type="checkbox"/>
+Cliente autoriza con PIN</li>
+<li><input disabled="" type="checkbox"/>
+POS confirma venta</li>
+</ul>
+<hr />
+<p><strong>HU-112 [P0]</strong> Como prestador, quiero cobrar un monto manual cuando el cliente no tiene tag ni celular, para no perder ventas.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Botón "Cobro manual"</li>
+<li><input disabled="" type="checkbox"/>
+Input: teléfono del cliente, monto</li>
+<li><input disabled="" type="checkbox"/>
+Cliente recibe push para aceptar</li>
+<li><input disabled="" type="checkbox"/>
+Requiere confirmación del cliente</li>
+</ul>
+<hr />
+<p><strong>HU-113 [P0]</strong> Como prestador, quiero cancelar un cobro en proceso si me equivoco, para corregir errores.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Botón "Cancelar" visible durante el flujo de cobro</li>
+<li><input disabled="" type="checkbox"/>
+Si tx no se firmó, se cancela sin efecto</li>
+<li><input disabled="" type="checkbox"/>
+Si tx se firmó pero no se almacenó, se crea tx de cancelación</li>
+</ul>
+<hr />
+<p><strong>HU-114 [P0]</strong> Como prestador, quiero ver el estado de la transacción después del cobro, para confirmar que se procesó.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Pantalla post-venta con: cliente UID, monto, hora, firma</li>
+<li><input disabled="" type="checkbox"/>
+Botón "Nueva venta" para empezar otra</li>
+<li><input disabled="" type="checkbox"/>
+Botón "Recibo" para generar PDF</li>
+</ul>
+<hr />
+<p><strong>HU-115 [P1]</strong> Como prestador, quiero cobrar múltiples productos en una sola transacción, para ventas con varios items.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Carrito de productos</li>
+<li><input disabled="" type="checkbox"/>
+Suma de precios</li>
+<li><input disabled="" type="checkbox"/>
+Una sola transacción con el total</li>
+</ul>
+<hr />
+<h2 id="us-p-003--sync"><a class="header" href="#us-p-003--sync">US-P-003 — Sync</a></h2>
+<p><strong>HU-120 [P0]</strong> Como prestador, quiero ver cuántas transacciones tengo sin sincronizar, para saber si hay pendientes.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Badge en POS con número de tx pendientes</li>
+<li><input disabled="" type="checkbox"/>
+Tooltip: "X transacciones se subirán cuando vuelva internet"</li>
+</ul>
+<hr />
+<p><strong>HU-121 [P0]</strong> Como prestador, quiero que las transacciones se sincronicen automáticamente cuando vuelva internet, para no tener que hacerlo yo.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Auto-sync en background</li>
+<li><input disabled="" type="checkbox"/>
+Indicador de progreso</li>
+<li><input disabled="" type="checkbox"/>
+Notificación push al completar</li>
+</ul>
+<hr />
+<p><strong>HU-122 [P1]</strong> Como prestador, quiero forzar sync manualmente, para asegurar que las tx se procesen ya.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Botón "Sincronizar ahora"</li>
+<li><input disabled="" type="checkbox"/>
+Útil si hay problemas de red</li>
+</ul>
+<hr />
+<h2 id="us-p-004--reportes-y-dashboard"><a class="header" href="#us-p-004--reportes-y-dashboard">US-P-004 — Reportes y Dashboard</a></h2>
+<p><strong>HU-130 [P0]</strong> Como prestador, quiero ver las ventas del día, para saber cuánto llevo.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+POS home muestra: total vendido hoy, # de transacciones</li>
+<li><input disabled="" type="checkbox"/>
+Click lleva al detalle</li>
+</ul>
+<hr />
+<p><strong>HU-131 [P0]</strong> Como prestador, quiero ver ventas por rango de fechas, para análisis de negocio.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Selector de rango (hoy, semana, mes, custom)</li>
+<li><input disabled="" type="checkbox"/>
+Total vendido, # tx, ticket promedio</li>
+<li><input disabled="" type="checkbox"/>
+Gráfico de barras por día</li>
+</ul>
+<hr />
+<p><strong>HU-132 [P1]</strong> Como prestador, quiero ver el detalle de cada transacción, para auditoría.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Lista paginada con filtros</li>
+<li><input disabled="" type="checkbox"/>
+Detalle con: cliente UID, monto, hora, firma, estado sync</li>
+</ul>
+<hr />
+<p><strong>HU-133 [P1]</strong> Como prestador, quiero exportar mis ventas, para contabilidad.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Botón "Exportar"</li>
+<li><input disabled="" type="checkbox"/>
+Formato: CSV / PDF</li>
+<li><input disabled="" type="checkbox"/>
+Compatible con software contable</li>
+</ul>
+<hr />
+<h2 id="us-p-005--cashout"><a class="header" href="#us-p-005--cashout">US-P-005 — CashOut</a></h2>
+<p><strong>HU-140 [P0]</strong> Como prestador, quiero liquidar mi saldo a mi cuenta bancaria, para tener el dinero en mi banco.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Pantalla CashOut</li>
+<li><input disabled="" type="checkbox"/>
+Input: monto (o "todo")</li>
+<li><input disabled="" type="checkbox"/>
+Confirmación con PIN</li>
+<li><input disabled="" type="checkbox"/>
+Recibo con ID de liquidación</li>
+</ul>
+<hr />
+<p><strong>HU-141 [P0]</strong> Como prestador, quiero ver el historial de mis liquidaciones, para saber cuándo recibí dinero.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Lista con: fecha, monto, banco destino, estado</li>
+<li><input disabled="" type="checkbox"/>
+Detalle de cada liquidación</li>
+</ul>
+<hr />
+<p><strong>HU-142 [P1]</strong> Como prestador, quiero configurar auto-liquidación cuando se acumule un monto, para no tener que acordarme.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Settings → Auto-liquidación</li>
+<li><input disabled="" type="checkbox"/>
+Configurable: umbral, frecuencia (diario/semanal)</li>
+<li><input disabled="" type="checkbox"/>
+El sistema ejecuta CashOut automático</li>
+</ul>
+<hr />
+<h2 id="us-p-006--operación"><a class="header" href="#us-p-006--operación">US-P-006 — Operación</a></h2>
+<p><strong>HU-150 [P0]</strong> Como prestador, quiero cerrar sesión cuando termino mi turno, para que el siguiente empleado use su cuenta.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Botón "Cerrar sesión"</li>
+<li><input disabled="" type="checkbox"/>
+Confirma con credencial</li>
+<li><input disabled="" type="checkbox"/>
+Sesión del POS queda limpia</li>
+</ul>
+<hr />
+<p><strong>HU-151 [P0]</strong> Como prestador, quiero cambiar mi PIN, para mantener seguridad.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Settings → Cambiar PIN</li>
+<li><input disabled="" type="checkbox"/>
+Validar PIN actual</li>
+<li><input disabled="" type="checkbox"/>
+Nuevo PIN con confirmación</li>
+</ul>
+<hr />
+<p><strong>HU-152 [P1]</strong> Como prestador, quiero ver mi balance disponible vs balance pendiente de sync, para saber cuánto puedo liquidar.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Mostrar ambos balances separados</li>
+<li><input disabled="" type="checkbox"/>
+Solo se puede liquidar el balance sincronizado</li>
+</ul>
+<hr />
+<h2 id="us-p-007--soporte"><a class="header" href="#us-p-007--soporte">US-P-007 — Soporte</a></h2>
+<p><strong>HU-160 [P0]</strong> Como prestador, quiero reportar un problema técnico, para que me ayuden.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Pantalla "Reportar problema"</li>
+<li><input disabled="" type="checkbox"/>
+Categoría: bug, transacción, sync, otro</li>
+<li><input disabled="" type="checkbox"/>
+Input de descripción</li>
+<li><input disabled="" type="checkbox"/>
+Adjuntar screenshot (opcional)</li>
+<li><input disabled="" type="checkbox"/>
+Envío vía backend ViCheck</li>
+</ul>
+<hr />
+<p><strong>HU-161 [P1]</strong> Como prestador, quiero ver el estado de mis tickets de soporte, para saber si están resueltos.</p>
+<p><strong>Criterios de aceptación:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Lista de tickets</li>
+<li><input disabled="" type="checkbox"/>
+Estado: abierto / en proceso / resuelto</li>
+<li><input disabled="" type="checkbox"/>
+Comunicación con soporte</li>
+</ul>
+<hr />
+<h2 id="resumen"><a class="header" href="#resumen">Resumen</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Historia</th><th>P0</th><th>P1</th></tr></thead><tbody>
+<tr><td>Onboarding</td><td>2</td><td>1</td></tr>
+<tr><td>POS cobro</td><td>4</td><td>1</td></tr>
+<tr><td>Sync</td><td>2</td><td>1</td></tr>
+<tr><td>Reportes</td><td>2</td><td>2</td></tr>
+<tr><td>CashOut</td><td>2</td><td>1</td></tr>
+<tr><td>Operación</td><td>2</td><td>1</td></tr>
+<tr><td>Soporte</td><td>1</td><td>1</td></tr>
+<tr><td><strong>Total prestador</strong></td><td><strong>15</strong></td><td><strong>8</strong></td></tr>
+</tbody></table>
+</div>
+<hr />
+<p><strong>Próximo documento:</strong> <code>US-operador-transporte.md</code> — historias del operador de transporte.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../04-requirements/user-stories/US-cliente-final.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../04-requirements/user-stories/US-operador-transporte.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../04-requirements/user-stories/US-cliente-final.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../04-requirements/user-stories/US-operador-transporte.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
