@@ -1,4 +1,3 @@
-
 # Build artifacts
 .gradle/
 build/
@@ -19,3 +18,5 @@ node_modules/
 # mdBook
 book/
 
+# Local config
+.env
