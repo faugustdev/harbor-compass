@@ -1,0 +1,783 @@
+<!DOCTYPE HTML>
+<html lang="es" class="navy" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Especificación Figma - Harbor Compass</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Documentación interna">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Intro</a></li><li class="chapter-item expanded affix "><li class="part-title">Producto</li><li class="chapter-item expanded "><a href="../01-product-brief.html"><strong aria-hidden="true">1.</strong> Product Brief</a></li><li class="chapter-item expanded affix "><li class="part-title">Arquitectura</li><li class="chapter-item expanded "><a href="../02-architecture.html"><strong aria-hidden="true">2.</strong> Arquitectura Técnica</a></li><li class="chapter-item expanded "><a href="../03-tech-stack.html"><strong aria-hidden="true">3.</strong> Stack Tecnológico</a></li><li class="chapter-item expanded "><a href="../05-data-model.html"><strong aria-hidden="true">4.</strong> Modelo de Datos</a></li><li class="chapter-item expanded affix "><li class="part-title">Requisitos</li><li class="chapter-item expanded "><a href="../04-requirements/functional-requirements.html"><strong aria-hidden="true">5.</strong> Requisitos Funcionales</a></li><li class="chapter-item expanded "><a href="../04-requirements/non-functional.html"><strong aria-hidden="true">6.</strong> Requisitos No Funcionales</a></li><li class="chapter-item expanded "><a href="../04-requirements/figma-base-spec.html" class="active"><strong aria-hidden="true">7.</strong> Especificación Figma</a></li><li class="chapter-item expanded "><a href="../04-requirements/ui-flows-complete.html"><strong aria-hidden="true">8.</strong> Flujos UI Completos</a></li><li class="chapter-item expanded "><a href="../04-requirements/user-stories/US-cliente-final.html"><strong aria-hidden="true">9.</strong> Cliente Final</a></li><li class="chapter-item expanded "><a href="../04-requirements/user-stories/US-prestador.html"><strong aria-hidden="true">10.</strong> Prestador (Comercio)</a></li><li class="chapter-item expanded "><a href="../04-requirements/user-stories/US-operador-transporte.html"><strong aria-hidden="true">11.</strong> Operador de Transporte</a></li><li class="chapter-item expanded "><a href="../04-requirements/user-stories/US-admin.html"><strong aria-hidden="true">12.</strong> Admin VIPPO</a></li><li class="chapter-item expanded "><a href="../04-requirements/use-cases/UC-01-cashin.html"><strong aria-hidden="true">13.</strong> UC-01 CashIn</a></li><li class="chapter-item expanded "><a href="../04-requirements/use-cases/UC-02-pago-offline.html"><strong aria-hidden="true">14.</strong> UC-02 Pago Offline NFC</a></li><li class="chapter-item expanded "><a href="../04-requirements/use-cases/UC-05-sync.html"><strong aria-hidden="true">15.</strong> UC-05 Sync Online</a></li><li class="chapter-item expanded affix "><li class="part-title">API</li><li class="chapter-item expanded "><a href="../06-api-contract.html"><strong aria-hidden="true">16.</strong> Contrato de API</a></li><li class="chapter-item expanded affix "><li class="part-title">Operación</li><li class="chapter-item expanded "><a href="../07-time-estimate.html"><strong aria-hidden="true">17.</strong> Estimación de Tiempo</a></li><li class="chapter-item expanded "><a href="../08-questions-for-vippo.html"><strong aria-hidden="true">18.</strong> Preguntas para VIPPO</a></li><li class="chapter-item expanded affix "><li class="part-title">Decisiones</li><li class="chapter-item expanded "><a href="../09-decisions/ADR-001-multiplatform.html"><strong aria-hidden="true">19.</strong> ADR-001 Kotlin Multiplatform</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Harbor Compass</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass/edit/main/docs-src/04-requirements/figma-base-spec.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="vicheck-mvp--figma-base-wireframes-y-design-spec"><a class="header" href="#vicheck-mvp--figma-base-wireframes-y-design-spec">ViCheck MVP — Figma Base (Wireframes y Design Spec)</a></h1>
+<blockquote>
+<p><strong>Documento de referencia para arrancar el diseño en Figma.</strong> NO lee especificaciones funcionales completas.</p>
+</blockquote>
+<h2 id="1-información-para-el-diseñador"><a class="header" href="#1-información-para-el-diseñador">1. Información para el diseñador</a></h2>
+<p><strong>Producto:</strong> ViCheck — billetera móvil offline-first para Venezuela
+<strong>Audiencia:</strong> Clientes finales (consumidores) + Prestadores (comercios)
+<strong>Tipo:</strong> App Android nativa (Kotlin + Jetpack Compose)
+<strong>Estado:</strong> MVP — closed beta
+<strong>Estilo visual:</strong> Moderno, confiable, fintech (similar a Nequi, Yape, Mercado Pago)</p>
+<h2 id="2-sistema-de-diseño-base"><a class="header" href="#2-sistema-de-diseño-base">2. Sistema de diseño base</a></h2>
+<h3 id="21-paleta-de-colores"><a class="header" href="#21-paleta-de-colores">2.1 Paleta de colores</a></h3>
+<pre><code>PRIMARIO (confianza, fintech):
+  Primary 900:  #003D5C  (azul marino profundo)
+  Primary 700:  #006090  (botones, CTAs)
+  Primary 500:  #0099D9  (acentos, highlights)
+  Primary 100:  #E0F2FA  (backgrounds sutiles)
+
+SECUNDARIO (offline, premium):
+  Secondary 900: #2D1B4E  (morado oscuro)
+  Secondary 500: #6B4FBB  (acento de marca)
+  Secondary 100: #F0E9FB
+
+ESTADO:
+  Success:  #10B981  (verde, trans OK)
+  Error:    #EF4444  (rojo, error)
+  Warning:  #F59E0B  (naranja, alerta)
+  Info:     #3B82F6  (azul info)
+
+NEUTRALES:
+  White:    #FFFFFF
+  Gray 50:  #F9FAFB
+  Gray 100: #F3F4F6
+  Gray 200: #E5E7EB
+  Gray 400: #9CA3AF
+  Gray 600: #4B5563
+  Gray 800: #1F2937
+  Gray 900: #111827
+  Black:    #000000
+</code></pre>
+<h3 id="22-tipografía"><a class="header" href="#22-tipografía">2.2 Tipografía</a></h3>
+<pre><code>FUENTE: Inter (sans-serif moderno)
+
+Display:  Inter Bold 32px
+H1:       Inter Bold 24px
+H2:       Inter SemiBold 20px
+H3:       Inter Medium 18px
+Body L:   Inter Regular 16px
+Body M:   Inter Regular 14px
+Body S:   Inter Regular 12px
+Caption:  Inter Medium 11px
+
+NÚMEROS (balances):
+  Inter Bold 32px (balance principal)
+  Inter SemiBold 16px (montos en lista)
+  Monospace para IDs (JetBrains Mono)
+</code></pre>
+<h3 id="23-iconografía"><a class="header" href="#23-iconografía">2.3 Iconografía</a></h3>
+<ul>
+<li><strong>Set:</strong> Material Icons + Phosphor Icons</li>
+<li><strong>Estilo:</strong> Outline, 24px default</li>
+<li><strong>Iconos críticos:</strong>
+<ul>
+<li>NFC tap (icono de ondas)</li>
+<li>QR scanner (cámara)</li>
+<li>Wallet / saldo (tarjeta)</li>
+<li>Sync (flechas circulares)</li>
+<li>CashIn (flecha hacia abajo)</li>
+<li>CashOut (flecha hacia arriba)</li>
+<li>Pay (transferencia)</li>
+<li>Settings (engranaje)</li>
+</ul>
+</li>
+</ul>
+<h3 id="24-espaciado"><a class="header" href="#24-espaciado">2.4 Espaciado</a></h3>
+<pre><code>Base: 4px
+
+Espacios:
+  xs: 4px
+  sm: 8px
+  md: 16px
+  lg: 24px
+  xl: 32px
+  2xl: 48px
+
+Radio de bordes:
+  sm: 4px
+  md: 8px
+  lg: 16px
+  xl: 24px
+  full: 9999px
+</code></pre>
+<h2 id="3-pantallas-del-mvp-ordenadas-por-flujo"><a class="header" href="#3-pantallas-del-mvp-ordenadas-por-flujo">3. Pantallas del MVP (ordenadas por flujo)</a></h2>
+<h3 id="31-flujo-cliente-final"><a class="header" href="#31-flujo-cliente-final">3.1 Flujo cliente final</a></h3>
+<h4 id="c-01-splash--carga-inicial"><a class="header" href="#c-01-splash--carga-inicial">[C-01] Splash / Carga inicial</a></h4>
+<p><strong>Pantalla negra con logo ViCheck, 2s de duración.</strong></p>
+<h4 id="c-02-onboarding-3-slides"><a class="header" href="#c-02-onboarding-3-slides">[C-02] Onboarding (3 slides)</a></h4>
+<pre><code>Slide 1: "Sin señal. Ni problema."
+         - icono de conectividad tachada
+         - "Paga incluso sin internet"
+
+Slide 2: "Acercar y listo"
+         - ilustración de NFC tap
+         - "Acerca tu pulsera o celular"
+
+Slide 3: "Seguro siempre"
+         - icono de escudo
+         - "Tus fondos protegidos con criptografía"
+</code></pre>
+<p>Botón: "Empezar" (CTA grande)</p>
+<h4 id="c-03-login--registro"><a class="header" href="#c-03-login--registro">[C-03] Login / Registro</a></h4>
+<p><strong>Layout:</strong></p>
+<ul>
+<li>Logo ViCheck (top)</li>
+<li>Input: Teléfono (con código país +58)</li>
+<li>Botón: "Continuar"</li>
+<li>Link: "Ya estoy registrado"</li>
+</ul>
+<h4 id="c-04-verificación-sms"><a class="header" href="#c-04-verificación-sms">[C-04] Verificación SMS</a></h4>
+<ul>
+<li>Input: código de 6 dígitos</li>
+<li>Botón: "Verificar"</li>
+<li>Botón secundario: "Reenviar código"</li>
+<li>Countdown de 30s</li>
+</ul>
+<h4 id="c-05-onboarding-datos-personales"><a class="header" href="#c-05-onboarding-datos-personales">[C-05] Onboarding datos personales</a></h4>
+<ul>
+<li>Input: Nombre completo</li>
+<li>Input: Cédula</li>
+<li>Input: Email (opcional)</li>
+<li>Botón: "Siguiente"</li>
+</ul>
+<h4 id="c-06-selección-de-banco-origen-cashin"><a class="header" href="#c-06-selección-de-banco-origen-cashin">[C-06] Selección de banco origen (CashIn)</a></h4>
+<ul>
+<li>Lista de bancos VE afiliados</li>
+<li>Input: número de cuenta</li>
+<li>Botón: "Continuar"</li>
+</ul>
+<h4 id="c-07-home--billetera"><a class="header" href="#c-07-home--billetera">[C-07] Home / Billetera</a></h4>
+<p><strong>Layout principal:</strong></p>
+<pre><code>┌─────────────────────────────────────┐
+│  [avatar] Hola, Francisco    [⚙️]   │
+│                                      │
+│  ╔══════════════════════════════╗   │
+│  ║   Mi saldo                    ║   │
+│  ║   Bs. 12,500.00              ║   │
+│  ║   [+ Recargar] [↗ Enviar]    ║   │
+│  ╚══════════════════════════════╝   │
+│                                      │
+│  ┌──────────┐ ┌──────────┐         │
+│  │ [📡 NFC] │ │ [📷 QR] │          │
+│  │ Pagar    │ │ Escanear │         │
+│  └──────────┘ └──────────┘         │
+│                                      │
+│  Actividad reciente                  │
+│  ┌──────────────────────────────┐  │
+│  │ Hoy, 14:32                   │  │
+│  │ Pago en La Bandera   -Bs.45  │  │
+│  │ ✓ Confirmado                  │  │
+│  ├──────────────────────────────┤  │
+│  │ Hoy, 09:15                   │  │
+│  │ Recarga recibida  +Bs.5000  │  │
+│  │ ✓ Confirmado                  │  │
+│  └──────────────────────────────┘  │
+│                                      │
+│  [Home]  [Historial]  [Más]          │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-08-cashin--recargar"><a class="header" href="#c-08-cashin--recargar">[C-08] CashIn / Recargar</a></h4>
+<ul>
+<li>Monto predefinidos: Bs. 500, 1000, 2000, 5000</li>
+<li>Input custom de monto</li>
+<li>Selector de banco origen</li>
+<li>Resumen de la operación</li>
+<li>Botón: "Confirmar recarga"</li>
+</ul>
+<h4 id="c-09-cashin-en-proceso"><a class="header" href="#c-09-cashin-en-proceso">[C-09] CashIn en proceso</a></h4>
+<ul>
+<li>Indicador de carga</li>
+<li>Texto: "Conectando con tu banco..."</li>
+<li>Botón disabled</li>
+</ul>
+<h4 id="c-10-cashin-exitoso"><a class="header" href="#c-10-cashin-exitoso">[C-10] CashIn exitoso</a></h4>
+<ul>
+<li>Icono de checkmark</li>
+<li>Texto: "¡Recarga exitosa!"</li>
+<li>Monto: Bs. 5000.00</li>
+<li>Nuevo balance: Bs. 17,500.00</li>
+<li>Botón: "Volver al inicio"</li>
+</ul>
+<h4 id="c-11-cashin-fallido"><a class="header" href="#c-11-cashin-fallido">[C-11] CashIn fallido</a></h4>
+<ul>
+<li>Icono de error</li>
+<li>Texto: "No pudimos procesar la recarga"</li>
+<li>Razón: <detalle del error></li>
+<li>Botones: "Reintentar" | "Volver"</li>
+</ul>
+<h4 id="c-12-pagar-con-nfc"><a class="header" href="#c-12-pagar-con-nfc">[C-12] Pagar con NFC</a></h4>
+<p><strong>Pantalla de "acerca tu tag":</strong></p>
+<pre><code>┌─────────────────────────────────────┐
+│              ← Volver                │
+│                                      │
+│         [icono NFC animado]          │
+│                                      │
+│      Acerca tu pulsera o tarjeta     │
+│         al POS del comercio          │
+│                                      │
+│         Esperando conexión...        │
+│                                      │
+│     ┌────────────────────────┐     │
+│     │ Bs. 12,500.00   [tu balance] │ │
+│     └────────────────────────┘     │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-13-confirmar-pago-con-pin"><a class="header" href="#c-13-confirmar-pago-con-pin">[C-13] Confirmar pago (con PIN)</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│              ← Cancelar            │
+│                                      │
+│   Pago a Terminal La Bandera         │
+│   Bs. 45.00                          │
+│                                      │
+│   Ingresa tu PIN para confirmar:    │
+│                                      │
+│   ┌─┐  ┌─┐  ┌─┐  ┌─┐  ┌─┐  ┌─┐    │
+│   │●│  │●│  │●│  │ │  │ │  │ │    │
+│   └─┘  └─┘  └─┘  └─┘  └─┘  └─┘    │
+│                                      │
+│   Nuevo balance: Bs. 12,455.00        │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-14-pago-exitoso"><a class="header" href="#c-14-pago-exitoso">[C-14] Pago exitoso</a></h4>
+<ul>
+<li>Animación de checkmark</li>
+<li>Texto: "¡Pago exitoso!"</li>
+<li>Detalles: comercio, monto, nuevo balance</li>
+<li>Botones: "Ver recibo" | "Volver al inicio"</li>
+</ul>
+<h4 id="c-15-pagar-con-qr"><a class="header" href="#c-15-pagar-con-qr">[C-15] Pagar con QR</a></h4>
+<ul>
+<li>Cámara activa con marco de escaneo</li>
+<li>"Escanea el código QR del comercio"</li>
+</ul>
+<h4 id="c-16-historial-completo"><a class="header" href="#c-16-historial-completo">[C-16] Historial completo</a></h4>
+<ul>
+<li>Lista paginada de transacciones</li>
+<li>Filtros: por fecha, monto, tipo</li>
+</ul>
+<h4 id="c-17-detalle-de-transacción"><a class="header" href="#c-17-detalle-de-transacción">[C-17] Detalle de transacción</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│         ← Volver                      │
+│                                      │
+│       ✓ Confirmado                    │
+│   Bs. 45.00                           │
+│   Pago en Terminal La Bandera        │
+│                                      │
+│   ID transacción:                    │
+│   a3f7c8b2-...                       │
+│                                      │
+│   Fecha: 2 oct 2026, 14:32          │
+│   Tipo: Pago a comercio             │
+│   Comercio: La Bandera            │
+│                                      │
+│   Firma digital:                    │
+│   0x9f4a...                         │
+│                                      │
+│   [Compartir recibo] [Soporte]      │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-18-settings"><a class="header" href="#c-18-settings">[C-18] Settings</a></h4>
+<ul>
+<li>Mi perfil (nombre, cédula, email)</li>
+<li>Seguridad (cambiar PIN, biometría)</li>
+<li>NFC (gestionar tags emparejados)</li>
+<li>Notificaciones</li>
+<li>Privacidad</li>
+<li>Cerrar sesión</li>
+</ul>
+<h4 id="c-19-emparejar-tag-nfc"><a class="header" href="#c-19-emparejar-tag-nfc">[C-19] Emparejar tag NFC</a></h4>
+<ul>
+<li>Input: nombre del tag</li>
+<li>"Acerca el tag NFC"</li>
+<li>Animación de ondas cuando lo detecta</li>
+<li>Confirmación + PIN</li>
+<li>Botón: "Emparejado exitosamente"</li>
+</ul>
+<h3 id="32-flujo-pos-comercio"><a class="header" href="#32-flujo-pos-comercio">3.2 Flujo POS comercio</a></h3>
+<h4 id="p-01-pos-login"><a class="header" href="#p-01-pos-login">[P-01] POS Login</a></h4>
+<ul>
+<li>Tenant ID</li>
+<li>Usuario POS</li>
+<li>PIN</li>
+</ul>
+<h4 id="p-02-pos-home--cobrar"><a class="header" href="#p-02-pos-home--cobrar">[P-02] POS Home / Cobrar</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│  Terminal La Bandera    [usuario ▼]  │
+│                                      │
+│  ╔══════════════════════════════╗   │
+│  ║   Cobrar ahora               ║   │
+│  ║                              ║   │
+│  ║   Bs. ____________           ║   │
+│  ║                              ║   │
+│  ║  [📡 NFC] [📷 QR] [✋ Manual] ║   │
+│  ╚══════════════════════════════╝   │
+│                                      │
+│  Ventas hoy                          │
+│   Bs. 12,450.00 / 87 transacciones   │
+│                                      │
+│  Estado: ● Online   Sync: 0 pend.   │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="p-03-pos-esperando-tap-nfc"><a class="header" href="#p-03-pos-esperando-tap-nfc">[P-03] POS esperando tap NFC</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│        ← Cancelar                    │
+│                                      │
+│       [icono NFC animado]            │
+│                                      │
+│   Acerca el tag del cliente          │
+│                                      │
+│   Monto: Bs. 45.00                  │
+│                                      │
+│   Esperando tag...                   │
+│                                      │
+│   Cliente UID: 04:A3:B2:...         │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="p-04-pos-esperando-qr"><a class="header" href="#p-04-pos-esperando-qr">[P-04] POS esperando QR</a></h4>
+<ul>
+<li>Cámara activa</li>
+<li>"Cliente escanea QR"</li>
+</ul>
+<h4 id="p-05-pos-confirmando-transacción"><a class="header" href="#p-05-pos-confirmando-transacción">[P-05] POS confirmando transacción</a></h4>
+<ul>
+<li>"Procesando..."</li>
+<li>Detalles de la tx</li>
+</ul>
+<h4 id="p-06-pos-venta-exitosa"><a class="header" href="#p-06-pos-venta-exitosa">[P-06] POS venta exitosa</a></h4>
+<ul>
+<li>Animación de checkmark</li>
+<li>"¡Venta exitosa!"</li>
+<li>Detalles: cliente UID, monto, hora</li>
+<li>Botones: "Nueva venta" | "Recibo"</li>
+</ul>
+<h4 id="p-07-pos-saldo-insuficiente"><a class="header" href="#p-07-pos-saldo-insuficiente">[P-07] POS saldo insuficiente</a></h4>
+<ul>
+<li>"El cliente no tiene saldo suficiente"</li>
+<li>Saldo actual del cliente</li>
+<li>Botón: "OK"</li>
+</ul>
+<h4 id="p-08-pos-reportar-problema"><a class="header" href="#p-08-pos-reportar-problema">[P-08] POS reportar problema</a></h4>
+<ul>
+<li>Selección de categoría</li>
+<li>Input: descripción</li>
+<li>Botón: "Enviar"</li>
+</ul>
+<h4 id="p-09-pos-sync"><a class="header" href="#p-09-pos-sync">[P-09] POS sync</a></h4>
+<ul>
+<li>Indicador "Sincronizando X transacciones..."</li>
+<li>Barra de progreso</li>
+<li>Resultado: "✓ X transacciones sincronizadas"</li>
+</ul>
+<h4 id="p-10-pos-dashboard-reportes"><a class="header" href="#p-10-pos-dashboard-reportes">[P-10] POS dashboard reportes</a></h4>
+<ul>
+<li>KPIs: ventas hoy/semana/mes</li>
+<li>Gráfico de barras de ventas por día</li>
+<li>Lista de transacciones</li>
+</ul>
+<h4 id="p-11-pos-cashout"><a class="header" href="#p-11-pos-cashout">[P-11] POS CashOut</a></h4>
+<ul>
+<li>Balance disponible</li>
+<li>Input: monto a liquidar</li>
+<li>Botón: "Solicitar liquidación"</li>
+</ul>
+<h3 id="33-flujo-admin-vippo-futuro-p2"><a class="header" href="#33-flujo-admin-vippo-futuro-p2">3.3 Flujo Admin VIPPO (futuro P2)</a></h3>
+<h4 id="a-01-admin-login"><a class="header" href="#a-01-admin-login">[A-01] Admin login</a></h4>
+<ul>
+<li>Email + password + 2FA</li>
+</ul>
+<h4 id="a-02-admin-dashboard"><a class="header" href="#a-02-admin-dashboard">[A-02] Admin dashboard</a></h4>
+<ul>
+<li>KPIs globales</li>
+<li>Mapa de calor de actividad</li>
+<li>Lista de alertas</li>
+</ul>
+<h4 id="a-03-lista-de-tenants"><a class="header" href="#a-03-lista-de-tenants">[A-03] Lista de tenants</a></h4>
+<ul>
+<li>Tabla con filtros</li>
+</ul>
+<h4 id="a-04-detalle-de-tenant"><a class="header" href="#a-04-detalle-de-tenant">[A-04] Detalle de tenant</a></h4>
+<ul>
+<li>Info del comercio</li>
+<li>Balance</li>
+<li>Transacciones</li>
+<li>Configuración</li>
+</ul>
+<h4 id="a-05-detalle-de-transacción-cross-tenant"><a class="header" href="#a-05-detalle-de-transacción-cross-tenant">[A-05] Detalle de transacción (cross-tenant)</a></h4>
+<ul>
+<li>Vista detallada</li>
+<li>Acciones: reversar, congelar, escalar</li>
+</ul>
+<h2 id="4-componentes-reutilizables-design-system"><a class="header" href="#4-componentes-reutilizables-design-system">4. Componentes reutilizables (Design System)</a></h2>
+<p>Lista de componentes que el diseñador debe entregar antes de empezar las pantallas:</p>
+<h3 id="botones"><a class="header" href="#botones">Botones</a></h3>
+<ul>
+<li>Primary Button (Filled)</li>
+<li>Secondary Button (Outlined)</li>
+<li>Tertiary Button (Text)</li>
+<li>Destructive Button (Filled Red)</li>
+<li>Button with Icon (left/right)</li>
+<li>Button Loading State</li>
+</ul>
+<h3 id="inputs"><a class="header" href="#inputs">Inputs</a></h3>
+<ul>
+<li>Text Input (default, focused, error, disabled)</li>
+<li>Phone Input (con país)</li>
+<li>Currency Input (con prefijo Bs.)</li>
+<li>PIN Input (6 dígitos)</li>
+<li>OTP Input</li>
+<li>Search Input</li>
+</ul>
+<h3 id="cards"><a class="header" href="#cards">Cards</a></h3>
+<ul>
+<li>Balance Card (con CTA actions)</li>
+<li>Transaction Card (en historial)</li>
+<li>Info Card (banner informativo)</li>
+<li>Error Card</li>
+<li>Success Card</li>
+</ul>
+<h3 id="modales--sheets"><a class="header" href="#modales--sheets">Modales / Sheets</a></h3>
+<ul>
+<li>Bottom Sheet genérico</li>
+<li>Modal de confirmación</li>
+<li>Modal de error</li>
+<li>Action Sheet (acciones múltiples)</li>
+</ul>
+<h3 id="navigation"><a class="header" href="#navigation">Navigation</a></h3>
+<ul>
+<li>Bottom Navigation (3-5 items)</li>
+<li>Top App Bar (con back, título, acciones)</li>
+<li>Tabs (segmentados)</li>
+</ul>
+<h3 id="status"><a class="header" href="#status">Status</a></h3>
+<ul>
+<li>Online/Offline indicator (chip)</li>
+<li>Sync status badge</li>
+<li>Loading spinner</li>
+<li>Empty state component</li>
+<li>Error state component</li>
+</ul>
+<h3 id="charts"><a class="header" href="#charts">Charts</a></h3>
+<ul>
+<li>Bar chart (ventas por día)</li>
+<li>Line chart (balance evolución)</li>
+</ul>
+<h2 id="5-pantallas-priorizadas-para-figma-orden"><a class="header" href="#5-pantallas-priorizadas-para-figma-orden">5. Pantallas priorizadas para Figma (orden)</a></h2>
+<ol>
+<li><strong>[C-07] Home / Billetera</strong> (la más importante)</li>
+<li><strong>[C-12] Pagar con NFC</strong> (core de la propuesta)</li>
+<li><strong>[C-13] Confirmar pago con PIN</strong> (crítico)</li>
+<li><strong>[C-14] Pago exitoso</strong> (feedback)</li>
+<li><strong>[C-08] CashIn / Recargar</strong> (entrada de dinero)</li>
+<li><strong>[P-02] POS Home</strong> (comercio)</li>
+<li><strong>[P-03] POS esperando tap</strong> (comercio)</li>
+<li><strong>[P-06] POS venta exitosa</strong> (feedback)</li>
+<li><strong>[C-02] Onboarding 3 slides</strong> (primera impresión)</li>
+<li><strong>[C-03] Login / Registro</strong> (entrada)</li>
+<li><strong>[C-17] Detalle de transacción</strong> (auditoría)</li>
+<li>Resto en orden de flujo</li>
+</ol>
+<h2 id="6-tokens-de-diseño-figma-variables"><a class="header" href="#6-tokens-de-diseño-figma-variables">6. Tokens de diseño (Figma Variables)</a></h2>
+<pre><code>Color/Primary/900 → #003D5C
+Color/Primary/700 → #006090
+Color/Primary/500 → #0099D9
+Color/Primary/100 → #E0F2FA
+...
+Color/Secondary/900 → #2D1B4E
+...
+Color/State/Success → #10B981
+...
+Color/Neutral/White → #FFFFFF
+Color/Neutral/Gray-50 → #F9FAFB
+...
+
+Spacing/xs → 4px
+Spacing/sm → 8px
+Spacing/md → 16px
+Spacing/lg → 24px
+Spacing/xl → 32px
+
+Radius/sm → 4px
+Radius/md → 8px
+Radius/lg → 16px
+Radius/xl → 24px
+Radius/full → 9999px
+
+Typography/Display → Inter Bold 32px
+Typography/H1 → Inter Bold 24px
+...
+</code></pre>
+<h2 id="7-consideraciones-especiales"><a class="header" href="#7-consideraciones-especiales">7. Consideraciones especiales</a></h2>
+<h3 id="71-modo-offline"><a class="header" href="#71-modo-offline">7.1 Modo offline</a></h3>
+<ul>
+<li>Las pantallas deben mostrar claramente <strong>estado online/offline</strong></li>
+<li>Indicador persistente en top bar</li>
+<li>Mensajes contextuales: "Estás offline. La transacción se guardará y sincronizará cuando vuelvas online."</li>
+</ul>
+<h3 id="72-multi-tenancy-visual"><a class="header" href="#72-multi-tenancy-visual">7.2 Multi-tenancy visual</a></h3>
+<ul>
+<li>Cada tenant puede customizar:
+<ul>
+<li>Color primario (Primary/700)</li>
+<li>Logo</li>
+<li>Nombre comercial</li>
+</ul>
+</li>
+<li>Componentes deben usar tokens, no colores hardcoded</li>
+</ul>
+<h3 id="73-accesibilidad"><a class="header" href="#73-accesibilidad">7.3 Accesibilidad</a></h3>
+<ul>
+<li>Contraste WCAG AA mínimo</li>
+<li>Touch targets ≥ 48dp</li>
+<li>Text escalable (soporte dynamic type)</li>
+</ul>
+<h3 id="74-modo-oscuro"><a class="header" href="#74-modo-oscuro">7.4 Modo oscuro</a></h3>
+<ul>
+<li>Soporte nativo Android</li>
+<li>Variables claras para modo oscuro</li>
+<li>Grays se invierten, primarios se ajustan</li>
+</ul>
+<h2 id="8-recursos-para-el-diseñador"><a class="header" href="#8-recursos-para-el-diseñador">8. Recursos para el diseñador</a></h2>
+<ul>
+<li><strong>Estilo visual:</strong> Nequi (Colombia), Yape (Perú), Mercado Pago (Latam), Cash App (US)</li>
+<li><strong>Iconografía:</strong> Phosphor Icons (https://phosphoricons.com/) — open source</li>
+<li><strong>Inspiración fintech:</strong> ver capturas reales de Yape + Nequi + Mercado Pago Wallet</li>
+<li><strong>NFC interaction:</strong> ver videos de Apple Pay / Google Pay tap animations</li>
+</ul>
+<h2 id="9-entregables-del-figma"><a class="header" href="#9-entregables-del-figma">9. Entregables del Figma</a></h2>
+<ol>
+<li><strong>Cover</strong> (portada del archivo con descripción del producto)</li>
+<li><strong>Design System</strong> (componentes + variables + estilos)</li>
+<li><strong>Onboarding flow</strong> (C-01 a C-06)</li>
+<li><strong>Wallet flow</strong> (C-07 a C-17)</li>
+<li><strong>Settings flow</strong> (C-18, C-19)</li>
+<li><strong>POS flow</strong> (P-01 a P-11)</li>
+<li><strong>Estados vacíos</strong> (sin saldo, sin transacciones, sin conexión)</li>
+<li><strong>Estados de error</strong> (todos los flujos)</li>
+<li><strong>Modo oscuro</strong> (variantes de pantallas clave)</li>
+<li><strong>Handoff para Android</strong> (especificaciones de implementación)</li>
+</ol>
+<hr />
+<p><strong>Próximo documento:</strong> <code>04-requirements/non-functional.md</code> — requisitos no funcionales.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../04-requirements/non-functional.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../04-requirements/ui-flows-complete.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../04-requirements/non-functional.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../04-requirements/ui-flows-complete.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

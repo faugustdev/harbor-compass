@@ -1,0 +1,2143 @@
+<!DOCTYPE HTML>
+<html lang="es" class="navy" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Flujos UI Completos - Harbor Compass</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Documentación interna">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Intro</a></li><li class="chapter-item expanded affix "><li class="part-title">Producto</li><li class="chapter-item expanded "><a href="../01-product-brief.html"><strong aria-hidden="true">1.</strong> Product Brief</a></li><li class="chapter-item expanded affix "><li class="part-title">Arquitectura</li><li class="chapter-item expanded "><a href="../02-architecture.html"><strong aria-hidden="true">2.</strong> Arquitectura Técnica</a></li><li class="chapter-item expanded "><a href="../03-tech-stack.html"><strong aria-hidden="true">3.</strong> Stack Tecnológico</a></li><li class="chapter-item expanded "><a href="../05-data-model.html"><strong aria-hidden="true">4.</strong> Modelo de Datos</a></li><li class="chapter-item expanded affix "><li class="part-title">Requisitos</li><li class="chapter-item expanded "><a href="../04-requirements/functional-requirements.html"><strong aria-hidden="true">5.</strong> Requisitos Funcionales</a></li><li class="chapter-item expanded "><a href="../04-requirements/non-functional.html"><strong aria-hidden="true">6.</strong> Requisitos No Funcionales</a></li><li class="chapter-item expanded "><a href="../04-requirements/figma-base-spec.html"><strong aria-hidden="true">7.</strong> Especificación Figma</a></li><li class="chapter-item expanded "><a href="../04-requirements/ui-flows-complete.html" class="active"><strong aria-hidden="true">8.</strong> Flujos UI Completos</a></li><li class="chapter-item expanded "><a href="../04-requirements/user-stories/US-cliente-final.html"><strong aria-hidden="true">9.</strong> Cliente Final</a></li><li class="chapter-item expanded "><a href="../04-requirements/user-stories/US-prestador.html"><strong aria-hidden="true">10.</strong> Prestador (Comercio)</a></li><li class="chapter-item expanded "><a href="../04-requirements/user-stories/US-operador-transporte.html"><strong aria-hidden="true">11.</strong> Operador de Transporte</a></li><li class="chapter-item expanded "><a href="../04-requirements/user-stories/US-admin.html"><strong aria-hidden="true">12.</strong> Admin VIPPO</a></li><li class="chapter-item expanded "><a href="../04-requirements/use-cases/UC-01-cashin.html"><strong aria-hidden="true">13.</strong> UC-01 CashIn</a></li><li class="chapter-item expanded "><a href="../04-requirements/use-cases/UC-02-pago-offline.html"><strong aria-hidden="true">14.</strong> UC-02 Pago Offline NFC</a></li><li class="chapter-item expanded "><a href="../04-requirements/use-cases/UC-05-sync.html"><strong aria-hidden="true">15.</strong> UC-05 Sync Online</a></li><li class="chapter-item expanded affix "><li class="part-title">API</li><li class="chapter-item expanded "><a href="../06-api-contract.html"><strong aria-hidden="true">16.</strong> Contrato de API</a></li><li class="chapter-item expanded affix "><li class="part-title">Operación</li><li class="chapter-item expanded "><a href="../07-time-estimate.html"><strong aria-hidden="true">17.</strong> Estimación de Tiempo</a></li><li class="chapter-item expanded "><a href="../08-questions-for-vippo.html"><strong aria-hidden="true">18.</strong> Preguntas para VIPPO</a></li><li class="chapter-item expanded affix "><li class="part-title">Decisiones</li><li class="chapter-item expanded "><a href="../09-decisions/ADR-001-multiplatform.html"><strong aria-hidden="true">19.</strong> ADR-001 Kotlin Multiplatform</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Harbor Compass</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass/edit/main/docs-src/04-requirements/ui-flows-complete.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="vicheck-mvp--especificación-completa-de-flujos-ui"><a class="header" href="#vicheck-mvp--especificación-completa-de-flujos-ui">ViCheck MVP — Especificación Completa de Flujos UI</a></h1>
+<blockquote>
+<p><strong>Documento de referencia para el diseño en Figma y para la implementación en Android/Web.</strong> Cubre el 100% de los flujos de usuario (cliente final), aliado comercial (POS comercio + dashboard admin del aliado) y administrador ViPPO (web admin).</p>
+</blockquote>
+<h2 id="convenciones"><a class="header" href="#convenciones">Convenciones</a></h2>
+<ul>
+<li><code>**[C-XX]**</code> = Pantalla de Cliente final (móvil)</li>
+<li><code>**[P-XX]**</code> = Pantalla de POS comercio (móvil, modo POS)</li>
+<li><code>**[D-XX]**</code> = Pantalla de Dashboard del aliado (móvil, modo gerente)</li>
+<li><code>**[W-XX]**</code> = Pantalla de Web Admin ViPPO (escritorio)</li>
+<li><code>**[F-XX]**</code> = Flujo completo (secuencia de pantallas)</li>
+</ul>
+<p><strong>Estados de pantalla:</strong></p>
+<ul>
+<li><code>[Onb]</code> = Onboarding</li>
+<li><code>[Auth]</code> = Autenticación</li>
+<li><code>[Main]</code> = Pantalla principal</li>
+<li><code>[Action]</code> = Acción en curso</li>
+<li><code>[Confirm]</code> = Confirmación requerida</li>
+<li><code>[Success]</code> = Resultado exitoso</li>
+<li><code>[Error]</code> = Resultado fallido</li>
+<li><code>[Empty]</code> = Sin datos</li>
+<li><code>[Offline]</code> = Sin conectividad</li>
+<li><code>[Loading]</code> = Cargando</li>
+</ul>
+<p><strong>Tokens visuales (de figma-base-spec.md):</strong></p>
+<ul>
+<li><code>Primary 700: #006090</code> — CTAs principales</li>
+<li><code>Secondary 500: #6B4FBB</code> — Accento offline / marca</li>
+<li><code>Success: #10B981</code> — Transacciones OK</li>
+<li><code>Error: #EF4444</code> — Errores</li>
+<li><code>Warning: #F59E0B</code> — Alertas</li>
+<li><code>Gray 600: #4B5563</code> — Texto secundario</li>
+<li><code>Gray 100: #F3F4F6</code> — Backgrounds sutiles</li>
+</ul>
+<p><strong>Símbolos de medios de pago:</strong></p>
+<ul>
+<li>📡 NFC (chip a teléfono)</li>
+<li>📷 QR (cámara)</li>
+<li>📲 Celular como tag (HCE)</li>
+<li>✋ Manual (sin medio físico)</li>
+</ul>
+<hr />
+<h1 id="Índice-de-flujos"><a class="header" href="#Índice-de-flujos">ÍNDICE DE FLUJOS</a></h1>
+<h2 id="cliente-final-c"><a class="header" href="#cliente-final-c">Cliente final (C)</a></h2>
+<ul>
+<li>[F-C-01] Onboarding y registro de cuenta</li>
+<li>[F-C-02] Conectar dispositivo NFC (pulsera, tarjeta, celular)</li>
+<li>[F-C-03] CashIn / Recargar saldo</li>
+<li>[F-C-04] CashOut / Retirar saldo a banco</li>
+<li>[F-C-05] Pago NFC (chip a teléfono)</li>
+<li>[F-C-06] Pago QR (cámara)</li>
+<li>[F-C-07] Pago phone-to-phone P2P</li>
+<li>[F-C-08] Pago con el mismo celular (HCE)</li>
+<li>[F-C-09] Pago sin conexión (fallback universal)</li>
+<li>[F-C-10] Ver historial y detalle de transacción</li>
+<li>[F-C-11] Configuración de seguridad (PIN, biometría)</li>
+<li>[F-C-12] Notificaciones</li>
+<li>[F-C-13] Reembolsos y disputas</li>
+<li>[F-C-14] Recuperación de cuenta</li>
+<li>[F-C-15] Eliminar cuenta</li>
+<li>[F-C-16] Promoción y cashback</li>
+</ul>
+<h2 id="aliado--comercio-d--dashboard-aliado-p--pos"><a class="header" href="#aliado--comercio-d--dashboard-aliado-p--pos">Aliado / Comercio (D = Dashboard aliado, P = POS)</a></h2>
+<ul>
+<li>[F-A-01] Onboarding del aliado</li>
+<li>[F-A-02] Configurar branding y fees del tenant</li>
+<li>[F-A-03] Cobro NFC (POS)</li>
+<li>[F-A-04] Cobro QR (POS)</li>
+<li>[F-A-05] Cobro manual (POS)</li>
+<li>[F-A-06] Sync de transacciones (POS)</li>
+<li>[F-A-07] CashOut / Liquidación a banco del aliado</li>
+<li>[F-A-08] Dashboard de ventas (móvil gerente)</li>
+<li>[F-A-09] Gestión de empleados (multi-tenant POS)</li>
+<li>[F-A-10] Notificación de cashin recibido del cliente</li>
+<li>[F-A-11] Gestión de promociones</li>
+</ul>
+<h2 id="web-admin-vippo-w"><a class="header" href="#web-admin-vippo-w">Web Admin ViPPO (W)</a></h2>
+<ul>
+<li>[F-W-01] Login admin + 2FA</li>
+<li>[F-W-02] Ver lista de aliados (tenants)</li>
+<li>[F-W-03] Crear/editar/deshabilitar aliado</li>
+<li>[F-W-04] Ver lista de usuarios</li>
+<li>[F-W-05] CRUD de datos de usuario</li>
+<li>[F-W-06] Verificaciones de seguridad y KYC</li>
+<li>[F-W-07] Anti-fraude: revisar tx sospechosas</li>
+<li>[F-W-08] Anti-fraude: congelar wallet</li>
+<li>[F-W-09] Anti-fraude: reversar transacción</li>
+<li>[F-W-10] Conciliación manual</li>
+<li>[F-W-11] Reportes regulatorios (SUDEBAN, SENIAT)</li>
+<li>[F-W-12] Configuración global de fees y límites</li>
+</ul>
+<hr />
+<h1 id="parte-1--cliente-final"><a class="header" href="#parte-1--cliente-final">PARTE 1 — CLIENTE FINAL</a></h1>
+<h2 id="f-c-01-onboarding-y-registro-de-cuenta"><a class="header" href="#f-c-01-onboarding-y-registro-de-cuenta">F-C-01: Onboarding y registro de cuenta</a></h2>
+<p><strong>Pantallas:</strong> C-01, C-02, C-03, C-04, C-05</p>
+<pre><code>[C-01 Splash 2s] → [C-02 Onboarding 3 slides] → [C-03 Login/Registro]
+                        ↓
+                [C-04 Verificación SMS OTP]
+                        ↓
+              [C-05 Onboarding datos personales]
+                        ↓
+              [C-06 Selección banco origen]
+                        ↓
+                 [C-07 Home / Billetera]
+</code></pre>
+<p><strong>Estados clave:</strong></p>
+<ul>
+<li>Si OTP falla 3 veces → bloqueo temporal 5 min</li>
+<li>Si KYC incompleto → CashIn limitado a $500/mes</li>
+<li>Si banco no afiliado → mensaje "Banco no soportado, prueba con otro"</li>
+</ul>
+<p><strong>Pantallas detalladas:</strong></p>
+<h4 id="c-01-splash--carga-inicial"><a class="header" href="#c-01-splash--carga-inicial">[C-01] Splash / Carga inicial</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│                                     │
+│                                     │
+│          [Logo ViCheck]             │
+│                                     │
+│                                     │
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Fondo: Primary 900 (#003D5C)</li>
+<li>Logo: blanco, centrado</li>
+<li>Duración: 2 segundos</li>
+</ul>
+<h4 id="c-02-onboarding-3-slides"><a class="header" href="#c-02-onboarding-3-slides">[C-02] Onboarding (3 slides)</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [Skip]                              │
+│                                     │
+│      [Ilustración NFC + offline]    │
+│                                     │
+│      Sin señal. Ni problema.        │
+│                                     │
+│  Paga incluso sin internet, tu     │
+│  dinero siempre seguro.            │
+│                                     │
+│     ● ○ ○    [Empezar →]            │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>3 slides (ya documentadas en figma-base-spec)</li>
+<li>Botón "Saltar" arriba a la derecha</li>
+<li>Indicador de progreso (dots)</li>
+<li>Botón CTA primario: "Empezar" o "Siguiente"</li>
+</ul>
+<h4 id="c-03-login--registro"><a class="header" href="#c-03-login--registro">[C-03] Login / Registro</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                 │
+│                                     │
+│      [Logo ViCheck]                │
+│                                     │
+│   Ingresa tu teléfono              │
+│                                     │
+│  🇻🇪 +58 [____________________]    │
+│                                     │
+│  [   Continuar   ]                 │
+│                                     │
+│  ¿Ya tienes cuenta? Inicia sesión  │
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Selector de país (default VE)</li>
+<li>Input con máscara automática</li>
+<li>Validación: solo números, 10 dígitos VE</li>
+<li>Botón deshabilitado hasta validar formato</li>
+</ul>
+<h4 id="c-04-verificación-sms"><a class="header" href="#c-04-verificación-sms">[C-04] Verificación SMS</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                 │
+│                                     │
+│   Te enviamos un código al         │
+│   +58 412 1234567                  │
+│                                     │
+│   ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐         │
+│   │ │ │ │ │ │ │ │ │ │ │ │         │
+│   └─┘ └─┘ └─┘ └─┘ └─┘ └─┘         │
+│                                     │
+│   Reenviar código (00:28)          │
+│                                     │
+│   [   Verificar   ]                │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>6 dígitos individuales</li>
+<li>Auto-focus siguiente input</li>
+<li>Countdown 30s para reenvío</li>
+<li>Error: shake animation + texto rojo</li>
+</ul>
+<h4 id="c-05-datos-personales"><a class="header" href="#c-05-datos-personales">[C-05] Datos personales</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Cuéntanos sobre ti               │
+│                                     │
+│   Nombre completo                   │
+│   [____________________]            │
+│                                     │
+│   Cédula                            │
+│   [V-_________]                     │
+│                                     │
+│   Email (opcional)                  │
+│   [____________________]            │
+│                                     │
+│   [   Continuar   ]                │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Validación KYC automática con SENIAT/SUDEBAN</li>
+<li>Email opcional</li>
+<li>Si KYC falla → mensaje "Verifica tu cédula"</li>
+</ul>
+<h4 id="c-06-selección-banco-origen"><a class="header" href="#c-06-selección-banco-origen">[C-06] Selección banco origen</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Selecciona tu banco              │
+│                                     │
+│   🔍 [Buscar banco...]            │
+│                                     │
+│   ┌────────────────────┐          │
+│   │ 🏦 Banesco        │          │
+│   ├────────────────────┤          │
+│   │ 🏦 Mercantil      │          │
+│   ├────────────────────┤          │
+│   │ 🏦 Provincial     │          │
+│   ├────────────────────┤          │
+│   │ 🏦 Venezuela      │          │
+│   ├────────────────────┤          │
+│   │ 🏦 BNC            │          │
+│   └────────────────────┘          │
+│                                     │
+│   [   Continuar   ]                │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Lista de bancos VIPPO afiliados</li>
+<li>Búsqueda con filtro live</li>
+<li>Cache de selección</li>
+</ul>
+<hr />
+<h2 id="f-c-02-conectar-dispositivo-nfc-pulsera-tarjeta-celular"><a class="header" href="#f-c-02-conectar-dispositivo-nfc-pulsera-tarjeta-celular">F-C-02: Conectar dispositivo NFC (pulsera, tarjeta, celular)</a></h2>
+<p><strong>Pantallas:</strong> C-19 + nuevas: [C-20], [C-22], [C-23]</p>
+<h3 id="variantes-del-flujo"><a class="header" href="#variantes-del-flujo">Variantes del flujo:</a></h3>
+<p><strong>Variante A: Emparejar pulsera/tarjeta</strong></p>
+<pre><code>[Settings → NFC → Emparejar nuevo tag]
+              ↓
+       [C-19 Emparejar tag NFC]
+              ↓
+       (acercar tag)
+              ↓
+       [C-20 Confirmar con PIN]
+              ↓
+       [C-21 Emparejado exitoso]
+</code></pre>
+<p><strong>Variante B: Emparejar celular (HCE)</strong></p>
+<pre><code>[Settings → NFC → Usar este celular como tag]
+              ↓
+       [C-22 Activar modo celular]
+              ↓
+       (instalar perfil ViCheck)
+              ↓
+       [C-23 Celular activado como tag]
+</code></pre>
+<p><strong>Variante C: Transferir dispositivo (cambio de celular o pulsera)</strong></p>
+<pre><code>[Settings → NFC → Mis dispositivos]
+              ↓
+       [C-24 Lista de dispositivos emparejados]
+              ↓
+       [C-25 Transferir / Desemparejar]
+              ↓
+       [Confirmar con PIN]
+              ↓
+       [C-26 Transferencia completada]
+</code></pre>
+<h3 id="pantallas-detalladas"><a class="header" href="#pantallas-detalladas">Pantallas detalladas:</a></h3>
+<h4 id="c-19-emparejar-tag-nfc-pulseratarjeta"><a class="header" href="#c-19-emparejar-tag-nfc-pulseratarjeta">[C-19] Emparejar tag NFC (pulsera/tarjeta)</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                              │
+│                                     │
+│      [Animación ondas NFC]         │
+│                                     │
+│      Acerca tu pulsera o tarjeta  │
+│                                     │
+│      Detectando...                 │
+│                                     │
+│   ┌────────────────────────┐      │
+│   │ Tags detectados:          │      │
+│   │ UID 04:A3:B2:C1:D4:E5:F6│      │
+│   └────────────────────────┘      │
+│                                     │
+│      Nombre del tag:               │
+│      [____________________]        │
+│                                     │
+│      [   Emparejar   ]            │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Animación de ondas pulsantes</li>
+<li>Lista de tags cercanos (puede haber varios)</li>
+<li>Selector si múltiples tags</li>
+<li>Nombre opcional</li>
+</ul>
+<h4 id="c-20-confirmar-con-pin-para-emparejar"><a class="header" href="#c-20-confirmar-con-pin-para-emparejar">[C-20] Confirmar con PIN para emparejar</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [← Cancelar]                        │
+│                                     │
+│   Confirma con tu PIN               │
+│                                     │
+│   ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐      │
+│   │●│ │●│ │●│ │ │ │ │ │ │      │
+│   └─┘ └─┘ └─┘ └─┘ └─┘ └─┘      │
+│                                     │
+│   Emparejando: "Mi pulsera gym"    │
+│   UID: 04:A3:B2:C1:D4:E5:F6        │
+│                                     │
+│   [Huella digital]                  │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>6 dígitos o biometría</li>
+<li>Si falla 5 veces → bloqueo 5 min</li>
+<li>Mensaje de confirmación clara</li>
+</ul>
+<h4 id="c-21-emparejado-exitoso"><a class="header" href="#c-21-emparejado-exitoso">[C-21] Emparejado exitoso</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│                                     │
+│         ✓                          │
+│                                     │
+│   ¡Listo! Tu tag está emparejado   │
+│                                     │
+│   "Mi pulsera gym"                  │
+│                                     │
+│   UID: 04:A3:B2:C1:D4:E5:F6        │
+│                                     │
+│   Ahora puedes pagar con él en     │
+│   cualquier comercio afiliado.      │
+│                                     │
+│   [ Emparejar otro ] [ Listo ]    │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-22-activar-celular-como-tag-hce"><a class="header" href="#c-22-activar-celular-como-tag-hce">[C-22] Activar celular como tag (HCE)</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   📲 Activar este celular como tag  │
+│                                     │
+│   Esto te permite pagar sin          │
+│   sacar efectivo ni llevar tarjetas. │
+│   Tu celular emitirá una señal NFC  │
+│   como si fuera una tarjeta.       │
+│                                     │
+│   Requisitos:                       │
+│   ✓ Android 7.0 o superior         │
+│   ✓ NFC habilitado                │
+│   ✓ Pantalla encendida           │
+│                                     │
+│   [   Activar   ]                  │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-23-celular-activado-como-tag"><a class="header" href="#c-23-celular-activado-como-tag">[C-23] Celular activado como tag</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│                                     │
+│         ✓                          │
+│                                     │
+│   ¡Tu celular es ahora un tag NFC!│
+│                                     │
+│   📲                                │
+│                                     │
+│   Para pagar:                       │
+│   1. Desbloquea la pantalla        │
+│   2. Acerca al POS                 │
+│   3. Confirma con tu PIN          │
+│                                     │
+│   [ Probar ahora ] [ Configuración ]│
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-24-mis-dispositivos-emparejados"><a class="header" href="#c-24-mis-dispositivos-emparejados">[C-24] Mis dispositivos emparejados</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Mis dispositivos NFC              │
+│                                     │
+│   ┌────────────────────────┐      │
+│   │ 📲 Este celular       │      │
+│   │    Activo             │      │
+│   ├────────────────────────┤      │
+│   │ ⌚ Mi pulsera gym     │      │
+│   │    UID 04:A3:...      │      │
+│   │    Activo · gym empaque││
+│   ├────────────────────────┤      │
+│   │ 💳 Tarjeta oficina    │      │
+│   │    UID 04:B2:...      │      │
+│   │    Activo             │      │
+│   └────────────────────────┘      │
+│                                     │
+│   [+ Emparejar nuevo]              │
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Lista con iconos por tipo (📲 ⌚ 💳)</li>
+<li>Estado: Activo / Inactivo</li>
+<li>Cada item: editar nombre, desemparejar</li>
+</ul>
+<h4 id="c-25-desemparejar--transferir"><a class="header" href="#c-25-desemparejar--transferir">[C-25] Desemparejar / Transferir</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [← Cancelar]                        │
+│                                     │
+│   ⌚ "Mi pulsera gym"               │
+│   UID: 04:A3:B2:C1:D4:E5:F6        │
+│                                     │
+│   ⚠️ Al desemparejar este tag, ya │
+│   不会再 podrás pagar con él.        │
+│                                     │
+│   Opciones:                         │
+│   ○ Desemparejar (queda inutilizable)│
+│   ○ Transferir a otra persona     │
+│                                     │
+│   Ingresa tu PIN para confirmar:  │
+│   ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐       │
+│   │ │ │ │ │ │ │ │ │ │ │ │       │
+│   └─┘ └─┘ └─┘ └─┘ └─┘ └─┘       │
+│                                     │
+│   [   Confirmar   ]                │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-c-03-cashin--recargar-saldo"><a class="header" href="#f-c-03-cashin--recargar-saldo">F-C-03: CashIn / Recargar saldo</a></h2>
+<p><strong>Pantallas:</strong> C-08, C-09, C-10, C-11 + nueva [C-08b confirmación]</p>
+<h3 id="flujo-completo"><a class="header" href="#flujo-completo">Flujo completo:</a></h3>
+<pre><code>[Home] → [C-08 Seleccionar monto] → [C-08b Confirmar recarga]
+                                            ↓
+                                     [C-09 Procesando]
+                                            ↓
+                              ┌─────────────┴────────────┐
+                              ↓                          ↓
+                       [C-10 Exitoso]            [C-11 Fallido]
+</code></pre>
+<h4 id="c-08-seleccionar-monto-de-recarga"><a class="header" href="#c-08-seleccionar-monto-de-recarga">[C-08] Seleccionar monto de recarga</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Recargar saldo                    │
+│                                     │
+│   Saldo actual: Bs. 12,500.00      │
+│                                     │
+│   Monto rápido:                     │
+│   ┌────────┐ ┌────────┐            │
+│   │ Bs.500 │ │Bs.1,000│            │
+│   └────────┘ └────────┘            │
+│   ┌────────┐ ┌────────┐            │
+│   │Bs.2,000│ │Bs.5,000│            │
+│   └────────┘ └────────┘            │
+│                                     │
+│   O ingresa otro monto:            │
+│   Bs. [____________________]       │
+│                                     │
+│   Banco origen:                     │
+│   🏦 Banesco - ****1234   [Cambiar]│
+│                                     │
+│   💡 Recibirás un push al           │
+│   completarse la operación.        │
+│                                     │
+│   [   Continuar   ]                │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Montos predeterminados: 500, 1000, 2000, 5000</li>
+<li>Monto custom con teclado numérico</li>
+<li>Validación: mín 100 VES, máx diario</li>
+<li>Si excede límite → mensaje contextual</li>
+</ul>
+<h4 id="c-08b-confirmar-recarga"><a class="header" href="#c-08b-confirmar-recarga">[C-08b] Confirmar recarga</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Confirma tu recarga              │
+│                                     │
+│   ┌────────────────────────┐      │
+│   │                          │      │
+│   │   Bs. 2,000.00           │      │
+│   │                          │      │
+│   │   Desde Banesco ****1234 │      │
+│   │                          │      │
+│   │   Comisión: Bs. 0        │      │
+│   │                          │      │
+│   │   ⏱️ Tarda unos 5 seg.   │      │
+│   │                          │      │
+│   └────────────────────────┘      │
+│                                     │
+│   Confirma con tu PIN:              │
+│   ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐       │
+│   │ │ │ │ │ │ │ │ │ │ │ │       │
+│   └─┘ └─┘ └─┘ └─┘ └─┘ └─┘       │
+│                                     │
+│   [   Confirmar recarga   ]                  │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Resumen visual claro</li>
+<li>PIN obligatorio (RNF-SEC-002)</li>
+<li>Botón deshabilitado hasta PIN completo</li>
+</ul>
+<h4 id="c-09-procesando"><a class="header" href="#c-09-procesando">[C-09] Procesando</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│                                     │
+│         [Spinner animado]           │
+│                                     │
+│      Conectando con tu banco...    │
+│                                     │
+│      ⏱️ ~5 segundos                │
+│                                     │
+│   ┌────────────────────────┐      │
+│   │ Bs. 2,000.00            │      │
+│   │ Banesco ****1234        │      │
+│   └────────────────────────┘      │
+│                                     │
+│   [   Cancelar   ] (con timer)     │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Spinner + texto tranquilizador</li>
+<li>Cancelar solo primeros 10s</li>
+</ul>
+<h4 id="c-10-recarga-exitosa"><a class="header" href="#c-10-recarga-exitosa">[C-10] Recarga exitosa</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│                                     │
+│         ✓ (animado)                │
+│                                     │
+│      ¡Recarga exitosa!             │
+│                                     │
+│   Bs. 2,000.00                     │
+│                                     │
+│   Saldo anterior:    Bs. 12,500.00│
+│   + Recarga:         Bs.  2,000.00│
+│   ─────────────────────────────   │
+│   Saldo nuevo:       Bs. 14,500.00│
+│                                     │
+│   🕐 Hace 2 segundos              │
+│   📋 ID: cashin-uuid-corto        │
+│                                     │
+│   [ Ver historial ] [ Inicio ]   │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-11-recarga-fallida"><a class="header" href="#c-11-recarga-fallida">[C-11] Recarga fallida</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│         ✗                          │
+│                                     │
+│      No pudimos procesar la       │
+│      recarga                        │
+│                                     │
+│   Razón:                           │
+│   "Saldo insuficiente en tu       │
+│    cuenta bancaria"                │
+│                                     │
+│   Bs. 2,000.00 - Banesco ****1234 │
+│                                     │
+│   💡 Verifica tu saldo bancario.  │
+│                                     │
+│   [   Reintentar   ] [ Inicio ]   │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-c-04-cashout--retirar-saldo-a-banco"><a class="header" href="#f-c-04-cashout--retirar-saldo-a-banco">F-C-04: CashOut / Retirar saldo a banco</a></h2>
+<p><strong>Pantallas:</strong> nuevas [C-30] a [C-34]</p>
+<pre><code>[Home] → [C-30 Seleccionar monto CashOut]
+            ↓
+       [C-31 Confirmar CashOut]
+            ↓
+       [C-32 Procesando CashOut]
+            ↓
+    ┌───────┴───────┐
+    ↓               ↓
+[C-33 Exitoso] [C-34 Fallido]
+</code></pre>
+<h4 id="c-30-seleccionar-monto-cashout"><a class="header" href="#c-30-seleccionar-monto-cashout">[C-30] Seleccionar monto CashOut</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Retirar a mi banco                │
+│                                     │
+│   Disponible: Bs. 12,500.00       │
+│   (No incluye saldo pendiente sync)│
+│                                     │
+│   Retirar todo: Bs. 12,500.00    │
+│                                     │
+│   O monto custom:                         │
+│   Bs. [____________________]       │
+│                                     │
+│   Banco destino:                     │
+│   🏦 Banesco - ****1234            │
+│                                     │
+│   ⏱️ Llega en 24 horas hábiles      │
+│                                     │
+│   [   Continuar   ]                │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>"Retirar todo" por defecto</li>
+<li>Validación: no exceder disponible</li>
+<li>Tiempo estimado: "Llega en 24h hábiles"</li>
+</ul>
+<h4 id="c-31-confirmar-cashout"><a class="header" href="#c-31-confirmar-cashout">[C-31] Confirmar CashOut</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Confirma tu retiro                │
+│                                     │
+│   ┌────────────────────────┐      │
+│   │   Bs. 12,500.00         │      │
+│   │   A Banesco ****1234   │      │
+│   │   ⏱️ 24h hábiles        │      │
+│   └────────────────────────┘      │
+│                                     │
+│   PIN:                              │
+│   ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐       │
+│   │ │ │ │ │ │ │ │ │ │ │ │       │
+│   └─┘ └─┘ └─┘ └─┘ └─┘ └─┘       │
+│                                     │
+│   [   Confirmar retiro   ]                  │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-32-procesando-cashout"><a class="header" href="#c-32-procesando-cashout">[C-32] Procesando CashOut</a></h4>
+<pre><code>[Spinner + "Procesando tu retiro..."]
+
+Llega en 24h hábiles
+</code></pre>
+<h4 id="c-33-cashout-exitoso"><a class="header" href="#c-33-cashout-exitoso">[C-33] CashOut exitoso</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│                                     │
+│         ✓                          │
+│                                     │
+│      ¡Retiro iniciado!             │
+│                                     │
+│   Bs. 12,500.00                     │
+│   A Banesco ****1234             │
+│                                     │
+│   💡 Llega en 24h hábiles.         │
+│      Te notificaremos cuando       │
+│      se acredite.                  │
+│                                     │
+│   📋 ID: cashout-uuid-corto       │
+│                                     │
+│   [ Ver historial ] [ Inicio ]   │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-c-05-pago-nfc-chip-a-teléfono"><a class="header" href="#f-c-05-pago-nfc-chip-a-teléfono">F-C-05: Pago NFC (chip a teléfono)</a></h2>
+<p><strong>Pantallas:</strong> C-12, C-13, C-14</p>
+<pre><code>[Home] → [C-12 Esperar tap NFC]
+              ↓
+       (tap detectado)
+              ↓
+       [C-13 Confirmar con PIN]
+              ↓
+       [C-14 Pago exitoso]
+</code></pre>
+<p><strong>Variantes del flujo offline (cubierto en F-C-09).</strong></p>
+<h4 id="c-12-esperar-tap-nfc"><a class="header" href="#c-12-esperar-tap-nfc">[C-12] Esperar tap NFC</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [← Cancelar]                        │
+│                                     │
+│      [Animación ondas NFC]         │
+│                                     │
+│      Acerca tu pulsera, tarjeta    │
+│      o celular al POS del comercio  │
+│                                     │
+│      Esperando tap...                │
+│                                     │
+│   ┌────────────────────────┐      │
+│   │ Tu saldo: Bs. 12,500.00 │      │
+│   └────────────────────────┘      │
+│                                     │
+│   💡 Si no tienes saldo, te       │
+│   avisaremos al instante.         │
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Animación ondas pulsantes (3-5 segundos loop)</li>
+<li>Si no detecta en 30s → "¿Problemas? Prueba QR"</li>
+</ul>
+<h4 id="c-13-confirmar-pago-con-pin"><a class="header" href="#c-13-confirmar-pago-con-pin">[C-13] Confirmar pago con PIN</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [← Cancelar]                        │
+│                                     │
+│   Pago a Terminal La Bandera        │
+│                                     │
+│   Bs. 45.00                         │
+│                                     │
+│   Tu nuevo saldo:                  │
+│   Bs. 12,455.00                     │
+│                                     │
+│   Ingresa tu PIN para confirmar:  │
+│   ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐       │
+│   │●│ │●│ │●│ │ │ │ │ │ │       │
+│   └─┘ └─┘ └─┘ └─┘ └─┘ └─┘       │
+│                                     │
+│   ⏱️ 30 segundos para confirmar    │
+│                                     │
+│   [Huella]                          │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Monto, comercio, nuevo saldo visibles</li>
+<li>PIN 6 dígitos</li>
+<li>Timer 30s, después cancela</li>
+</ul>
+<h4 id="c-14-pago-exitoso"><a class="header" href="#c-14-pago-exitoso">[C-14] Pago exitoso</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│                                     │
+│         ✓ (animado)                │
+│                                     │
+│      ¡Pago exitoso!                │
+│                                     │
+│   Bs. 45.00                         │
+│   Terminal La Bandera                │
+│                                     │
+│   Saldo: Bs. 12,455.00             │
+│                                     │
+│   📋 ID: pay-uuid-corto           │
+│   📅 2 oct 2026, 14:32             │
+│                                     │
+│   [ Ver recibo ] [ Inicio ]       │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-c-06-pago-qr-cámara"><a class="header" href="#f-c-06-pago-qr-cámara">F-C-06: Pago QR (cámara)</a></h2>
+<p><strong>Pantallas:</strong> C-15, [C-13], [C-14]</p>
+<pre><code>[Home] → [C-15 Escanear QR]
+              ↓
+       (QR detectado)
+              ↓
+       [C-13' Confirmar pago QR]
+              ↓
+       [C-14 Pago exitoso]
+</code></pre>
+<h4 id="c-15-escanear-qr-del-comercio"><a class="header" href="#c-15-escanear-qr-del-comercio">[C-15] Escanear QR del comercio</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [← Cancelar]                        │
+│                                     │
+│   ┌────────────────────────┐      │
+│   │                          │      │
+│   │  [Cámara con marco]    │      │
+│   │                          │      │
+│   │   Apunta al QR del      │      │
+│   │   comercio              │      │
+│   │                          │      │
+│   └────────────────────────┘      │
+│                                     │
+│   🔲 Escaneando...                  │
+│                                     │
+│   💡 O usa NFC si está disponible  │
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Vista de cámara con marco cuadrado</li>
+<li>Animación de escaneo</li>
+<li>Si QR expira (30s) → re-scan</li>
+</ul>
+<h4 id="c-13-confirmar-pago-qr"><a class="header" href="#c-13-confirmar-pago-qr">[C-13'] Confirmar pago QR</a></h4>
+<pre><code>[Igual que C-13 pero con texto contextual del QR]
+</code></pre>
+<hr />
+<h2 id="f-c-07-pago-phone-to-phone-p2p"><a class="header" href="#f-c-07-pago-phone-to-phone-p2p">F-C-07: Pago phone-to-phone P2P</a></h2>
+<p><strong>Pantallas:</strong> nuevas [C-40] a [C-43]</p>
+<pre><code>[Home] → [C-40 Iniciar P2P]
+            ↓
+       [C-41 Buscar destinatario]
+            ↓
+       [C-42 Ingresar monto]
+            ↓
+       [C-13 Confirmar con PIN]
+            ↓
+       [C-43 P2P exitoso]
+</code></pre>
+<h4 id="c-40-iniciar-transferencia-p2p"><a class="header" href="#c-40-iniciar-transferencia-p2p">[C-40] Iniciar transferencia P2P</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Enviar a otra persona             │
+│                                     │
+│   ┌──────────────┐ ┌──────────────┐│
+│   │ 📞 Por       │ │ 🔍 Por      ││
+│   │ teléfono     │ │ contacto     ││
+│   └──────────────┘ └──────────────┘│
+│                                     │
+│   ┌──────────────┐ ┌──────────────┐│
+│   │ 📡 Por NFC   │ │ 📷 Por QR   ││
+│   │ del otro     │ │ del otro    ││
+│   │ celular      │ │ celular     ││
+│   └──────────────┘ └──────────────┘│
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>4 modos de encontrar destinatario</li>
+<li>Cada uno abre flujo específico</li>
+</ul>
+<h4 id="c-41-buscar-por-teléfono-o-contacto"><a class="header" href="#c-41-buscar-por-teléfono-o-contacto">[C-41] Buscar por teléfono o contacto</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Buscar destinatario                │
+│                                     │
+│   📞 Teléfono                      │
+│   [____________________]            │
+│                                     │
+│   👤 Contactos                      │
+│   ┌────────────────────────┐      │
+│   │ María Pérez             │      │
+│   │ +58 412 1112233         │      │
+│   ├────────────────────────┤      │
+│   │ Juan González          │      │
+│   │ +58 414 5558899         │      │
+│   └────────────────────────┘      │
+│                                     │
+│   [   Continuar   ]                │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Búsqueda por número</li>
+<li>Integración con contactos del teléfono (con permiso)</li>
+<li>Solo muestra contactos que ya usan ViCheck</li>
+</ul>
+<h4 id="c-42-ingresar-monto-p2p"><a class="header" href="#c-42-ingresar-monto-p2p">[C-42] Ingresar monto P2P</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   Enviar a María Pérez             │
+│                                     │
+│   Bs. [____________________]       │
+│                                     │
+│   💬 Mensaje (opcional)             │
+│   [_________________________]      │
+│                                     │
+│   Tu saldo: Bs. 12,500.00          │
+│                                     │
+│   [   Continuar   ]                │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Mensaje opcional (max 100 chars)</li>
+<li>Validación saldo</li>
+</ul>
+<h4 id="c-43-p2p-exitoso"><a class="header" href="#c-43-p2p-exitoso">[C-43] P2P exitoso</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│                                     │
+│         ✓                          │
+│                                     │
+│      ¡Enviaste Bs. 500!            │
+│                                     │
+│   A María Pérez                     │
+│                                     │
+│   Tu nuevo saldo: Bs. 12,000.00   │
+│                                     │
+│   💬 "Almuerzo de hoy"            │
+│                                     │
+│   [ Ver recibo ] [ Inicio ]       │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-c-08-pago-con-el-mismo-celular-hce"><a class="header" href="#f-c-08-pago-con-el-mismo-celular-hce">F-C-08: Pago con el mismo celular (HCE)</a></h2>
+<p><strong>Variante del F-C-05 pero iniciando desde el celular del cliente.</strong></p>
+<pre><code>[Cliente acerca su celular al POS del comercio]
+   ↓
+[POS lee el celular del cliente vía NFC peer-to-peer]
+   ↓
+[Flujo normal C-13 → C-14]
+</code></pre>
+<p><strong>Estados especiales:</strong></p>
+<ul>
+<li>Pantalla del cliente debe estar encendida (no apagada)</li>
+<li>HCE requiere Android 7.0+</li>
+</ul>
+<hr />
+<h2 id="f-c-09-pago-sin-conexión-fallback-universal"><a class="header" href="#f-c-09-pago-sin-conexión-fallback-universal">F-C-09: Pago sin conexión (fallback universal)</a></h2>
+<p>Este flujo es <strong>transversal</strong> a C-05, C-06, C-07, C-08. Cuando no hay internet, todos los pagos funcionan igual, pero:</p>
+<ul>
+<li>POS y cliente firman localmente con ECDSA</li>
+<li>Tx queda en vault local encriptado</li>
+<li>Cuando vuelva internet → sync automático</li>
+</ul>
+<p><strong>Estados offline específicos:</strong></p>
+<h4 id="c-50-banner-offline-persistente"><a class="header" href="#c-50-banner-offline-persistente">[C-50] Banner offline persistente</a></h4>
+<pre><code>[Top bar]
+📡 Sin conexión
+Algunas funciones no estarán disponibles.
+</code></pre>
+<p><strong>Funcionalidades offline:</strong></p>
+<ul>
+<li>✅ Pago NFC/QR/P2P</li>
+<li>✅ Ver balance (cache)</li>
+<li>✅ Ver historial (cache)</li>
+<li>❌ CashIn (requiere internet)</li>
+<li>❌ CashOut (requiere internet)</li>
+<li>❌ Emparejar tag nuevo (requiere internet primera vez)</li>
+</ul>
+<h4 id="c-51-pago-offline-exitoso-variante-c-14"><a class="header" href="#c-51-pago-offline-exitoso-variante-c-14">[C-51] Pago offline exitoso (variante C-14)</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│                                     │
+│         ✓                          │
+│                                     │
+│      ¡Pago exitoso!                │
+│                                     │
+│   Bs. 45.00                         │
+│   Terminal La Bandera                │
+│                                     │
+│   Saldo: Bs. 12,455.00             │
+│                                     │
+│   📡 Se sincronizará al volver     │
+│      online                        │
+│                                     │
+│   [ Ver recibo ] [ Inicio ]       │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Indicador visual "📡 Se sincronizará"</li>
+<li>Diferencia visual con pago online (icono sutil)</li>
+</ul>
+<h4 id="c-52-indicador-de-sync"><a class="header" href="#c-52-indicador-de-sync">[C-52] Indicador de sync</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [Top bar]                           │
+│ 🔄 Sincronizando 3 tx pendientes   │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-c-10-ver-historial-y-detalle-de-transacción"><a class="header" href="#f-c-10-ver-historial-y-detalle-de-transacción">F-C-10: Ver historial y detalle de transacción</a></h2>
+<p><strong>Pantallas:</strong> C-16, C-17</p>
+<p><strong>Variantes del filtro:</strong></p>
+<pre><code>[C-16 Historial]
+   ↓
+[C-16b Filtros aplicados]
+   ↓
+[C-17 Detalle de transacción]
+</code></pre>
+<h4 id="c-16-historial-completo"><a class="header" href="#c-16-historial-completo">[C-16] Historial completo</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]  [Filtros ▼]                  │
+│                                     │
+│   Hoy, 14:32                       │
+│   ┌──────────────────────────┐    │
+│   │ ✓ Pago La Bandera -Bs.45 │    │
+│   │   🔄 Sincronizado         │    │
+│   ├──────────────────────────┤    │
+│   │ ✓ Recarga Banesco +Bs.5k│    │
+│   │   🔄 Sincronizado         │    │
+│   └──────────────────────────┘    │
+│                                     │
+│   Hoy, 09:15                       │
+│   ┌──────────────────────────┐    │
+│   │ ✓ Envío a María -Bs.500 │    │
+│   │   📡 Pendiente sync       │    │
+│   └──────────────────────────┘    │
+│                                     │
+│   Ayer                             │
+│   ┌──────────────────────────┐    │
+│   │ ✓ Retiro a Banesco -Bs.5k│   │
+│   │   🔄 Sincronizado         │    │
+│   └──────────────────────────┘    │
+│                                     │
+│   [Cargar más]                     │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>Agrupado por día</li>
+<li>Iconos por tipo (cashin, pago, P2P, cashout)</li>
+<li>Estado de sync visible</li>
+</ul>
+<h4 id="c-16b-filtros"><a class="header" href="#c-16b-filtros">[C-16b] Filtros</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [✕ Cerrar]                          │
+│                                     │
+│   Filtrar historial                │
+│                                     │
+│   📅 Período                        │
+│   [Hoy] [Semana] [Mes] [Año] [Custom]│
+│                                     │
+│   📊 Tipo                           │
+│   ☑ Recargas                        │
+│   ☑ Pagos                           │
+│   ☑ Transferencias                  │
+│   ☑ Retiros                         │
+│                                     │
+│   💰 Monto                          │
+│   Mín [___] Máx [___]              │
+│                                     │
+│   [ Aplicar filtros ]              │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="c-17-detalle-de-transacción"><a class="header" href="#c-17-detalle-de-transacción">[C-17] Detalle de transacción</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│         ✓ Sincronizado              │
+│                                     │
+│   Bs. 45.00                         │
+│                                     │
+│   ━━━━━━━━━━━━━━━━━━━━━            │
+│                                     │
+│   Tipo:          Pago              │
+│   Comercio:      Terminal La Bandera│
+│   Fecha:         2 oct 2026, 14:32 │
+│   ID:            pay-uuid-corto    │
+│                                     │
+│   ━━━━━━━━━━━━━━━━━━━━━            │
+│                                     │
+│   Detalles técnicos                │
+│   🔐 Firma: 0x9f4a...corto         │
+│   📡 Estado: Sincronizado          │
+│   🔄 Sincronizado: hace 5 seg      │
+│   📲 Dispositivo: Mi celular       │
+│                                     │
+│   [ Compartir ] [ Reportar ]       │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-c-11-configuración-de-seguridad"><a class="header" href="#f-c-11-configuración-de-seguridad">F-C-11: Configuración de seguridad</a></h2>
+<p><strong>Pantallas:</strong> nuevas [C-60] a [C-64]</p>
+<pre><code>[Settings → Seguridad]
+   ↓
+[C-60 Seguridad hub]
+   ├→ [C-61 Cambiar PIN]
+   ├→ [C-62 Habilitar biometría]
+   ├→ [C-63 Sesiones activas]
+   └→ [C-64 Bloquear app]
+</code></pre>
+<h4 id="c-60-seguridad-hub"><a class="header" href="#c-60-seguridad-hub">[C-60] Seguridad hub</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]  Seguridad                     │
+│                                     │
+│   🔐 PIN                            │
+│   Cambiado hace 30 días  [Cambiar]│
+│                                     │
+│   👆 Huella digital                  │
+│   Habilitado para login  [Off]     │
+│                                     │
+│   📱 Dispositivo de confianza        │
+│   Este celular                  ✓  │
+│                                     │
+│   🔍 Sesiones activas               │
+│   1 sesión activa  [Ver]            │
+│                                     │
+│   ⏱️ Bloqueo automático              │
+│   [Inmediato ▼]                     │
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-c-12-notificaciones"><a class="header" href="#f-c-12-notificaciones">F-C-12: Notificaciones</a></h2>
+<p><strong>Pantallas:</strong> nuevas [C-70] a [C-72]</p>
+<pre><code>[Top bar] → Click en push
+   ↓
+[C-70 Detalle de notificación]
+   ↓
+[Acciones: ver tx, ver perfil, etc.]
+</code></pre>
+<p><strong>Tipos:</strong></p>
+<ul>
+<li>✅ Pago recibido (P2P)</li>
+<li>✅ CashIn completado</li>
+<li>✅ CashOut acreditado</li>
+<li>✅ Tag emparejado</li>
+<li>⚠️ Actividad sospechosa detectada</li>
+<li>🔄 Sync completado</li>
+<li>💰 Cashback recibido</li>
+</ul>
+<hr />
+<h2 id="f-c-13-reembolsos-y-disputas"><a class="header" href="#f-c-13-reembolsos-y-disputas">F-C-13: Reembolsos y disputas</a></h2>
+<p><strong>Pantallas:</strong> nuevas [C-80] a [C-83]</p>
+<pre><code>[Detalle tx] → [Reportar problema]
+   ↓
+[C-80 Categoría de disputa]
+   ↓
+[C-81 Detalle del problema]
+   ↓
+[C-82 Confirmar envío]
+   ↓
+[C-83 Ticket creado]
+</code></pre>
+<hr />
+<h2 id="f-c-14-recuperación-de-cuenta"><a class="header" href="#f-c-14-recuperación-de-cuenta">F-C-14: Recuperación de cuenta</a></h2>
+<p><strong>Pantallas:</strong> nuevas [C-90] a [C-92]</p>
+<pre><code>[Login → "Olvidé mi PIN"]
+   ↓
+[C-90 Verificación identidad]
+   ↓
+[C-91 Reset PIN]
+   ↓
+[C-92 Confirmación]
+</code></pre>
+<hr />
+<h2 id="f-c-15-eliminar-cuenta"><a class="header" href="#f-c-15-eliminar-cuenta">F-C-15: Eliminar cuenta</a></h2>
+<p><strong>Pantallas:</strong> nuevas [C-100] a [C-102]</p>
+<pre><code>[Settings → Eliminar cuenta]
+   ↓
+[C-100 Advertencia]
+   ↓
+[C-101 Liquidar saldo pendiente]
+   ↓
+[C-102 Confirmar con PIN]
+   ↓
+[Cuenta eliminada en 30 días]
+</code></pre>
+<hr />
+<h2 id="f-c-16-promoción-y-cashback"><a class="header" href="#f-c-16-promoción-y-cashback">F-C-16: Promoción y cashback</a></h2>
+<p><strong>Pantallas:</strong> nuevas [C-110] a [C-112]</p>
+<pre><code>[Home → Ver promo balance]
+   ↓
+[C-110 Lista de promociones]
+   ↓
+[C-111 Detalle de promoción]
+   ↓
+[C-112 Reclamar cashback]
+</code></pre>
+<hr />
+<h1 id="parte-2--aliado--comercio-pos--dashboard"><a class="header" href="#parte-2--aliado--comercio-pos--dashboard">PARTE 2 — ALIADO / COMERCIO (POS + Dashboard)</a></h1>
+<h2 id="f-a-01-onboarding-del-aliado"><a class="header" href="#f-a-01-onboarding-del-aliado">F-A-01: Onboarding del aliado</a></h2>
+<p><strong>Pantallas:</strong> nuevas [A-01] a [A-07]</p>
+<pre><code>[A-01 Splash POS] → [A-02 Bienvenida]
+   ↓
+[A-03 Registro RIF]
+   ↓
+[A-04 Datos del comercio]
+   ↓
+[A-05 Cuenta bancaria]
+   ↓
+[A-06 Configuración inicial]
+   ↓
+[A-07 Onboarding completado]
+</code></pre>
+<hr />
+<h2 id="f-a-02-configurar-branding-y-fees"><a class="header" href="#f-a-02-configurar-branding-y-fees">F-A-02: Configurar branding y fees</a></h2>
+<p><strong>Pantallas:</strong> nuevas [A-10] a [A-14]</p>
+<pre><code>[Dashboard] → [Configuración]
+   ↓
+[A-10 Branding]
+   ├→ [A-11 Logo]
+   ├→ [A-12 Colores]
+   └→ [A-13 Nombre comercial]
+
+[A-10] → [A-14 Fees y límites]
+</code></pre>
+<hr />
+<h2 id="f-a-03-cobro-nfc-pos"><a class="header" href="#f-a-03-cobro-nfc-pos">F-A-03: Cobro NFC (POS)</a></h2>
+<p><strong>Pantallas:</strong> P-02, P-03, P-05, P-06 + nuevo P-02b ingreso monto</p>
+<pre><code>[P-02 POS Home] → [P-02b Ingresar monto] → [P-03 Esperar tap]
+                                       ↓
+                                 [P-05 Procesando]
+                                       ↓
+                                ┌──────┴──────┐
+                                ↓              ↓
+                          [P-06 Éxito]   [P-07 Saldo insuficiente]
+</code></pre>
+<hr />
+<h2 id="f-a-04-cobro-qr-pos"><a class="header" href="#f-a-04-cobro-qr-pos">F-A-04: Cobro QR (POS)</a></h2>
+<p><strong>Pantallas:</strong> P-04, P-05, P-06</p>
+<pre><code>[P-02 POS Home] → [P-04 Generar QR] → (cliente escanea)
+                                          ↓
+                                    [P-05 Procesando]
+                                          ↓
+                                    [P-06 Éxito]
+</code></pre>
+<h4 id="p-04-pos-esperando-que-cliente-escanee"><a class="header" href="#p-04-pos-esperando-que-cliente-escanee">[P-04] POS esperando que cliente escanee</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [← Cancelar]                        │
+│                                     │
+│   Monto: Bs. 45.00                  │
+│                                     │
+│   ┌────────────────────────┐      │
+│   │                          │      │
+│   │   [QR dinámico]         │      │
+│   │   Se renueva en 25s    │      │
+│   │                          │      │
+│   └────────────────────────┘      │
+│                                     │
+│   El cliente debe escanear el QR   │
+│   desde su app ViCheck            │
+│                                     │
+│   🔄 QR válido por 30 segundos    │
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-a-05-cobro-manual-pos"><a class="header" href="#f-a-05-cobro-manual-pos">F-A-05: Cobro manual (POS)</a></h2>
+<p><strong>Pantallas:</strong> nuevas [P-12] a [P-14]</p>
+<pre><code>[P-02 POS Home] → [P-12 Cobro manual]
+   ↓
+[P-13 Ingresar teléfono del cliente]
+   ↓
+[P-14 Ingresar monto + descripción]
+   ↓
+[Push al cliente para confirmar]
+   ↓
+[Éxito / Cancelado]
+</code></pre>
+<hr />
+<h2 id="f-a-06-sync-de-transacciones-pos"><a class="header" href="#f-a-06-sync-de-transacciones-pos">F-A-06: Sync de transacciones (POS)</a></h2>
+<p><strong>Pantallas:</strong> P-09 + nuevas [P-15] a [P-18]</p>
+<pre><code>[P-02] → Indicador "5 pendientes"
+   ↓
+[P-15 Sync ahora] (manual)
+   ↓
+[P-16 Progreso de sync]
+   ↓
+[P-17 Resultado del sync]
+   ↓
+[P-18 Detalle de tx fallida]
+</code></pre>
+<hr />
+<h2 id="f-a-07-cashout--liquidación-a-banco-del-aliado"><a class="header" href="#f-a-07-cashout--liquidación-a-banco-del-aliado">F-A-07: CashOut / Liquidación a banco del aliado</a></h2>
+<p><strong>Pantallas:</strong> P-11 + nuevas [P-20] a [P-23]</p>
+<pre><code>[P-11 POS CashOut]
+   ↓
+[P-20 Seleccionar monto]
+   ↓
+[P-21 Confirmar]
+   ↓
+[P-22 Procesando]
+   ↓
+[P-23 Liquidación iniciada]
+</code></pre>
+<hr />
+<h2 id="f-a-08-dashboard-de-ventas-móvil-gerente"><a class="header" href="#f-a-08-dashboard-de-ventas-móvil-gerente">F-A-08: Dashboard de ventas (móvil gerente)</a></h2>
+<p><strong>Pantallas:</strong> nuevas [D-01] a [D-08]</p>
+<pre><code>[D-01 Dashboard home]
+   ├→ [D-02 Ventas hoy]
+   ├→ [D-03 Ventas semana]
+   ├→ [D-04 Ventas mes]
+   ├→ [D-05 Comparativa]
+   ├→ [D-06 Productos top]
+   ├→ [D-07 Por empleado]
+   └→ [D-08 Gráficos]
+</code></pre>
+<h4 id="d-01-dashboard-home-del-aliado"><a class="header" href="#d-01-dashboard-home-del-aliado">[D-01] Dashboard home del aliado</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ Terminal La Bandera    [usuario ▼]  │
+│                                     │
+│  ┌────────────────────────────┐    │
+│  │ 📊 Ventas hoy                │    │
+│  │ Bs. 12,450.00                │    │
+│  │ 87 transacciones            │    │
+│  │ ↗ +15% vs ayer              │    │
+│  └────────────────────────────┘    │
+│                                     │
+│  ┌──────────────┐ ┌──────────────┐ │
+│  │ 💰 Saldo     │ │ 📡 Sync      │ │
+│  │ Bs. 8,500   │ │ 0 pendientes │ │
+│  └──────────────┘ └──────────────┘ │
+│                                     │
+│  Top productos                      │
+│  1. Pasaje Bs.500    320 ventas │
+│  2. Trato Total Bs.800  90 ventas │
+│  3. VIP Bs.1500       45 ventas │
+│                                     │
+│  [Cobrar] ahora [Más...]           │
+└─────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-a-09-gestión-de-empleados"><a class="header" href="#f-a-09-gestión-de-empleados">F-A-09: Gestión de empleados</a></h2>
+<p><strong>Pantallas:</strong> nuevas [D-10] a [D-15]</p>
+<pre><code>[D-01] → [D-10 Empleados]
+   ├→ [D-11 Agregar empleado]
+   ├→ [D-12 Permisos por empleado]
+   ├→ [D-13 Horarios]
+   └→ [D-14 Eliminar empleado]
+</code></pre>
+<hr />
+<h2 id="f-a-10-notificación-de-cashin-recibido-del-cliente"><a class="header" href="#f-a-10-notificación-de-cashin-recibido-del-cliente">F-A-10: Notificación de cashin recibido del cliente</a></h2>
+<p><strong>Pantalla:</strong> nueva [D-20]</p>
+<p>Cuando un cliente recarga saldo desde su banco, <strong>el aliado recibe una notificación push</strong> si tiene configurado el feature "Notificarme cuando mis clientes recargan":</p>
+<pre><code>┌─────────────────────────────────────┐
+│ [Push notification]                │
+│                                     │
+│ 💰 Juan Pérez recargó Bs. 2,000   │
+│ Toca para ver detalles             │
+└─────────────────────────────────────┘
+</code></pre>
+<h4 id="d-20-detalle-de-notificación"><a class="header" href="#d-20-detalle-de-notificación">[D-20] Detalle de notificación</a></h4>
+<pre><code>┌─────────────────────────────────────┐
+│ [←]                                │
+│                                     │
+│   💰 Recarga de cliente             │
+│                                     │
+│   Juan Pérez                         │
+│   +58 412 1234567                   │
+│                                     │
+│   Monto: Bs. 2,000.00              │
+│                                     │
+│   Fecha: 2 oct 2026, 14:32         │
+│                                     │
+│   💡 Notificación informativa.     │
+│   No afecta tu saldo directamente.│
+│                                     │
+└─────────────────────────────────────┘
+</code></pre>
+<p><strong>Configuración:</strong> Settings → Notificaciones → Toggle "Cashins de clientes"</p>
+<hr />
+<h2 id="f-a-11-gestión-de-promociones"><a class="header" href="#f-a-11-gestión-de-promociones">F-A-11: Gestión de promociones</a></h2>
+<p><strong>Pantallas:</strong> nuevas [D-30] a [D-35]</p>
+<pre><code>[D-01] → [D-30 Promociones]
+   ├→ [D-31 Crear promo]
+   ├→ [D-32 Cashback]
+   ├→ [D-33 Descuento]
+   └→ [D-34 Activas]
+</code></pre>
+<hr />
+<h1 id="parte-3--web-admin-vippo"><a class="header" href="#parte-3--web-admin-vippo">PARTE 3 — WEB ADMIN VIPPO</a></h1>
+<h2 id="f-w-01-login-admin--2fa"><a class="header" href="#f-w-01-login-admin--2fa">F-W-01: Login admin + 2FA</a></h2>
+<p><strong>Pantallas:</strong> nuevas [W-01] a [W-03]</p>
+<pre><code>[W-01 Login]
+   ↓
+[W-02 2FA TOTP]
+   ↓
+[W-03 Dashboard]
+</code></pre>
+<h4 id="w-01-login-admin"><a class="header" href="#w-01-login-admin">[W-01] Login admin</a></h4>
+<pre><code>┌──────────────────────────────────────────┐
+│                                          │
+│         [Logo ViCheck Admin]              │
+│                                          │
+│   Iniciar sesión                         │
+│                                          │
+│   Email                                   │
+│   [admin@vippo.io____________]            │
+│                                          │
+│   Contraseña                              │
+│   [_______________]                      │
+│                                          │
+│   [   Iniciar sesión   ]                 │
+│                                          │
+│   ¿Olvidaste tu contraseña?             │
+│                                          │
+└──────────────────────────────────────────┘
+</code></pre>
+<h4 id="w-02-2fa-totp"><a class="header" href="#w-02-2fa-totp">[W-02] 2FA TOTP</a></h4>
+<pre><code>┌──────────────────────────────────────────┐
+│                                          │
+│   Verificación en dos pasos             │
+│                                          │
+│   Ingresa el código de tu app          │
+│   autenticadora (Google Authenticator) │
+│                                          │
+│   ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐              │
+│   │ │ │ │ │ │ │ │ │ │ │ │              │
+│   └─┘ └─┘ └─┘ └─┘ └─┘ └─┘              │
+│                                          │
+│   💡 El código cambia cada 30 segundos │
+│                                          │
+│   [   Verificar   ]                     │
+│                                          │
+└──────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-w-02-ver-lista-de-aliados-tenants"><a class="header" href="#f-w-02-ver-lista-de-aliados-tenants">F-W-02: Ver lista de aliados (tenants)</a></h2>
+<p><strong>Pantalla:</strong> [W-10] Lista de tenants</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ ViPPO Admin        Dashboard | Aliados | Usuarios | Seguridad│
+├──────────────────────────────────────────────────────────────┤
+│ Aliados                                          [+ Crear]    │
+│                                                              │
+│ 🔍 [Buscar aliado...]      Estado: [Todos ▼] [Activos ▼]  │
+│                                                              │
+│ ┌──────────────┬─────────┬──────────┬──────────┬─────────┐ │
+│ │ Nombre       │ RIF     │ Estado   │ Balance  │ Ventas  │ │
+│ ├──────────────┼─────────┼──────────┼──────────┼─────────┤ │
+│ │ La Bandera   │ J-1234  │ Activo   │ Bs.8,500 │ Bs.45k  │ │
+│ │ Comida Rapida│ J-5678  │ Activo   │ Bs.2,300 │ Bs.22k  │ │
+│ │ VIP Disco    │ VIP-001  │ Suspend. │ Bs.0     │ Bs.0    │ │
+│ └──────────────┴─────────┴──────────┴──────────┴─────────┘ │
+│                                                              │
+│ Página 1 de 23                       [Anterior] [Siguiente]  │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-w-03-creareditardeshabilitar-aliado"><a class="header" href="#f-w-03-creareditardeshabilitar-aliado">F-W-03: Crear/editar/deshabilitar aliado</a></h2>
+<p><strong>Pantallas:</strong> nuevas [W-20] a [W-23]</p>
+<pre><code>[W-10] → [+ Crear]
+   ↓
+[W-20 Datos básicos]
+   ↓
+[W-21 Cuenta bancaria]
+   ↓
+[W-22 Configuración inicial]
+   ↓
+[W-23 Confirmar y crear]
+
+[Editar: misma W-20 pero precargada]
+[Deshabilitar: W-24 confirmación]
+</code></pre>
+<h4 id="w-20-datos-básicos-del-aliado"><a class="header" href="#w-20-datos-básicos-del-aliado">[W-20] Datos básicos del aliado</a></h4>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ Crear aliado                                  [Cancelar]      │
+│                                                              │
+│ Datos básicos                                                │
+│                                                              │
+│ Razón social *                                                 │
+│ [Terminal La Bandera C.A.____________]                       │
+│                                                              │
+│ RIF *                                                        │
+│ [J-12345678-9_____]                                          │
+│                                                              │
+│ Nombre comercial *                                           │
+│ [Terminal La Bandera________]                                │
+│                                                              │
+│ Tipo de negocio *                                            │
+│ [Transporte ▼]                                              │
+│                                                              │
+│ Teléfono de contacto *                                       │
+│ [+58 ____________________]                                  │
+│                                                              │
+│ Email                                                        │
+│ [_________________________]                                  │
+│                                                              │
+│                              [Siguiente →]                  │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-w-04-ver-lista-de-usuarios"><a class="header" href="#f-w-04-ver-lista-de-usuarios">F-W-04: Ver lista de usuarios</a></h2>
+<p><strong>Pantalla:</strong> [W-30]</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ Usuarios                                                     │
+│                                                              │
+│ 🔍 [Buscar...]  Estado: [Todos ▼]  Tenant: [Todos ▼]      │
+│                                                              │
+│ ┌──────────────┬──────────────┬──────────┬──────────┬─────┐ │
+│ │ Nombre       │ Cédula       │ Tenant   │ Balance  │ KYC │ │
+│ ├──────────────┼──────────────┼──────────┼──────────┼─────┤ │
+│ │ Juan Pérez   │ V-12345678   │ La Band. │ Bs.12.5k │Full │ │
+│ │ María López  │ V-87654321   │ VIP Disco│ Bs.2,300 │Bas  │ │
+│ └──────────────┴──────────────┴──────────┴──────────┴─────┘ │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-w-05-crud-de-datos-de-usuario"><a class="header" href="#f-w-05-crud-de-datos-de-usuario">F-W-05: CRUD de datos de usuario</a></h2>
+<p><strong>Pantallas:</strong> nuevas [W-40] a [W-45]</p>
+<pre><code>[W-30] → Click en usuario
+   ↓
+[W-40 Detalle de usuario]
+   ├→ [W-41 Editar datos]
+   ├→ [W-42 Cambiar estado]
+   ├→ [W-43 Ver wallets]
+   ├→ [W-44 Ver transacciones]
+   └→ [W-45 Eliminar usuario]
+</code></pre>
+<h4 id="w-40-detalle-de-usuario"><a class="header" href="#w-40-detalle-de-usuario">[W-40] Detalle de usuario</a></h4>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ [← Usuarios]                              [Editar] [Deshabilitar]│
+│                                                              │
+│ Juan Pérez                                                   │
+│ V-12345678                                                   │
+│                                                              │
+│ ┌─────────────────────┬────────────────────┐               │
+│ │ Datos personales     │ Cuentas            │               │
+│ │ Nombre: Juan Pérez   │ Tenant: La Bandera │               │
+│ │ Cédula: V-12345678   │ Wallet ID:        │               │
+│ │ Email: juan@x.com    │ Balance: Bs.12.5k │               │
+│ │ Tel: +58 412 1234567 │ Status: Active     │               │
+│ │ KYC: Full            │                    │               │
+│ └─────────────────────┴────────────────────┘               │
+│                                                              │
+│ KYC Status                                                   │
+│ ┌────────────────────────────────────────────────┐         │
+│ │ Documento identidad: ✓ Verificado              │         │
+│ │ Selfie: ✓ Verificado                          │         │
+│ │ Prueba de vida: ✓ Verificado                  │         │
+│ │ Listas restrictivas: ✓ Limpio                  │         │
+│ │ PEP: No es PEP                                │         │
+│ └────────────────────────────────────────────────┘         │
+│                                                              │
+│ Actividad reciente                                           │
+│ ┌────────────────────────────────────────────────┐         │
+│ │ Hoy 14:32 - Pago La Bandera -Bs.45            │         │
+│ │ Hoy 09:15 - Recarga Banesco +Bs.5,000         │         │
+│ │ Ayer 18:00 - Retiro a Banesco -Bs.2,000       │         │
+│ └────────────────────────────────────────────────┘         │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-w-06-verificaciones-de-seguridad-y-kyc"><a class="header" href="#f-w-06-verificaciones-de-seguridad-y-kyc">F-W-06: Verificaciones de seguridad y KYC</a></h2>
+<p><strong>Pantallas:</strong> nuevas [W-50] a [W-55]</p>
+<pre><code>[W-40] → [Verificaciones]
+   ↓
+[W-50 Lista de verificaciones pendientes]
+   ↓
+[W-51 Revisar documento de identidad]
+   ↓
+[W-52 Revisar selfie]
+   ↓
+[W-53 Verificación de vida]
+   ↓
+[W-54 Aprobar / Rechazar]
+   ↓
+[W-55 Confirmación]
+</code></pre>
+<h4 id="w-50-lista-de-verificaciones-pendientes"><a class="header" href="#w-50-lista-de-verificaciones-pendientes">[W-50] Lista de verificaciones pendientes</a></h4>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ Verificaciones de seguridad pendientes           [Filtrar ▼]│
+│                                                              │
+│ ┌─────────────┬────────────┬──────────────┬────────────┐   │
+│ │ Usuario     │ Tipo       │ Recibido     │ Acción      │   │
+│ ├─────────────┼────────────┼──────────────┼────────────┤   │
+│ │ Juan Pérez  │ Cédula     │ Hace 2h     │ [Revisar]  │   │
+│ │ María López │ Selfie      │ Hace 5h     │ [Revisar]  │   │
+│ │ Carlos R.   │ Prueba vida│ Hace 1d     │ [Revisar]  │   │
+│ └─────────────┴────────────┴──────────────┴────────────┘   │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h4 id="w-51-revisar-documento"><a class="header" href="#w-51-revisar-documento">[W-51] Revisar documento</a></h4>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ [←]                                                      [Cerrar]│
+│                                                              │
+│ Verificación de cédula - Juan Pérez                          │
+│                                                              │
+│ ┌────────────────────┐  ┌────────────────────┐               │
+│ │  [Foto cédula]     │  │ [Selfie]           │               │
+│ │  Frente            │  │                    │               │
+│ └────────────────────┘  └────────────────────┘               │
+│                                                              │
+│ ┌────────────────────┐                                       │
+│ │  [Foto cédula]     │                                       │
+│ │  Reverso           │                                       │
+│ └────────────────────┘                                       │
+│                                                              │
+│ Análisis automático:                                         │
+│ • Documento válido: ✓                                        │
+│ • Cédula coincide: ✓                                         │
+│ • Selfie coincide: ✓                                         │
+│ • No manipulación detectada: ✓                               │
+│                                                              │
+│ ⚠️ Documento tiene 8 años (vigencia 10 años)              │
+│                                                              │
+│ Aprobado por: [yo ▼]    Fecha: [hoy]                       │
+│                                                              │
+│ Decisión:                                                    │
+│ ( ) Aprobar                                                   │
+│ ( ) Rechazar - Razón: [________________]                    │
+│ ( ) Solicitar más info                                       │
+│                                                              │
+│ [   Confirmar decisión   ]                                  │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-w-07-anti-fraude-revisar-tx-sospechosas"><a class="header" href="#f-w-07-anti-fraude-revisar-tx-sospechosas">F-W-07: Anti-fraude: revisar tx sospechosas</a></h2>
+<p><strong>Pantallas:</strong> nuevas [W-60] a [W-65]</p>
+<pre><code>[W-Dashboard] → [Anti-fraude]
+   ↓
+[W-60 Cola de alertas]
+   ↓
+[W-61 Detalle de alerta]
+   ↓
+[W-62 Acciones posibles]
+</code></pre>
+<h4 id="w-60-cola-de-alertas-anti-fraude"><a class="header" href="#w-60-cola-de-alertas-anti-fraude">[W-60] Cola de alertas anti-fraude</a></h4>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ Anti-fraude - Alertas                                       │
+│                                                              │
+│ Filtros: [Severidad ▼] [Tipo ▼] [Tenant ▼]                 │
+│                                                              │
+│ 🔴 3 críticas | 🟡 12 advertencia | 🔵 8 informativa      │
+│                                                              │
+│ ┌─────────┬─────────┬──────────┬──────────┬──────────────┐ │
+│ │ Severidad│ Tipo    │ Usuario  │ Tenant   │ Detectado    │ │
+│ ├─────────┼─────────┼──────────┼──────────┼──────────────┤ │
+│ │ 🔴      │Tx rapid │ Juan P.  │La Bandera│ Hace 5 min   │ │
+│ │ 🟡      │Monto    │ María L. │VIP Disco │ Hace 1h      │ │
+│ │ 🔵      │Geo      │ Carlos R.│Comida Rap│ Hace 3h      │ │
+│ └─────────┴─────────┴──────────┴──────────┴──────────────┘ │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h4 id="w-61-detalle-de-alerta"><a class="header" href="#w-61-detalle-de-alerta">[W-61] Detalle de alerta</a></h4>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ [←]  Alerta: Tx rápidas (🔴 crítica)                        │
+│                                                              │
+│ Juan Pérez (+58 412 1234567)                                │
+│ La Bandera                                                    │
+│                                                              │
+│ Actividad sospechosa:                                        │
+│ • 15 transacciones en 2 minutos                             │
+│ • Promedio: Bs. 200                                          │
+│ • Total: Bs. 3,000                                          │
+│                                                              │
+│ Patrón normal del usuario:                                   │
+│ • 2 transacciones/día                                        │
+│ • Promedio: Bs. 50                                            │
+│                                                              │
+│ Análisis:                                                    │
+│ 🔴 Velocidad 7.5x sobre lo normal                           │
+│ 🔴 Monto total 60x sobre promedio                           │
+│ 🟡 IP cambió de Maracaibo a Caracas en 10 min                │
+│                                                              │
+│ Acciones disponibles:                                        │
+│ [🟡 Marcar tx sospechoso]                                    │
+│ [❄️ Congelar wallet]                                       │
+│ [🔄 Reversar transacción]                                  │
+│ [✅ Descartar alerta (falso positivo)]                      │
+│                                                              │
+│ Notas del analista:                                          │
+│ [____________________________________________________]     │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-w-08-anti-fraude-congelar-wallet"><a class="header" href="#f-w-08-anti-fraude-congelar-wallet">F-W-08: Anti-fraude: congelar wallet</a></h2>
+<p><strong>Pantalla:</strong> [W-70]</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ ❄️ Congelar wallet                                          │
+│                                                              │
+│ Wallet: Juan Pérez (w-uuid-corto)                          │
+│ Balance actual: Bs. 12,500.00                               │
+│                                                              │
+│ Razón *                                                      │
+│ [Actividad fraudulenta detectada____________________]       │
+│                                                              │
+│ Tipo de congelamiento:                                       │
+│ ( ) Temporal (24h, requiere renovación)                     │
+│ (●) Indefinido (hasta revisión manual)                      │
+│                                                              │
+│ ⓘ Esta acción:                                              │
+│ • Impide nuevas operaciones                                  │
+│ • Notifica al usuario vía push                               │
+│ • Se registra en audit log                                   │
+│                                                              │
+│ [   Confirmar congelamiento   ]      [Cancelar]             │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-w-09-anti-fraude-reversar-transacción"><a class="header" href="#f-w-09-anti-fraude-reversar-transacción">F-W-09: Anti-fraude: reversar transacción</a></h2>
+<p><strong>Pantalla:</strong> [W-80]</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ 🔄 Reversar transacción                                     │
+│                                                              │
+│ TX original: pay-uuid-corto                                  │
+│ Juan Pérez → La Bandera                                      │
+│ Bs. 45.00                                                   │
+│ 2 oct 2026, 14:32                                          │
+│                                                              │
+│ ⚠️ Esta acción:                                              │
+│ • Devuelve el monto al cliente                              │
+│ • Descuenta al comercio                                      │
+│ • Crea transacción de reverso en ledger                      │
+│ • Se registra en audit log                                   │
+│ • No se puede deshacer                                      │
+│                                                              │
+│ Razón *                                                      │
+│ [Actividad fraudulenta confirmada_______________________]   │
+│                                                              │
+│ Confirmar con credencial de admin:                          │
+│ [contraseña admin]                                          │
+│                                                              │
+│ [   Reversar transacción   ]      [Cancelar]                 │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="f-w-10-conciliación-manual"><a class="header" href="#f-w-10-conciliación-manual">F-W-10: Conciliación manual</a></h2>
+<p><strong>Pantallas:</strong> nuevas [W-90] a [W-92]</p>
+<pre><code>[Dashboard] → [Conciliación]
+   ↓
+[W-90 Vista general]
+   ↓
+[W-91 Detalle de discrepancia]
+   ↓
+[W-92 Acciones correctivas]
+</code></pre>
+<hr />
+<h2 id="f-w-11-reportes-regulatorios-sudeban-seniat"><a class="header" href="#f-w-11-reportes-regulatorios-sudeban-seniat">F-W-11: Reportes regulatorios (SUDEBAN, SENIAT)</a></h2>
+<p><strong>Pantallas:</strong> nuevas [W-100] a [W-105]</p>
+<pre><code>[Reportes] → [Regulatorios]
+   ↓
+[W-100 Seleccionar tipo de reporte]
+   ├→ [W-101 Reporte SUDEBAN]
+   ├→ [W-102 Reporte SENIAT]
+   └→ [W-103 Auditoría LOPDP]
+</code></pre>
+<hr />
+<h2 id="f-w-12-configuración-global-de-fees-y-límites"><a class="header" href="#f-w-12-configuración-global-de-fees-y-límites">F-W-12: Configuración global de fees y límites</a></h2>
+<p><strong>Pantallas:</strong> nuevas [W-110] a [W-115]</p>
+<pre><code>[Configuración] → [Global]
+   ↓
+[W-110 Fees]
+   ├→ [W-111 Fee por defecto]
+   ├→ [W-112 Fee por tipo de tx]
+   └→ [W-113 Fee por tenant]
+
+[W-110] → [W-114 Límites]
+   ├→ [W-115 Límites CashIn]
+   └→ [W-116 Límites CashOut]
+</code></pre>
+<hr />
+<h1 id="parte-4--diagramas-de-navegaciÓn"><a class="header" href="#parte-4--diagramas-de-navegaciÓn">PARTE 4 — DIAGRAMAS DE NAVEGACIÓN</a></h1>
+<h2 id="mapa-de-navegación-cliente-android"><a class="header" href="#mapa-de-navegación-cliente-android">Mapa de navegación cliente (Android)</a></h2>
+<pre><code>                    [Splash]
+                       ↓
+                [Onboarding]
+                       ↓
+            ┌─────────┴─────────┐
+            ↓                   ↓
+         [Login]         [Registro]
+            ↓                   ↓
+            └─────────┬─────────┘
+                      ↓
+              [Verificación OTP]
+                      ↓
+            ┌─────────┴─────────┐
+            ↓                   ↓
+      [Datos pers.]    [Selección banco]
+            ↓                   ↓
+            └─────────┬─────────┘
+                      ↓
+              [Home / Billetera]
+                   │  │  │
+       ┌───────────┼──┼───────────┐
+       ↓           ↓  ↓           ↓
+   [CashIn]   [CashOut] [Pagar] [Historial]
+       │           │      │          │
+       │           │   ┌──┼──┐       │
+       │           │   ↓   ↓       ↓
+       │           │ [NFC] [QR] [Detalle tx]
+       │           │   │   │
+       │           │   └───┘
+       │           ↓     ↓
+       │       [PIN] [Procesando]
+       │           │   │
+       │           ↓   ↓
+       │       [Éxito / Fallo]
+       │           │
+       │           └──→ [Home]
+       │
+       └──→ [Home]
+              ↑
+       [Settings] ←─── [Emparejar tag]
+              ↑
+       [Seguridad]
+</code></pre>
+<h2 id="mapa-de-navegación-aliado"><a class="header" href="#mapa-de-navegación-aliado">Mapa de navegación aliado</a></h2>
+<pre><code>                [Splash POS]
+                     ↓
+                [Login POS]
+                     ↓
+              ┌──────┴──────┐
+              ↓             ↓
+       [POS Home]    [Dashboard Aliado]
+              │             │
+       ┌──────┼─────┐       │   │
+       ↓      ↓     ↓       ↓   ↓
+   [Cobrar NFC] [QR] [Manual] [Empleados] [Reportes]
+       │      │     │       │
+       └──────┴─────┘       │
+              ↓              │
+        [Esperando tap/QR]   │
+              ↓              │
+        [Procesando]         │
+              ↓              │
+       ┌──────┴─────┐        │
+       ↓            ↓        ↓
+    [Éxito]    [Fallo]   [Liquidación]
+       │            │        │
+       └──────┬─────┘        │
+              ↓          ↓
+          [POS Home] ←─────┘
+</code></pre>
+<h2 id="mapa-de-navegación-web-admin"><a class="header" href="#mapa-de-navegación-web-admin">Mapa de navegación web admin</a></h2>
+<pre><code>            [Login Admin]
+                  ↓
+           [2FA TOTP]
+                  ↓
+           [Dashboard]
+                  │
+       ┌──────────┼──────────┐
+       ↓          ↓          ↓
+   [Aliados] [Usuarios] [Seguridad]
+       │          │          │
+       │          │     ┌────┴────┐
+       │          │     ↓         ↓
+       │          │  [Anti-fraude] [KYC]
+       │          │     │         │
+       │          │     ↓         ↓
+       │          │  [Alertas] [Verificaciones]
+       │          │     │         │
+       │          │     └───┬─────┘
+       │          │         ↓
+       │          │    [Detalle → Acciones]
+       │          │         ↓
+       │          │    [Congelar / Reversar]
+       │          │
+       │          └→ [CRUD]
+       │              ↓
+       │          [Editar / Eliminar]
+       │
+       └→ [CRUD aliado]
+              ↓
+          [Detalle / Crear / Editar]
+              ↓
+          [Branding / Fees / Cuenta banco]
+</code></pre>
+<hr />
+<h1 id="parte-5--estados-globales"><a class="header" href="#parte-5--estados-globales">PARTE 5 — ESTADOS GLOBALES</a></h1>
+<h2 id="estados-de-la-app-cliente"><a class="header" href="#estados-de-la-app-cliente">Estados de la app cliente</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Estado</th><th>Indicador visual</th><th>Funcionalidades afectadas</th></tr></thead><tbody>
+<tr><td><code>Online</code></td><td>Barra verde sutil "🟢 Online"</td><td>Todas disponibles</td></tr>
+<tr><td><code>Offline</code></td><td>Barra naranja "📡 Sin conexión"</td><td>CashIn/Out deshabilitados</td></tr>
+<tr><td><code>Sincronizando</code></td><td>"🔄 Sincronizando X tx"</td><td>Resto funciona normal</td></tr>
+<tr><td><code>Error de sync</code></td><td>"⚠️ Error sincronizando"</td><td>Acción manual requerida</td></tr>
+<tr><td><code>Batería baja</code></td><td>Banner amarillo</td><td>Recomienda cargar pronto</td></tr>
+<tr><td><code>Modo avión</code></td><td>Banner persistente</td><td>Todas las NFC deshabilitadas</td></tr>
+</tbody></table>
+</div>
+<h2 id="estados-de-error-globales"><a class="header" href="#estados-de-error-globales">Estados de error globales</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Código</th><th>Mensaje al usuario</th><th>Acción</th></tr></thead><tbody>
+<tr><td><code>ERR_NETWORK</code></td><td>"Sin conexión. Verifica tu internet"</td><td>Mostrar modo offline</td></tr>
+<tr><td><code>ERR_AUTH_EXPIRED</code></td><td>"Tu sesión expiró. Inicia sesión"</td><td>Redirect a login</td></tr>
+<tr><td><code>ERR_SERVER</code></td><td>"Error del servidor. Intenta más tarde"</td><td>Retry con backoff</td></tr>
+<tr><td><code>ERR_VALIDATION</code></td><td>Específico del campo</td><td>Highlight del input</td></tr>
+<tr><td><code>ERR_INSUFFICIENT_FUNDS</code></td><td>"Saldo insuficiente"</td><td>Ofrecer CashIn</td></tr>
+<tr><td><code>ERR_TAG_NOT_REGISTERED</code></td><td>"Tu tag no está registrado"</td><td>Flujo emparejar</td></tr>
+<tr><td><code>ERR_TAG_BLOCKED</code></td><td>"Tu tag fue bloqueado. Llama soporte"</td><td>Mostrar teléfono soporte</td></tr>
+<tr><td><code>ERR_RATE_LIMIT</code></td><td>"Demasiadas operaciones. Espera N min"</td><td>Countdown</td></tr>
+<tr><td><code>ERR_WALLET_BLOCKED</code></td><td>"Tu cuenta está bloqueada"</td><td>Solo logout + soporte</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h1 id="parte-6--consideraciones-transversales"><a class="header" href="#parte-6--consideraciones-transversales">PARTE 6 — CONSIDERACIONES TRANSVERSALES</a></h1>
+<h2 id="multi-tenancy-visual"><a class="header" href="#multi-tenancy-visual">Multi-tenancy visual</a></h2>
+<p><strong>Cada aliado puede customizar:</strong></p>
+<ul>
+<li>Logo en pantallas del cliente (aparece en收款/pago)</li>
+<li>Color primario (botones, headers)</li>
+<li>Mensajes personalizados ("Gracias por tu compra en La Bandera")</li>
+</ul>
+<p><strong>Defaults para clientes:</strong></p>
+<ul>
+<li>Si el aliado no customizó → tema estándar ViCheck</li>
+<li>Cache de branding por tenant</li>
+</ul>
+<h2 id="accesibilidad"><a class="header" href="#accesibilidad">Accesibilidad</a></h2>
+<ul>
+<li>Touch targets ≥ 48dp en todos los botones</li>
+<li>Contraste WCAG AA mínimo</li>
+<li>Soporte screen readers (TalkBack)</li>
+<li>Texto escalable (dynamic type)</li>
+<li>Navegación por gestos opcional</li>
+<li>Modo de alto contraste</li>
+</ul>
+<h2 id="modo-oscuro"><a class="header" href="#modo-oscuro">Modo oscuro</a></h2>
+<ul>
+<li>Mismo sistema de tokens pero con paleta invertida</li>
+<li>Primary 100 como background principal</li>
+<li>Primary 900 como texto</li>
+</ul>
+<h2 id="i18n-futuro"><a class="header" href="#i18n-futuro">i18n (futuro)</a></h2>
+<ul>
+<li>Español (default para VE)</li>
+<li>Inglés (internacional)</li>
+<li>Textos parametrizados, no hardcoded</li>
+</ul>
+<hr />
+<h1 id="parte-7--mÉtricas-de-ux"><a class="header" href="#parte-7--mÉtricas-de-ux">PARTE 7 — MÉTRICAS DE UX</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Métrica</th><th>Target</th><th>Cómo medir</th></tr></thead><tbody>
+<tr><td>Tiempo promedio de registro</td><td>&lt; 2 min</td><td>Analytics</td></tr>
+<tr><td>Tiempo de CashIn completo</td><td>&lt; 30s</td><td>Analytics</td></tr>
+<tr><td>Tiempo de pago NFC completo</td><td>&lt; 5s (3 taps)</td><td>Analytics</td></tr>
+<tr><td>Tasa de éxito de emparejar tag</td><td>&gt; 95%</td><td>Analytics</td></tr>
+<tr><td>Tasa de abandono en PIN</td><td>&lt; 10%</td><td>Analytics</td></tr>
+<tr><td>Crash-free users</td><td>&gt; 99%</td><td>Crashlytics</td></tr>
+<tr><td>NPS cliente final</td><td>&gt; 50</td><td>Survey</td></tr>
+<tr><td>NPS aliado</td><td>&gt; 40</td><td>Survey</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h1 id="parte-8--entregables-para-figma"><a class="header" href="#parte-8--entregables-para-figma">PARTE 8 — ENTREGABLES PARA FIGMA</a></h1>
+<h2 id="prioridad-para-figma-orden-recomendado"><a class="header" href="#prioridad-para-figma-orden-recomendado">Prioridad para Figma (orden recomendado)</a></h2>
+<ol>
+<li><strong>Sistema de diseño base</strong> (paleta, tipografía, componentes)</li>
+<li><strong>Flujos de cliente (F-C-01 → F-C-09)</strong> — los más críticos</li>
+<li><strong>Flujos de POS (F-A-03 → F-A-06)</strong> — el producto base</li>
+<li><strong>Dashboard aliado (F-A-08)</strong> — diferenciador</li>
+<li><strong>Web admin (F-W-01 → F-W-06)</strong> — para gestión</li>
+<li><strong>Anti-fraude (F-W-07 → F-W-09)</strong> — seguridad</li>
+<li>Resto de flujos</li>
+</ol>
+<h2 id="componentes-críticos-para-entregar-primero"><a class="header" href="#componentes-críticos-para-entregar-primero">Componentes críticos para entregar primero</a></h2>
+<ul>
+<li>Botones (primary, secondary, tertiary, destructive)</li>
+<li>Inputs (text, phone, currency, PIN, OTP)</li>
+<li>Cards (balance, transacción, info, error)</li>
+<li>Modales y bottom sheets</li>
+<li>Indicadores de estado (online/offline, sync, loading)</li>
+<li>Empty states y error states</li>
+<li>Notificaciones push</li>
+<li>Componentes NFC/QR</li>
+<li>Componentes de seguridad (PIN, biometría)</li>
+</ul>
+<hr />
+<p><strong>Documento completo. Total: ~60 pantallas únicas + 30+ flujos. Mantenido con la estructura de figma-base-spec.md.</strong></p>
+<p><strong>Próximo documento:</strong> Cuando tengas feedback de este, puedo crear diagramas Mermaid de los flujos o expandir el detalle de pantallas individuales.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../04-requirements/figma-base-spec.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../04-requirements/user-stories/US-cliente-final.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../04-requirements/figma-base-spec.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../04-requirements/user-stories/US-cliente-final.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

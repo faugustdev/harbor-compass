@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html lang="es" class="navy" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Product Brief - Harbor Compass</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Documentación interna">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Intro</a></li><li class="chapter-item expanded affix "><li class="part-title">Producto</li><li class="chapter-item expanded "><a href="01-product-brief.html" class="active"><strong aria-hidden="true">1.</strong> Product Brief</a></li><li class="chapter-item expanded affix "><li class="part-title">Arquitectura</li><li class="chapter-item expanded "><a href="02-architecture.html"><strong aria-hidden="true">2.</strong> Arquitectura Técnica</a></li><li class="chapter-item expanded "><a href="03-tech-stack.html"><strong aria-hidden="true">3.</strong> Stack Tecnológico</a></li><li class="chapter-item expanded "><a href="05-data-model.html"><strong aria-hidden="true">4.</strong> Modelo de Datos</a></li><li class="chapter-item expanded affix "><li class="part-title">Requisitos</li><li class="chapter-item expanded "><a href="04-requirements/functional-requirements.html"><strong aria-hidden="true">5.</strong> Requisitos Funcionales</a></li><li class="chapter-item expanded "><a href="04-requirements/non-functional.html"><strong aria-hidden="true">6.</strong> Requisitos No Funcionales</a></li><li class="chapter-item expanded "><a href="04-requirements/figma-base-spec.html"><strong aria-hidden="true">7.</strong> Especificación Figma</a></li><li class="chapter-item expanded "><a href="04-requirements/ui-flows-complete.html"><strong aria-hidden="true">8.</strong> Flujos UI Completos</a></li><li class="chapter-item expanded "><a href="04-requirements/user-stories/US-cliente-final.html"><strong aria-hidden="true">9.</strong> Cliente Final</a></li><li class="chapter-item expanded "><a href="04-requirements/user-stories/US-prestador.html"><strong aria-hidden="true">10.</strong> Prestador (Comercio)</a></li><li class="chapter-item expanded "><a href="04-requirements/user-stories/US-operador-transporte.html"><strong aria-hidden="true">11.</strong> Operador de Transporte</a></li><li class="chapter-item expanded "><a href="04-requirements/user-stories/US-admin.html"><strong aria-hidden="true">12.</strong> Admin VIPPO</a></li><li class="chapter-item expanded "><a href="04-requirements/use-cases/UC-01-cashin.html"><strong aria-hidden="true">13.</strong> UC-01 CashIn</a></li><li class="chapter-item expanded "><a href="04-requirements/use-cases/UC-02-pago-offline.html"><strong aria-hidden="true">14.</strong> UC-02 Pago Offline NFC</a></li><li class="chapter-item expanded "><a href="04-requirements/use-cases/UC-05-sync.html"><strong aria-hidden="true">15.</strong> UC-05 Sync Online</a></li><li class="chapter-item expanded affix "><li class="part-title">API</li><li class="chapter-item expanded "><a href="06-api-contract.html"><strong aria-hidden="true">16.</strong> Contrato de API</a></li><li class="chapter-item expanded affix "><li class="part-title">Operación</li><li class="chapter-item expanded "><a href="07-time-estimate.html"><strong aria-hidden="true">17.</strong> Estimación de Tiempo</a></li><li class="chapter-item expanded "><a href="08-questions-for-vippo.html"><strong aria-hidden="true">18.</strong> Preguntas para VIPPO</a></li><li class="chapter-item expanded affix "><li class="part-title">Decisiones</li><li class="chapter-item expanded "><a href="09-decisions/ADR-001-multiplatform.html"><strong aria-hidden="true">19.</strong> ADR-001 Kotlin Multiplatform</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Harbor Compass</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass/edit/main/docs-src/01-product-brief.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="vicheck-mvp--product-brief"><a class="header" href="#vicheck-mvp--product-brief">ViCheck MVP — Product Brief</a></h1>
+<h2 id="1-problema"><a class="header" href="#1-problema">1. Problema</a></h2>
+<p>Venezuela tiene la <strong>infraestructura de telecomunicaciones más inestable de la región</strong>: cortes de electricidad, zonas sin cobertura 4G, intermitencia de WiFi en zonas comerciales. Esto bloquea el flujo de pago digital en contextos donde el efectivo es inseguro o impracticable:</p>
+<ul>
+<li><strong>Transporte público</strong> (terminales como La Bandera, rutas interurbanas): el pasajero sube con efectivo, el conductor maneja miles de bolívares sin registro, hay "robo hormiga" crónico, los reportes al final del día son manuales y mentirosos</li>
+<li><strong>Pequeño (comida rápida, ferias, eventos masivos, vendedores ambulantes):</strong> el comercio pierde ventas cuando la red falla</li>
+<li><strong>Pago entre personas (P2P):</strong> en zonas rurales o apagones, no se puede transferir</li>
+</ul>
+<p>VIPPO ya tiene <strong>SmartCashier</strong> (POS digital) y <strong>billetera electrónica con 65K+ usuarios</strong>. ViCheck añade la capa de <strong>supervivencia offline</strong> que falta.</p>
+<h2 id="2-propuesta-de-valor"><a class="header" href="#2-propuesta-de-valor">2. Propuesta de valor</a></h2>
+<p><strong>ViCheck = billetera offline-first</strong> que:</p>
+<ul>
+<li>Permite <strong>pagar incluso sin internet</strong> (chip-to-phone o phone-to-phone)</li>
+<li><strong>Liquida automáticamente</strong> cuando vuelve la conexión</li>
+<li><strong>Elimina el manejo de efectivo</strong> en contextos donde el cash es inseguro o lento</li>
+<li><strong>Registra todas las transacciones</strong> sin depender de la red para validación</li>
+<li><strong>Auditable</strong> por el comercio y por el regulador (SENIAT, SUDEBAN)</li>
+</ul>
+<h2 id="3-diferenciador-vs-myccashless"><a class="header" href="#3-diferenciador-vs-myccashless">3. Diferenciador vs MycCashless</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Capacidad</th><th>MycCashless</th><th>ViCheck (propuesto)</th></tr></thead><tbody>
+<tr><td>Offline transaccional</td><td>✅</td><td>✅</td></tr>
+<tr><td>Phone-to-phone (P2P)</td><td>✅ (sync engine)</td><td>✅</td></tr>
+<tr><td>Chip-to-phone (NFC/UID)</td><td>✅</td><td>✅</td></tr>
+<tr><td>QR dinámico autodegradable</td><td>✅ (dChip)</td><td>✅</td></tr>
+<tr><td>Auto-auditoría</td><td>✅</td><td>✅</td></tr>
+<tr><td><strong>Integración con banco local VE</strong></td><td>❌ (Stripe only)</td><td>✅ (vía APIs VIPPO existentes)</td></tr>
+<tr><td><strong>Multi-comercio: pago pequeño</strong></td><td>❌ (orientado a eventos)</td><td>✅ (transporte, comida, ferias)</td></tr>
+<tr><td><strong>Multi-tenancy</strong></td><td>✅</td><td>✅</td></tr>
+<tr><td><strong>Despliegue en zona con red inestable</strong></td><td>⚠️ (WiFi requerido en fin de lugar)</td><td>✅ (sin red)</td></tr>
+</tbody></table>
+</div>
+<h2 id="4-usuarios-objetivo"><a class="header" href="#4-usuarios-objetivo">4. Usuarios objetivo</a></h2>
+<h3 id="41-cliente-final-pasajero--consumidor"><a class="header" href="#41-cliente-final-pasajero--consumidor">4.1 Cliente final (pasajero / consumidor)</a></h3>
+<p>Persona que carga saldo en ViCheck y paga con su celular o pulsera NFC en cualquier comercio afiliado. Quiere velocidad y no depender del estado de la conexión.</p>
+<h3 id="42-prestador-de-servicios-comercio-afiliado"><a class="header" href="#42-prestador-de-servicios-comercio-afiliado">4.2 Prestador de servicios (comercio afiliado)</a></h3>
+<p>Negocio que cobra a sus clientes usando la app POS de ViCheck. Necesita: registrar ventas, conciliar, recibir liquidación en su cuenta bancaria. Quiere: cero pérdida de ventas por fallas de conectividad.</p>
+<h3 id="43-operador-de-transporte"><a class="header" href="#43-operador-de-transporte">4.3 Operador de transporte</a></h3>
+<p>Empresa de transporte (buses, taxis, mototaxis) que usa ViCheck como sistema de ticketing. Caso de uso piloto en <strong>Terminal La Bandera</strong> y rutas interurbanas.</p>
+<h3 id="44-admin-vippo"><a class="header" href="#44-admin-vippo">4.4 Admin VIPPO</a></h3>
+<p>Interno: onboarding de comercios, monitoreo de transacciones, anti-fraude, conciliaciones masivas, soporte.</p>
+<h2 id="5-casos-de-uso-prioritarios-mvp"><a class="header" href="#5-casos-de-uso-prioritarios-mvp">5. Casos de uso prioritarios (MVP)</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>#</th><th>Caso</th><th>Prioridad</th><th>Piloto</th></tr></thead><tbody>
+<tr><td>UC-01</td><td>CashIn online</td><td>P0</td><td>✅</td></tr>
+<tr><td>UC-02</td><td>Pago offline phone-to-phone</td><td>P0</td><td>✅</td></tr>
+<tr><td>UC-03</td><td>Pago offline chip-to-phone (NFC)</td><td>P0</td><td>✅</td></tr>
+<tr><td>UC-04</td><td>Pago offline QR dinámico (dChip)</td><td>P0</td><td>✅</td></tr>
+<tr><td>UC-05</td><td>Sync + CashOut online</td><td>P0</td><td>✅</td></tr>
+<tr><td>UC-06</td><td>Conciliación bancaria</td><td>P1</td><td>✅</td></tr>
+<tr><td>UC-07</td><td>Multi-tenancy (múltiples comercios)</td><td>P1</td><td>✅</td></tr>
+<tr><td>UC-08</td><td>Reportes / dashboard comercio</td><td>P2</td><td>⏸️ post-MVP</td></tr>
+<tr><td>UC-09</td><td>Anti-fraude (anomaly monitoring)</td><td>P2</td><td>⏸️ post-MVP</td></tr>
+<tr><td>UC-10</td><td>dChip web fallback (sin app instalada)</td><td>P1</td><td>⏸️ post-MVP</td></tr>
+</tbody></table>
+</div>
+<h2 id="6-out-of-scope-para-mvp"><a class="header" href="#6-out-of-scope-para-mvp">6. Out of scope para MVP</a></h2>
+<ul>
+<li>iOS (solo Android por restricción de recursos)</li>
+<li>Anti-fraude con ML (solo reglas básicas)</li>
+<li>Onboarding biométrico / KYC (delegado a VIPPO)</li>
+<li>Marketplace de productos / catálogo</li>
+<li>Webhooks a sistemas terceros</li>
+<li>Multi-moneda (solo VESB y VEBITDA/USD)</li>
+<li>SDK abierto para terceros</li>
+</ul>
+<h2 id="7-métricas-de-éxito-kpis-del-mvp"><a class="header" href="#7-métricas-de-éxito-kpis-del-mvp">7. Métricas de éxito (KPIs) del MVP</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Métrica</th><th>Target MVP</th><th>Cómo se mide</th></tr></thead><tbody>
+<tr><td>Latencia de transacción offline (tap → confirmación)</td><td>&lt; 300 ms</td><td>Métrica en POS</td></tr>
+<tr><td>Transacciones por segundo (TPS) por nodo POS</td><td>≥ 5 TPS</td><td>Load test</td></tr>
+<tr><td>Sync time cuando vuelve la red (1000 tx pendientes)</td><td>&lt; 30 segundos</td><td>Métrica backend</td></tr>
+<tr><td>Tiempo CashIn (online)</td><td>&lt; 5 segundos</td><td>Métrica backend</td></tr>
+<tr><td>Tasa de éxito de CashIn</td><td>≥ 95%</td><td>Logs</td></tr>
+<tr><td>Tasa de éxito de transacciones offline</td><td>≥ 99%</td><td>Logs</td></tr>
+<tr><td>Tiempo medio de CashOut al banco</td><td>&lt; 24 horas</td><td>Logs bancarios</td></tr>
+<tr><td>Multi-tenancy simultáneo</td><td>10 comercios independientes</td><td>Test funcional</td></tr>
+<tr><td>Crash rate Android</td><td>&lt; 1%</td><td>Crashlytics</td></tr>
+</tbody></table>
+</div>
+<h2 id="8-restricciones--asunción"><a class="header" href="#8-restricciones--asunción">8. Restricciones / Asunción</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>#</th><th>Restricción</th><th>Impacto</th></tr></thead><tbody>
+<tr><td>R-1</td><td>Sin internet garantizado en Venezuela</td><td>Diseño offline-first obligatorio</td></tr>
+<tr><td>R-2</td><td>Recursos limitados del equipo</td><td>Solo Android, sin iOS en MVP</td></tr>
+<tr><td>R-3</td><td>Multi-tenant desde día 1</td><td>Arquitectura debe separar datos por tenant</td></tr>
+<tr><td>R-4</td><td>Integración con APIs VIPPO existentes</td><td>CashIn/CashOut deben consumir las APIs existentes</td></tr>
+<tr><td>R-5</td><td>Despliegue en Google Play</td><td>Cumplir políticas de Play Store</td></tr>
+<tr><td>R-6</td><td>Datos sensibles financieros</td><td>Cumplimiento y encriptación de criptografía fuerte</td></tr>
+<tr><td>R-7</td><td>Costo infraestructura bajo</td><td>Serverless AWS SAM + PostgreSQL gestionado</td></tr>
+<tr><td>R-8</td><td>Multi-tenancy: cada comercio es tenant</td><td>Aislamiento de saldos, transacciones y reportes</td></tr>
+</tbody></table>
+</div>
+<h2 id="9-stakeholders"><a class="header" href="#9-stakeholders">9. Stakeholders</a></h2>
+<ul>
+<li><strong>Product Owner:</strong> Francisco August (consultor externo VIPPO)</li>
+<li><strong>Sponsor VIPPO:</strong> Miguel León (fundador VIPPO)</li>
+<li><strong>Equipo técnico VIPPO:</strong> backend legacy (SmartCashier, FIS-CORTEX), APIs de pago</li>
+<li><strong>Usuarios piloto:</strong> operador de transporte La Bandera, primer comercio Chino</li>
+<li><strong>Audiencia beta:</strong> cerrada, &lt; 50 usuarios iniciales</li>
+</ul>
+<h2 id="10-definición-de-mvp-completo"><a class="header" href="#10-definición-de-mvp-completo">10. Definición de "MVP completo"</a></h2>
+<p>El MVP está completo cuando:</p>
+<ol>
+<li>Cliente puede hacer CashIn desde su banco VIPPO</li>
+<li>Cliente puede pagar a un comercio sin internet (NFC o dChip QR)</li>
+<li>Cliente puede pagar P2P (phone-to-phone) sin internet</li>
+<li>POS comercio registra transacción en bóveda local encriptada</li>
+<li>Cuando vuelve internet, sync automático de transacciones pendientes</li>
+<li>Comercio puede ver reporte de ventas y solicitar CashIn</li>
+<li>10 comercios pueden operar simultáneamente con sus salves y sep</li>
+<li>App en Google Play cerrada (internal test track)</li>
+</ol>
+<hr />
+<p><strong>Próximo documento:</strong> <code>02-architecture.md</code> — la arquitectura técnica del motor OffVi.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="02-architecture.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="02-architecture.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

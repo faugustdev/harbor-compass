@@ -1,0 +1,605 @@
+<!DOCTYPE HTML>
+<html lang="es" class="navy" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Arquitectura Técnica - Harbor Compass</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Documentación interna">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Intro</a></li><li class="chapter-item expanded affix "><li class="part-title">Producto</li><li class="chapter-item expanded "><a href="01-product-brief.html"><strong aria-hidden="true">1.</strong> Product Brief</a></li><li class="chapter-item expanded affix "><li class="part-title">Arquitectura</li><li class="chapter-item expanded "><a href="02-architecture.html" class="active"><strong aria-hidden="true">2.</strong> Arquitectura Técnica</a></li><li class="chapter-item expanded "><a href="03-tech-stack.html"><strong aria-hidden="true">3.</strong> Stack Tecnológico</a></li><li class="chapter-item expanded "><a href="05-data-model.html"><strong aria-hidden="true">4.</strong> Modelo de Datos</a></li><li class="chapter-item expanded affix "><li class="part-title">Requisitos</li><li class="chapter-item expanded "><a href="04-requirements/functional-requirements.html"><strong aria-hidden="true">5.</strong> Requisitos Funcionales</a></li><li class="chapter-item expanded "><a href="04-requirements/non-functional.html"><strong aria-hidden="true">6.</strong> Requisitos No Funcionales</a></li><li class="chapter-item expanded "><a href="04-requirements/figma-base-spec.html"><strong aria-hidden="true">7.</strong> Especificación Figma</a></li><li class="chapter-item expanded "><a href="04-requirements/ui-flows-complete.html"><strong aria-hidden="true">8.</strong> Flujos UI Completos</a></li><li class="chapter-item expanded "><a href="04-requirements/user-stories/US-cliente-final.html"><strong aria-hidden="true">9.</strong> Cliente Final</a></li><li class="chapter-item expanded "><a href="04-requirements/user-stories/US-prestador.html"><strong aria-hidden="true">10.</strong> Prestador (Comercio)</a></li><li class="chapter-item expanded "><a href="04-requirements/user-stories/US-operador-transporte.html"><strong aria-hidden="true">11.</strong> Operador de Transporte</a></li><li class="chapter-item expanded "><a href="04-requirements/user-stories/US-admin.html"><strong aria-hidden="true">12.</strong> Admin VIPPO</a></li><li class="chapter-item expanded "><a href="04-requirements/use-cases/UC-01-cashin.html"><strong aria-hidden="true">13.</strong> UC-01 CashIn</a></li><li class="chapter-item expanded "><a href="04-requirements/use-cases/UC-02-pago-offline.html"><strong aria-hidden="true">14.</strong> UC-02 Pago Offline NFC</a></li><li class="chapter-item expanded "><a href="04-requirements/use-cases/UC-05-sync.html"><strong aria-hidden="true">15.</strong> UC-05 Sync Online</a></li><li class="chapter-item expanded affix "><li class="part-title">API</li><li class="chapter-item expanded "><a href="06-api-contract.html"><strong aria-hidden="true">16.</strong> Contrato de API</a></li><li class="chapter-item expanded affix "><li class="part-title">Operación</li><li class="chapter-item expanded "><a href="07-time-estimate.html"><strong aria-hidden="true">17.</strong> Estimación de Tiempo</a></li><li class="chapter-item expanded "><a href="08-questions-for-vippo.html"><strong aria-hidden="true">18.</strong> Preguntas para VIPPO</a></li><li class="chapter-item expanded affix "><li class="part-title">Decisiones</li><li class="chapter-item expanded "><a href="09-decisions/ADR-001-multiplatform.html"><strong aria-hidden="true">19.</strong> ADR-001 Kotlin Multiplatform</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Harbor Compass</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/faugustdev/harbor-compass/edit/main/docs-src/02-architecture.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="vicheck-mvp--arquitectura-técnica"><a class="header" href="#vicheck-mvp--arquitectura-técnica">ViCheck MVP — Arquitectura Técnica</a></h1>
+<h2 id="1-visión-general"><a class="header" href="#1-visión-general">1. Visión general</a></h2>
+<p>ViCheck es una <strong>billetera offline-first</strong> con un <strong>Motor de Sincronización Asíncrono (OffVi)</strong> que desacopla el ciclo de pago en tres fases independientes. El sistema no asume conectividad; cada componente está diseñado para sobrevivir apagones, zonas sin señal y cortes de WiFi.</p>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                            CLIENTE (App Android)                            │
+│                                                                             │
+│  ┌──────────────────┐    ┌────────────────────────────────────┐            │
+│  │  NFC Module (NFC) │    │          Core App (Kotlin)         │            │
+│  │  - Read UID       │    │  - CashIn UI                       │            │
+│  │  - Foreground    │    │  - Payment UI                      │            │
+│  │    Dispatch        │    │  - QR Generator (dChip)            │            │
+│  └────────┬───────────┘    │  - State machine (online/offline)  │            │
+│           │                └─────────────────┬───────────────────┘            │
+│           │                                  │                              │
+│  ┌────────▼──────────────────────────────────▼───────────────────┐         │
+│  │                   Offline-First Engine (Sec 3)                   │       │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐│       │
+│  │  │ Local Ledger │  │ Tx Queue    │  │ Encrypted Vault (AES-256) ││       │
+│  │  │ (balances)   │  │ (pending)   │  │ - pending_transactions   ││       │
+│  │  └─────────────┘  └─────────────┘  │ - keys, signatures       ││       │
+│  │                                      └─────────────────────────┘│       │
+│  └─────────────────────────────────────────────────────────────────┘       │
+│                                                                             │
+└──────────────────────────────────┬───────────────────────────────────────────┘
+                                   │ P2P / NFC tap / QR scan
+┌──────────────────────────────────▼──────────────────────────────────────────┐
+│                          POS COMERCIO (App Android)                         │
+│                                                                             │
+│  ┌─────────────────────────────────────────────────────────────────┐        │
+│  │                    POS Logic (Kotlin x Compose)                  │        │
+│  │  - read NFC UID from client                                      │        │
+│  │  - decode dChip QR from client                                   │        │
+│  │  - sign transaction (ECDSA P-256)                              │        │
+│  │  - update local vault                                            │        │
+│  └─────────────────────────────────────────────────────────────────┘        │
+│                                                                             │
+└──────────────────────────────────┬───────────────────────────────────────────┘
+                                   │ Internet when online
+┌──────────────────────────────────▼───────────────────────────────────────────┐
+│                          BACKEND ViCheck (AWS SAM)                            │
+│                                                                              │
+│  ┌────────────────────┐  ┌────────────────────┐  ┌────────────────────┐  │
+│  │  API Gateway        │  │  Lambda Functions  │  │  EventBridge API     │  │
+│  │  (REST + WS)        │  │  (Python 3.14)    │  │  (async events)     │  │
+│  └─────────┬────────────┘  └─────────┬──────────┘  └─────────┬──────────┘  │
+│            │                          │                       │                      │
+│  ┌─────────▼──────────────────────────▼───────────────────────▼──────────┐│
+│  │                          Core Services                                  ││
+│  │  - CashInService         - LedgerService         - SyncService          ││
+│  │  - CashOutService       - TenantService         - BankIntegration       ││
+│  └─────────┬──────────────────────────────────────────────┬──────────────┘│
+│            │                              │                              │        │
+│  ┌─────────▼───────────────┐  ┌────────▼────────────────┐                │
+│  │  PostgreSQL (RDS)        │  │  Redis (cache balances) │                │
+│  │  - tenants               │  │  - hot balance mirror   │                │
+│  │  - users                 │  │  - rate limit current    │                │
+│  │  - wallets               │  │  - session cache current  │                │
+│  │  - transactions          │  └──────────────────────────┘                │
+│  │  - ledger (append-only)  │                                                  │
+│  └──────────────────────────┘                                                  │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────┐        │
+│  │              External: VIPPO APIs                               │        │
+│  │  - /validacion de pago (CashIn flow existente)                 │        │
+│  │  - /cuentas (gestión bancaria de clientes)                     │        │
+│  │  - /liquidacion (entrega a cuenta del comercio)                │        │
+│  └─────────────────────────────────────────────────────────────────┘        │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="2-las-3-fases-del-offvi-sync-engine"><a class="header" href="#2-las-3-fases-del-offvi-sync-engine">2. Las 3 fases del OffVi Sync Engine</a></h2>
+<h3 id="fase-1-cashin-online"><a class="header" href="#fase-1-cashin-online">Fase 1: CashIn (Online)</a></h3>
+<p>El usuario final (cliente) o comercio (prestador) carga saldo en su billetera ViCheck. Esta fase <strong>requiere internet</strong> y consume las APIs existentes de VIPPO (<code>/validacion de pago</code> y <code>/cuentas</code>).</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant U as Cliente (App)
+    participant V as ViCheck API
+    participant P as VIPPO API
+    participant B as Banco
+
+    U-&gt;&gt;V: POST /cashin {amount: 200, source: 'banco_x'}
+    V-&gt;&gt;P: POST /validacion de pago
+    P-&gt;&gt;B: initiate transfer
+    B--&gt;&gt;P: 200 OK
+    P--&gt;&gt;V: {validacion_id, status: 'pending'}
+    V--&gt;&gt;U: 202 Accepted {cashin_id}
+
+    Note over V,P: webhook de VIPPO llega cuando se confirma
+
+    P--&gt;&gt;V: webhook {validacion_id, status: 'completed'}
+    V-&gt;&gt;V: u saldo del usuario, genera tx ledger
+    V--&gt;&gt;U: push notification 'saldo disponible'
+</code></pre>
+<p><strong>Eventualidades:</strong></p>
+<ul>
+<li>Si el webhook no llega en 30s, el cliente puede pull con <code>GET /cashin/:id</code></li>
+<li>Si falla la carga, reversión completa (transactional)</li>
+<li>Auditoría: cada carga queda registrada en <code>ledger</code> con <code>source = 'vippo_cashin'</code></li>
+</ul>
+<h3 id="fase-2-transacción-offline-void"><a class="header" href="#fase-2-transacción-offline-void">Fase 2: Transacción offline (Void)</a></h3>
+<p>El cliente paga al comercio sin internet. Hay dos medios físicos:</p>
+<h4 id="2a-nfc-chip-to-phone"><a class="header" href="#2a-nfc-chip-to-phone">2a. NFC (chip-to-phone)</a></h4>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant C as Client App
+    participant NFC as NFC Tag
+    participant P as POS Device
+    participant V as Local Vault
+
+    C-&gt;&gt;NFC: tap (cliente acerca pulsera/tarjeta/celular)
+    NFC--&gt;&gt;C: UID: 04:A3:B2:C1:D4:E5:F6
+    C-&gt;&gt;C: search local wallet by UID
+    C-&gt;&gt;C: sign tx {from_uid, to_merchant, amount, nonce, ts}
+    C-&gt;&gt;P: tx pushed via NFC (NDEF) o BLE
+    P-&gt;&gt;P: verify signature
+    P-&gt;&gt;P: u balance, append pending tx
+    P-&gt;&gt;V: encrypt and store
+    P--&gt;&gt;C: confirmation via NFC/NDEF
+</code></pre>
+<h4 id="2b-dchip-qr-phone-to-phone"><a class="header" href="#2b-dchip-qr-phone-to-phone">2b. dChip QR (phone-to-phone)</a></h4>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant C as Client App
+    participant P as POS Device
+
+    P-&gt;&gt;P: generates dChip QR (HMAC + nonce + ttl)
+    Note over P: QR se renueva cada 30s
+    C-&gt;&gt;P: scan QR
+    C-&gt;&gt;C: verify HMAC + ttl
+    C-&gt;&gt;P: POST signed tx via local WiFi/BLE o QR secondary channel
+    P-&gt;&gt;P: verify + record
+</code></pre>
+<p><strong>El PIN de confirmación:</strong> Cada transacción offline con monto significativo (≥ configurable por tenant) requiere <strong>PIN entry en el celular del cliente</strong> antes de firmar.</p>
+<p><strong>Estado local:</strong></p>
+<ul>
+<li><code>Local Ledger (SQLite + SQLCipher)</code>: balance mirrorado por tenant</li>
+<li><code>Pending Transactions Queue</code>: cola de TX firmadas esperando sync</li>
+<li><code>Key Store</code>: llaves ECDSA del dispositivo</li>
+</ul>
+<h3 id="fase-3-cashout--conciliación-online"><a class="header" href="#fase-3-cashout--conciliación-online">Fase 3: CashOut + Conciliación (Online)</a></h3>
+<p>Cuando el POS comercio detecta internet (NetworkCallback en Android), ejecuta el sync.</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant P as POS Device
+    participant V as ViCheck API
+    participant L as Ledger
+    participant B as Bank
+
+    P-&gt;&gt;V: POST /sync {batch: [...pending_txs]}
+    V-&gt;&gt;V: validate batch (firmas, secuencia, no duplicados)
+    loop for each tx
+        V-&gt;&gt;L: append entry (append-only)
+        V-&gt;&gt;V: update balances del usuario + comercio
+    end
+    V--&gt;&gt;P: 200 OK {batch_result, new_balance}
+
+    Note over V,L: CashOut se triggea por separado
+    V-&gt;&gt;B: POST /liquidacion {merchant_id, amount}
+    B--&gt;&gt;V: {liquidacion_id, status}
+    V--&gt;&gt;P: notification 'fondos liquidados'
+</code></pre>
+<h2 id="3-componentes-detallados"><a class="header" href="#3-componentes-detallados">3. Componentes detallados</a></h2>
+<h3 id="31-offline-first-engine-android"><a class="header" href="#31-offline-first-engine-android">3.1 Offline-First Engine (Android)</a></h3>
+<pre><code class="language-kotlin">// Estructura de packages
+com.vippo.vicheck/
+├── core/
+│   ├── nfc/                  ← lectura/escritura NFC
+│   ├── qr/                   ← generador dChip + scanner
+│   ├── crypto/               ← ECDSA, ECDH, AES-256
+│   ├── storage/              ← Room + SQLCipher
+│   └── sync/                 ← NetworkCallback, retry, backoff
+├── data/
+│   ├── model/                ← Wallet, Transaction, User, Tenant
+│   └── repository/           ← Local + Remote data sources
+├── domain/
+│   ├── usecase/              ← CashIn, Pay, Sync, CashOut
+│   └── state/                ← State machine Online/Offline/Partial
+├── feature/
+│   ├── onboarding/
+│   ├── wallet/                ← balance, history
+│   ├── pay/                  ← pagar a comercio
+│   ├── topup/                ← cashin flow
+│   └── settings/
+└── di/                       ← Hilt modules
+</code></pre>
+<h3 id="32-backend-aws-sam--lambda-python-314"><a class="header" href="#32-backend-aws-sam--lambda-python-314">3.2 Backend (AWS SAM + Lambda Python 3.14)</a></h3>
+<pre><code>vicheck-api/
+├── template.yaml             ← SAM template
+├── src/
+│   ├── handlers/
+│   │   ├── cashin.py         ← POST /cashin
+│   │   ├── sync.py           ← POST /sync
+│   │   ├── cashout.py        ← POST /cashout
+│   │   ├── balance.py        ← GET /balance/:uid
+│   │   ├── webhook_vippo.py  ← inbound webhook
+│   │   └── reconciliation.py ← CRON
+│   ├── services/
+│   │   ├── ledger.py         ← append-only writes
+│   │   ├── tenant.py
+│   │   ├── vippo_client.py   ← HTTP client a VIPPO APIs
+│   │   └── bank_client.py
+│   ├── models/
+│   │   └── pydantic_models.py
+│   ├── db/
+│   │   ├── migrations/       ← Alembic
+│   │   └── connection.py     ← psycopg2 pool
+│   └── utils/
+│       └── auth.py            ← JWT validation
+├── tests/
+│   └── unit/
+└── requirements.txt
+</code></pre>
+<h3 id="33-base-de-datos-postgresql"><a class="header" href="#33-base-de-datos-postgresql">3.3 Base de datos (PostgreSQL)</a></h3>
+<pre><code class="language-sql">-- Multitenancy por tenant_id en cada tabla
+CREATE TABLE tenants (
+  id UUID PRIMARY KEY,
+  name TEXT NOT NULL,
+  vippo_merchant_id TEXT UNIQUE,
+  bank_account_id TEXT,
+  status TEXT DEFAULT 'active',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE users (
+  id UUID PRIMARY KEY,
+  tenant_id UUID NOT NULL REFERENCES tenants(id),
+  phone TEXT UNIQUE NOT NULL,
+  email TEXT,
+  full_name TEXT,
+  kyc_status TEXT DEFAULT 'pending',
+  vippo_user_id TEXT UNIQUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE wallets (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(id),
+  tenant_id UUID NOT NULL REFERENCES tenants(id),
+  balance DECIMAL(18,4) NOT NULL DEFAULT 0,
+  currency TEXT NOT NULL DEFAULT 'VES',
+  status TEXT DEFAULT 'active',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(user_id, tenant_id, currency)
+);
+
+CREATE TABLE transactions (
+  id UUID PRIMARY KEY,
+  wallet_id UUID NOT NULL REFERENCES wallets(id),
+  tenant_id UUID NOT NULL REFERENCES tenants(id),
+  type TEXT NOT NULL,        -- 'cashin', 'pay', 'cashout', 'fee'
+  amount DECIMAL(18,4) NOT NULL,
+  currency TEXT NOT NULL,
+  counterparty_id UUID REFERENCES wallets(id),
+  status TEXT NOT NULL,       -- 'pending_sync', 'synced', 'reconciled', 'reversed'
+  offline_signature TEXT,     -- ECDSA signature hex
+  offline_nonce TEXT,
+  created_at TIMESTAMPTZ NOT NULL,
+  synced_at TIMESTAMPTZ,
+  vippo_cashin_id TEXT,
+  vippo_cashout_id TEXT
+);
+
+CREATE TABLE ledger (
+  id BIGSERIAL PRIMARY KEY,
+  tx_id UUID NOT NULL REFERENCES transactions(id),
+  tenant_id UUID NOT NULL,
+  wallet_id UUID NOT NULL,
+  direction TEXT NOT NULL,    -- 'debit' o 'credit'
+  amount DECIMAL(18,4) NOT NULL,
+  balance_after DECIMAL(18,4) NOT NULL,
+  recorded_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_tx_wallet_pending ON transactions(wallet_id, status) WHERE status = 'pending_sync';
+CREATE INDEX idx_tx_tenant_created ON transactions(tenant_id, created_at DESC);
+</code></pre>
+<p><strong>Modelo append-only:</strong> <code>ledger</code> nunca se modifica. Cualquier corrección genera <code>tx_terminal_type = 'reversal'</code>.</p>
+<h3 id="34-criptografía"><a class="header" href="#34-criptografía">3.4 Criptografía</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Uso</th><th>Algoritmo</th><th>Implementación</th></tr></thead><tbody>
+<tr><td>Firma tx offline</td><td>ECDSA P-256</td><td>Bouncy Castle (Android) / python-ecdsa (backend)</td></tr>
+<tr><td>Encriptación vault local</td><td>AES-256-GCM</td><td>Tink (Android) / cryptography (Python)</td></tr>
+<tr><td>Hash dChip</td><td>HMAC-SHA256</td><td>libsodium / Tink</td></tr>
+<tr><td>Llave dispositivo↔backend</td><td>ECDH P-256</td><td>Curva25519 / secp256r1</td></tr>
+<tr><td>Storage password</td><td>Argon2id</td><td>argon2-cffi (Python)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Generación de llaves:</strong> El backend genera el par de llaves ECDSA en el registro del dispositivo. La llave privada se entrega al dispositivo sobre un canal seguro (autenticación mutua con TLS) y se almacena en <code>EncryptedSharedPreferences</code> de Android.</p>
+<h2 id="4-flujo-de-datos-completo-pago-offline--sync"><a class="header" href="#4-flujo-de-datos-completo-pago-offline--sync">4. Flujo de datos completo (pago offline + sync)</a></h2>
+<pre><code>CLIENTE                                        COMERCIO                              BACKEND
+   │                                              │                                    │
+   │ 1. Tap pulsera al POS                        │  │                                    │
+   │────────────────────────────────────────────►│  │                                    │
+   │                                              │  │                                    │
+   │   2. POS lee UID                             │  │                                    │
+   │   3. POS consulta balance del UID           │  │                                    │
+   │      (lookup local + cache)                 │  │                                    │
+   │                                              │  │                                    │
+   │   4. POS muestra monto + comercio            │  │                                    │
+   │◄─────────────────────────────────────────────│  │                                    │
+   │                                              │                                    │
+   │   5. Cliente ingresa PIN                     │  │                                    │
+   │   6. Cliente firma tx (con llave priv)      │  │                                    │
+   │────────────────────────────────────────────►│  │                                    │
+   │                                              │                                    │
+   │   7. POS verifica firma                      │  │                                    │
+   │   8. POS descuenta local                    │  │                                    │
+   │   9. POS almacena en vault local            │  │                                    │
+   │                                              │                                    │
+   │   10. POS muestra OK al comercio + cliente   │  │                                    │
+   │◄─────────────────────────────────────────────│  │                                    │
+   │                                              │                                    │
+   │                                       [NO INTERNET]    [INTERNET VUELVE]           │
+   │                                              │                                    │
+   │                                              │  11. POST /sync {batch: [...tx]}   │
+   │                                              │────────────────────────────────► │
+   │                                              │                                    │
+   │                                              │  12. Backend valida batch          │
+   │                                              │  13. Backend append-only           │
+   │                                              │  14. Backend update balance         │
+   │                                              │                                    │
+   │                                              │  15. 200 OK {new_balance}           │
+   │                                              │◄──────────────────────────────── │
+   │                                              │                                    │
+   │                                              │  16. (opcional) CashOut si         │
+   │                                              │     balance &gt; threshold            │
+</code></pre>
+<h2 id="5-seguridad"><a class="header" href="#5-seguridad">5. Seguridad</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Capa</th><th>Medida</th></tr></thead><tbody>
+<tr><td><strong>Transporte</strong></td><td>TLS 1.3 en todas las llamadas HTTP/HTTPS</td></tr>
+<tr><td><strong>Autenticación</strong></td><td>JWT firmado por backend, refresh tokens con rotación</td></tr>
+<tr><td><strong>Autorización</strong></td><td>RBAC por tenant: cliente solo ve su balance, comercio ve sus ventas</td></tr>
+<tr><td><strong>Vault local</strong></td><td>AES-256-GCM, llave derivada de master + device-bound key</td></tr>
+<tr><td><strong>Firmas tx</strong></td><td>Cada tx tiene nonce + firma ECDSA, previene duplicación</td></tr>
+<tr><td><strong>Anti-replay</strong></td><td>Nonce + timestamp en cada tx, ventana de aceptación configurable</td></tr>
+<tr><td><strong>Device binding</strong></td><td>Cada dispositivo tiene par de llaves único registrado en backend</td></tr>
+<tr><td><strong>Audit log</strong></td><td>Ledger append-only, todas las operaciones registradas</td></tr>
+<tr><td><strong>Rate limiting</strong></td><td>Por usuario, por tenant, configurable</td></tr>
+<tr><td><strong>Multi-tenancy</strong></td><td><code>tenant_id</code> en todas las queries, nunca cruzado</td></tr>
+</tbody></table>
+</div>
+<h2 id="6-performance-y-capacidad-esperada"><a class="header" href="#6-performance-y-capacidad-esperada">6. Performance y capacidad esperada</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Métrica</th><th>Target MVP</th><th>Diseño</th></tr></thead><tbody>
+<tr><td>Latencia NFC tap → confirmación</td><td>&lt; 300 ms</td><td>NFC read + local lookup + firma</td></tr>
+<tr><td>Sync time (1000 tx pendientes)</td><td>&lt; 30 s</td><td>Batch upload + idempotente design</td></tr>
+<tr><td>TPS por nodo POS</td><td>≥ 5 TPS</td><td>SQLite local, batch writes</td></tr>
+<tr><td>Backend TPS</td><td>≥ 100 TPS</td><td>Lambda + Postgres + connection cache</td></tr>
+<tr><td>Cold start Android app</td><td>&lt; 2 s</td><td>Compose + Hilt + lazy init</td></tr>
+<tr><td>Tamaño APK</td><td>&lt; 50 MB</td><td>Sin recursos pesados</td></tr>
+</tbody></table>
+</div>
+<h2 id="7-despliegue"><a class="header" href="#7-despliegue">7. Despliegue</a></h2>
+<h3 id="71-android"><a class="header" href="#71-android">7.1 Android</a></h3>
+<ul>
+<li>Google Play Internal Testing track (closed beta)</li>
+<li>Fastlane para build + deploy automático</li>
+<li>Crashlytics + Firebase Analytics</li>
+<li>Play Console: requerirá privacy policy + data safety form</li>
+</ul>
+<h3 id="72-backend"><a class="header" href="#72-backend">7.2 Backend</a></h3>
+<ul>
+<li>AWS SAM CLI: <code>sam build &amp;&amp; sam deploy</code></li>
+<li>Multi-environment: <code>dev</code>, <code>staging</code>, <code>prod</code></li>
+<li>RDS PostgreSQL + ElastiCache Redis</li>
+<li>API Gateway + Lambda Python 3.14</li>
+<li>CloudWatch + X-Ray para observabilidad</li>
+<li>Secrets Manager para llaves</li>
+</ul>
+<h3 id="73-cicd"><a class="header" href="#73-cicd">7.3 CI/CD</a></h3>
+<ul>
+<li>GitHub Actions</li>
+<li>Tests: pytest (backend), JUnit + Espresso (Android)</li>
+<li>Lint: ruff (Python), ktlint + detekt (Kotlin)</li>
+<li>Deploy: automático a staging, manual approval a prod</li>
+</ul>
+<hr />
+<p><strong>Próximo documento:</strong> <code>03-tech-stack.md</code> — stack propuesto con justificación por elección.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="01-product-brief.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="03-tech-stack.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="01-product-brief.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="03-tech-stack.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
