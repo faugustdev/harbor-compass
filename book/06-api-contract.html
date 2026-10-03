@@ -189,83 +189,25 @@
 <li><strong>Errores:</strong> RFC 7807 (Problem Details for HTTP APIs)</li>
 </ul>
 <h2 id="2-endpoints-públicos"><a class="header" href="#2-endpoints-públicos">2. Endpoints públicos</a></h2>
-<h3 id="21-auth"><a class="header" href="#21-auth">2.1 Auth</a></h3>
+<h2 id="21-auth"><a class="header" href="#21-auth">2.1 Auth</a></h2>
 <h4 id="post-authrequest-otp"><a class="header" href="#post-authrequest-otp"><code>POST /auth/request-otp</code></a></h4>
-<p>Solicita código OTP al teléfono.</p>
-<p><strong>Request:</strong></p>
-<pre><code class="language-json">{
-  "phone": "+584121234567"
-}
-</code></pre>
-<p><strong>Response 202:</strong></p>
-<pre><code class="language-json">{
-  "request_id": "uuid",
-  "expires_at": "2026-10-02T14:30:00Z"
-}
-</code></pre>
 <h4 id="post-authverify-otp"><a class="header" href="#post-authverify-otp"><code>POST /auth/verify-otp</code></a></h4>
-<p>Verifica OTP y emite JWT.</p>
-<p><strong>Request:</strong></p>
-<pre><code class="language-json">{
-  "request_id": "uuid",
-  "otp": "123456"
-}
-</code></pre>
-<p><strong>Response 200:</strong></p>
-<pre><code class="language-json">{
-  "access_token": "eyJ...",
-  "refresh_token": "uuid",
-  "expires_in": 900,
-  "user": {
-    "id": "uuid",
-    "phone": "+584121234567",
-    "tenant_id": "uuid",
-    "full_name": "Francisco August"
-  }
-}
-</code></pre>
 <h4 id="post-authrefresh"><a class="header" href="#post-authrefresh"><code>POST /auth/refresh</code></a></h4>
-<p>Renueva access token.</p>
-<p><strong>Request:</strong></p>
-<pre><code class="language-json">{
-  "refresh_token": "uuid"
-}
-</code></pre>
-<p><strong>Response 200:</strong> mismo formato que verify-otp.</p>
-<h3 id="22-cashin"><a class="header" href="#22-cashin">2.2 CashIn</a></h3>
+<h3 id="22-cashin-online"><a class="header" href="#22-cashin-online">2.2 CashIn (online)</a></h3>
 <h4 id="post-cashin"><a class="header" href="#post-cashin"><code>POST /cashin</code></a></h4>
-<p>Inicia una carga de saldo.</p>
+<p>Inicia CashIn. Valida contra banco del cliente, transfiere dinero a cuenta del Aliado, acredita wallet lógica del cliente.</p>
 <p><strong>Request:</strong></p>
 <pre><code class="language-json">{
   "amount": "200.00",
   "currency": "VES",
   "source_bank_account_id": "uuid",
-  "source_bank_code": "0102"
+  "source_bank_code": "0102",
+  "aliado_id": "uuid"
 }
 </code></pre>
-<p><strong>Response 202:</strong></p>
-<pre><code class="language-json">{
-  "cashin_id": "uuid",
-  "status": "pending",
-  "expires_at": "2026-10-02T14:35:00Z"
-}
-</code></pre>
-<h4 id="get-cashincashin_id"><a class="header" href="#get-cashincashin_id"><code>GET /cashin/{cashin_id}</code></a></h4>
-<p>Consulta el estado del cuerpo CashIn.</p>
-<p><strong>Response 200:</strong></p>
-<pre><code class="language-json">{
-  "cashin_id": "uuid",
-  "status": "completed",
-  "amount": "200.00",
-  "currency": "VES",
-  "new_balance": "12500.00",
-  "completed_at": "2026-10-02T14:32:15Z",
-  "vippo_cashin_id": "vippo-uuid"
-}
-</code></pre>
-<h3 id="23-payments-offline-first"><a class="header" href="#23-payments-offline-first">2.3 Payments (Offline-first)</a></h3>
+<h3 id="23-sync-pagos-offline"><a class="header" href="#23-sync-pagos-offline">2.3 Sync (pagos offline)</a></h3>
 <h4 id="post-sync"><a class="header" href="#post-sync"><code>POST /sync</code></a></h4>
-<p>Sincroniza transacciones offline pendientes.</p>
+<p>Sincroniza transacciones offline pendientes. NO descuenta saldo aquí — ya se descontó en el dispositivo. Aquí solo registra y concilia.</p>
 <p><strong>Request:</strong></p>
 <pre><code class="language-json">{
   "device_id": "uuid",
@@ -275,7 +217,7 @@
       "type": "pay",
       "amount": "45.00",
       "currency": "VES",
-      "counterparty_external": "uuid-merchant",
+      "counterparty_aliado_id": "uuid-aliado",
       "timestamp": "2026-10-02T14:00:00Z",
       "nonce": "uuid",
       "signature": "0x9f4a..."
@@ -376,9 +318,8 @@
 <p>POS consulta historial de ventas.</p>
 <h4 id="get-posdashboard"><a class="header" href="#get-posdashboard"><code>GET /pos/dashboard</code></a></h4>
 <p>Métricas del POS: ventas hoy, semana, mes.</p>
-<h3 id="33-pos-cashout"><a class="header" href="#33-pos-cashout">3.3 POS CashOut</a></h3>
-<h4 id="post-poscashout"><a class="header" href="#post-poscashout"><code>POST /pos/cashout</code></a></h4>
-<p>Solicita liquidación.</p>
+<h3 id="33-pos-reporte-no-hay-cashout"><a class="header" href="#33-pos-reporte-no-hay-cashout">3.3 POS Reporte (NO hay CashOut)</a></h3>
+<p><strong>NO existe <code>/pos/cashout</code></strong> — el dinero del Aliado ya está en su banco desde el CashIn. El Aliado solo consulta reportes de ventas.</p>
 <h2 id="4-endpoints-admin-interno"><a class="header" href="#4-endpoints-admin-interno">4. Endpoints Admin (interno)</a></h2>
 <h4 id="get-admintenants"><a class="header" href="#get-admintenants"><code>GET /admin/tenants</code></a></h4>
 <p>Lista de tenants.</p>

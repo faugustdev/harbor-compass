@@ -179,117 +179,213 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="vicheck-mvp--product-brief"><a class="header" href="#vicheck-mvp--product-brief">ViCheck MVP — Product Brief</a></h1>
+                        <h1 id="vicheck-mvp--product-brief-modelo-corregido"><a class="header" href="#vicheck-mvp--product-brief-modelo-corregido">ViCheck MVP — Product Brief (Modelo corregido)</a></h1>
 <h2 id="1-problema"><a class="header" href="#1-problema">1. Problema</a></h2>
-<p>Venezuela tiene la <strong>infraestructura de telecomunicaciones más inestable de la región</strong>: cortes de electricidad, zonas sin cobertura 4G, intermitencia de WiFi en zonas comerciales. Esto bloquea el flujo de pago digital en contextos donde el efectivo es inseguro o impracticable:</p>
-<ul>
-<li><strong>Transporte público</strong> (terminales como La Bandera, rutas interurbanas): el pasajero sube con efectivo, el conductor maneja miles de bolívares sin registro, hay "robo hormiga" crónico, los reportes al final del día son manuales y mentirosos</li>
-<li><strong>Pequeño (comida rápida, ferias, eventos masivos, vendedores ambulantes):</strong> el comercio pierde ventas cuando la red falla</li>
-<li><strong>Pago entre personas (P2P):</strong> en zonas rurales o apagones, no se puede transferir</li>
-</ul>
-<p>VIPPO ya tiene <strong>SmartCashier</strong> (POS digital) y <strong>billetera electrónica con 65K+ usuarios</strong>. ViCheck añade la capa de <strong>supervivencia offline</strong> que falta.</p>
+<p>Venezuela tiene la <strong>infraestructura de telecomunicaciones más inestable de la región</strong>: cortes de electricidad, zonas sin cobertura 4G, intermitencia de WiFi en zonas comerciales. Esto bloquea el flujo de pago digital en contextos donde el efectivo es inseguro o impracticable.</p>
+<p>VIPPO ya tiene SmartCashier (POS digital) y billetera electrónica. ViCheck añade la capa de <strong>supervivencia offline</strong> que falta, manteniendo el modelo donde <strong>ViCheck nunca custodia dinero</strong>.</p>
 <h2 id="2-propuesta-de-valor"><a class="header" href="#2-propuesta-de-valor">2. Propuesta de valor</a></h2>
-<p><strong>ViCheck = billetera offline-first</strong> que:</p>
+<p><strong>ViCheck = capa de orquestación de pagos offline-first</strong> que:</p>
 <ul>
-<li>Permite <strong>pagar incluso sin internet</strong> (chip-to-phone o phone-to-phone)</li>
-<li><strong>Liquida automáticamente</strong> cuando vuelve la conexión</li>
-<li><strong>Elimina el manejo de efectivo</strong> en contextos donde el cash es inseguro o lento</li>
+<li>Permite al cliente <strong>pagar a un aliado</strong> que ya recibió el dinero en su cuenta bancaria</li>
+<li><strong>Sincroniza</strong> automáticamente cuando vuelve la conexión</li>
+<li><strong>Funciona offline</strong> una vez que el cliente cargó su wallet (CashIn)</li>
+<li><strong>Elimina el manejo de efectivo</strong> en contextos donde el cash es inseguro</li>
 <li><strong>Registra todas las transacciones</strong> sin depender de la red para validación</li>
-<li><strong>Auditable</strong> por el comercio y por el regulador (SENIAT, SUDEBAN)</li>
+<li><strong>Permite transferencia entre aliados</strong> (cliente pasa saldo de un aliado a otro)</li>
 </ul>
-<h2 id="3-diferenciador-vs-myccashless"><a class="header" href="#3-diferenciador-vs-myccashless">3. Diferenciador vs MycCashless</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Capacidad</th><th>MycCashless</th><th>ViCheck (propuesto)</th></tr></thead><tbody>
-<tr><td>Offline transaccional</td><td>✅</td><td>✅</td></tr>
-<tr><td>Phone-to-phone (P2P)</td><td>✅ (sync engine)</td><td>✅</td></tr>
-<tr><td>Chip-to-phone (NFC/UID)</td><td>✅</td><td>✅</td></tr>
-<tr><td>QR dinámico autodegradable</td><td>✅ (dChip)</td><td>✅</td></tr>
-<tr><td>Auto-auditoría</td><td>✅</td><td>✅</td></tr>
-<tr><td><strong>Integración con banco local VE</strong></td><td>❌ (Stripe only)</td><td>✅ (vía APIs VIPPO existentes)</td></tr>
-<tr><td><strong>Multi-comercio: pago pequeño</strong></td><td>❌ (orientado a eventos)</td><td>✅ (transporte, comida, ferias)</td></tr>
-<tr><td><strong>Multi-tenancy</strong></td><td>✅</td><td>✅</td></tr>
-<tr><td><strong>Despliegue en zona con red inestable</strong></td><td>⚠️ (WiFi requerido en fin de lugar)</td><td>✅ (sin red)</td></tr>
+<h2 id="3-modelo-de-dinero--corregido"><a class="header" href="#3-modelo-de-dinero--corregido">3. Modelo de dinero — CORREGIDO</a></h2>
+<h3 id="principio-clave-no-somos-custodio"><a class="header" href="#principio-clave-no-somos-custodio">Principio clave: NO somos custodio</a></h3>
+<pre><code>┌────────────────────────────────────────────────────────────────┐
+│  CLIENTE                                                     │
+│  Su banco (origen)                                            │
+│         │                                                    │
+│         │ ① CashIn (online): autorización + registro         │
+│         ▼                                                    │
+│  ┌──────────────┐                                            │
+│  │ ViCheck       │  (registra, valida, NO toca dinero)       │
+│  │ wallet lógica│                                            │
+│  │ del cliente   │                                            │
+│  └──────────────┘                                            │
+│         │                                                    │
+│         │ ② Dinero va directo a cuenta del Aliado            │
+│         ▼                                                    │
+│  ┌─────────────────────────────────────────┐                  │
+│  │ ALIADO (su banco)                        │                  │
+│  │ Recibe el dinero del CashIn              │                  │
+│  └─────────────────────────────────────────┘                  │
+│         ▲                                                    │
+│         │ ③ Cliente paga con ViCheck                          │
+│         │    (descuenta de su wallet lógica)                  │
+│         │                                                    │
+│  ┌──────────────┐                                            │
+│  │ ViCheck       │  (sincroniza offline-first)                │
+│  │ wallet lógica│                                            │
+│  └──────────────┘                                            │
+└────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="flujos-de-dinero"><a class="header" href="#flujos-de-dinero">Flujos de dinero</a></h3>
+<p><strong>CashIn (online):</strong></p>
+<pre><code>1. Cliente en ViCheck app selecciona "Recargar"
+2. ViCheck valida con API VIPPO que el cliente tiene saldo en su banco
+3. ViCheck registra autorización
+4. Banco del cliente transfiere DIRECTO a cuenta del Aliado
+5. ViCheck acredita saldo en la wallet lógica del cliente
+   (el dinero YA está en la cuenta del Aliado, ViCheck solo registra)
+</code></pre>
+<p><strong>Pago online (con conexión):</strong></p>
+<pre><code>1. Cliente selecciona monto y aliado
+2. ViCheck valida que el cliente tiene saldo en su wallet lógica
+3. ViCheck descuenta de la wallet del cliente
+4. Registra transacción (offline-first queue)
+5. Confirma al cliente
+</code></pre>
+<p><strong>Pago offline (sin conexión):</strong></p>
+<pre><code>1. Cliente selecciona monto y aliado
+2. ViCheck descuenta localmente de la wallet (signature ECDSA)
+3. Registra en vault local encriptado
+4. Confirma al cliente
+5. Cuando vuelve internet → sync automático al backend
+6. Backend concilia con la cuenta del Aliado
+</code></pre>
+<p><strong>Transferencia entre Aliados (online):</strong></p>
+<pre><code>1. Cliente tiene saldo acumulado con Aliado A
+2. Quiere gastar en Aliado B
+3. ViCheck valida:
+   - Cliente tiene saldo suficiente con Aliado A
+   - Aliado A tiene fondos suficientes en su banco
+   - Restricciones aplicables (montos, frecuencia)
+4. Banco del Aliado A transfiere a cuenta del Aliado B
+5. ViCheck registra el movimiento
+6. Cliente ahora tiene crédito con Aliado B
+</code></pre>
+<h3 id="quién-custodia-qué"><a class="header" href="#quién-custodia-qué">Quién custodia qué</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Actor</th><th>Qué tiene/custodia</th></tr></thead><tbody>
+<tr><td>Cliente (persona)</td><td>Dinero en su cuenta bancaria propia</td></tr>
+<tr><td>ViCheck</td><td>Nada. Solo es capa de orquestación y registro</td></tr>
+<tr><td>Aliado (comercio)</td><td>Dinero en su cuenta bancaria propia</td></tr>
+<tr><td>Banco del cliente</td><td>Fondos del cliente</td></tr>
+<tr><td>Banco del aliado</td><td>Fondos del aliado</td></tr>
 </tbody></table>
 </div>
-<h2 id="4-usuarios-objetivo"><a class="header" href="#4-usuarios-objetivo">4. Usuarios objetivo</a></h2>
-<h3 id="41-cliente-final-pasajero--consumidor"><a class="header" href="#41-cliente-final-pasajero--consumidor">4.1 Cliente final (pasajero / consumidor)</a></h3>
-<p>Persona que carga saldo en ViCheck y paga con su celular o pulsera NFC en cualquier comercio afiliado. Quiere velocidad y no depender del estado de la conexión.</p>
-<h3 id="42-prestador-de-servicios-comercio-afiliado"><a class="header" href="#42-prestador-de-servicios-comercio-afiliado">4.2 Prestador de servicios (comercio afiliado)</a></h3>
-<p>Negocio que cobra a sus clientes usando la app POS de ViCheck. Necesita: registrar ventas, conciliar, recibir liquidación en su cuenta bancaria. Quiere: cero pérdida de ventas por fallas de conectividad.</p>
-<h3 id="43-operador-de-transporte"><a class="header" href="#43-operador-de-transporte">4.3 Operador de transporte</a></h3>
-<p>Empresa de transporte (buses, taxis, mototaxis) que usa ViCheck como sistema de ticketing. Caso de uso piloto en <strong>Terminal La Bandera</strong> y rutas interurbanas.</p>
-<h3 id="44-admin-vippo"><a class="header" href="#44-admin-vippo">4.4 Admin VIPPO</a></h3>
-<p>Interno: onboarding de comercios, monitoreo de transacciones, anti-fraude, conciliaciones masivas, soporte.</p>
-<h2 id="5-casos-de-uso-prioritarios-mvp"><a class="header" href="#5-casos-de-uso-prioritarios-mvp">5. Casos de uso prioritarios (MVP)</a></h2>
+<p><strong>ViCheck NO custodia dinero en ningún momento.</strong></p>
+<h2 id="4-diferenciador-vs-myccashless"><a class="header" href="#4-diferenciador-vs-myccashless">4. Diferenciador vs MycCashless</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Capacidad</th><th>MycCashless</th><th>ViCheck (corregido)</th></tr></thead><tbody>
+<tr><td>Offline transaccional</td><td>✅</td><td>✅</td></tr>
+<tr><td>Phone-to-phone (P2P)</td><td>✅ (sync engine)</td><td>❌ (no es nuestro foco)</td></tr>
+<tr><td>Chip-to-phone (NFC/UID)</td><td>✅</td><td>✅</td></tr>
+<tr><td>QR dinámico autodegradable</td><td>✅ (dChip)</td><td>✅</td></tr>
+<tr><td>Custodia dinero del cliente</td><td>✅ (evento cerrado)</td><td>❌ (no custodia)</td></tr>
+<tr><td>Transferencia entre aliados</td><td>❌</td><td>✅ (interno, vía bancos)</td></tr>
+<tr><td><strong>Integración con banco local VE</strong></td><td>❌ (Stripe only)</td><td>✅ (vía VIPPO APIs)</td></tr>
+<tr><td>Multi-comercio: pago pequeño</td><td>❌ (orientado a eventos)</td><td>✅ (transporte, comida, ferias)</td></tr>
+<tr><td>Multi-tenancy</td><td>✅</td><td>✅</td></tr>
+<tr><td>Despliegue sin red</td><td>⚠️ (WiFi requerido)</td><td>✅ (sin red)</td></tr>
+</tbody></table>
+</div>
+<h2 id="5-usuarios-objetivo"><a class="header" href="#5-usuarios-objetivo">5. Usuarios objetivo</a></h2>
+<h3 id="51-cliente-final"><a class="header" href="#51-cliente-final">5.1 Cliente final</a></h3>
+<p>Persona que carga saldo en su wallet ViCheck (contra su banco) y paga a aliados con NFC/QR. Quiere velocidad y no depender del estado de la conexión.</p>
+<h3 id="52-prestador-de-servicios-aliadocomercio"><a class="header" href="#52-prestador-de-servicios-aliadocomercio">5.2 Prestador de servicios (Aliado/Comercio)</a></h3>
+<p>Negocio que cobra a sus clientes usando la app POS. Recibe el dinero directo en su cuenta bancaria. Necesita: registrar ventas, conciliar, ver dashboard.</p>
+<h3 id="53-operador-de-transporte"><a class="header" href="#53-operador-de-transporte">5.3 Operador de transporte</a></h3>
+<p>Empresa de transporte (buses, taxis) que usa ViCheck. Caso piloto: Terminal La Bandera y rutas interurbanas.</p>
+<h3 id="54-admin-vippo"><a class="header" href="#54-admin-vippo">5.4 Admin VIPPO</a></h3>
+<p>Interno: onboarding de aliados, monitoreo de transacciones, anti-fraude, conciliaciones, soporte.</p>
+<h2 id="6-casos-de-uso-prioritarios-mvp"><a class="header" href="#6-casos-de-uso-prioritarios-mvp">6. Casos de uso prioritarios (MVP)</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>#</th><th>Caso</th><th>Prioridad</th><th>Piloto</th></tr></thead><tbody>
-<tr><td>UC-01</td><td>CashIn online</td><td>P0</td><td>✅</td></tr>
+<tr><td>UC-01</td><td>CashIn (online)</td><td>P0</td><td>✅</td></tr>
 <tr><td>UC-02</td><td>Pago offline phone-to-phone</td><td>P0</td><td>✅</td></tr>
 <tr><td>UC-03</td><td>Pago offline chip-to-phone (NFC)</td><td>P0</td><td>✅</td></tr>
 <tr><td>UC-04</td><td>Pago offline QR dinámico (dChip)</td><td>P0</td><td>✅</td></tr>
-<tr><td>UC-05</td><td>Sync + CashOut online</td><td>P0</td><td>✅</td></tr>
-<tr><td>UC-06</td><td>Conciliación bancaria</td><td>P1</td><td>✅</td></tr>
-<tr><td>UC-07</td><td>Multi-tenancy (múltiples comercios)</td><td>P1</td><td>✅</td></tr>
-<tr><td>UC-08</td><td>Reportes / dashboard comercio</td><td>P2</td><td>⏸️ post-MVP</td></tr>
-<tr><td>UC-09</td><td>Anti-fraude (anomaly monitoring)</td><td>P2</td><td>⏸️ post-MVP</td></tr>
-<tr><td>UC-10</td><td>dChip web fallback (sin app instalada)</td><td>P1</td><td>⏸️ post-MVP</td></tr>
+<tr><td>UC-05</td><td>Sync + conciliación (online)</td><td>P0</td><td>✅</td></tr>
+<tr><td>UC-06</td><td>Transferencia entre aliados</td><td>P1</td><td>⏸️ post-MVP</td></tr>
+<tr><td>UC-07</td><td>Multi-tenancy</td><td>P1</td><td>✅</td></tr>
+<tr><td>UC-08</td><td>Reportes / dashboard aliado</td><td>P2</td><td>⏸️ post-MVP</td></tr>
+<tr><td>UC-09</td><td>Anti-fraude</td><td>P2</td><td>⏸️ post-MVP</td></tr>
 </tbody></table>
 </div>
-<h2 id="6-out-of-scope-para-mvp"><a class="header" href="#6-out-of-scope-para-mvp">6. Out of scope para MVP</a></h2>
+<h2 id="7-restricciones-críticas"><a class="header" href="#7-restricciones-críticas">7. Restricciones críticas</a></h2>
+<h3 id="71-modo-offline-real"><a class="header" href="#71-modo-offline-real">7.1 Modo offline real</a></h3>
 <ul>
-<li>iOS (solo Android por restricción de recursos)</li>
-<li>Anti-fraude con ML (solo reglas básicas)</li>
+<li>Cliente carga wallet con CashIn (online)</li>
+<li>Una vez cargada, puede gastar offline</li>
+<li>Cada gasto offline se sincroniza cuando vuelve conexión</li>
+<li>Tope configurable por app Y backend</li>
+</ul>
+<h3 id="72-pérdida-de-saldo-por-desinstalación"><a class="header" href="#72-pérdida-de-saldo-por-desinstalación">7.2 Pérdida de saldo por desinstalación</a></h3>
+<ul>
+<li>Si cliente tiene dinero en wallet pero desinstala sin sincronizar → pierde el saldo</li>
+<li>Mecanismo de autorización explícito en la app</li>
+<li>"Al desinstalar sin sincronizar, aceptas perder X Bs"</li>
+<li>Sincronización forzada antes de permitir desinstalación (con countdown)</li>
+</ul>
+<h3 id="73-motor-de-sincronización--corazón-del-producto"><a class="header" href="#73-motor-de-sincronización--corazón-del-producto">7.3 Motor de sincronización — corazón del producto</a></h3>
+<ul>
+<li>Sincronización automática cuando vuelve internet</li>
+<li>Reintentos con backoff exponencial</li>
+<li>Cola persistente (sobrevive crashes)</li>
+<li>Validación contra backend al sincronizar</li>
+<li>Reconciliación entre vueltas</li>
+</ul>
+<h2 id="8-compliance-y-regulatorio"><a class="header" href="#8-compliance-y-regulatorio">8. Compliance y regulatorio</a></h2>
+<h3 id="no-aplica"><a class="header" href="#no-aplica">NO aplica</a></h3>
+<ul>
+<li><strong>SUDEBAN</strong> — no custodiamos dinero</li>
+<li>Licencia de entidad financiera</li>
+<li>Regulación de billetera electrónica</li>
+</ul>
+<h3 id="sÍ-aplica"><a class="header" href="#sÍ-aplica">SÍ aplica</a></h3>
+<ul>
+<li>SENIAT — reportes fiscales</li>
+<li>LOPDP — protección de datos personales</li>
+<li>Regulaciones de interoperabilidad bancaria</li>
+<li>ISO 27001 — si manejamos datos sensibles</li>
+</ul>
+<h2 id="9-out-of-scope-para-mvp"><a class="header" href="#9-out-of-scope-para-mvp">9. Out of scope para MVP</a></h2>
+<ul>
+<li>iOS (solo Android)</li>
+<li>Anti-fraude con ML</li>
 <li>Onboarding biométrico / KYC (delegado a VIPPO)</li>
-<li>Marketplace de productos / catálogo</li>
+<li>Marketplace</li>
 <li>Webhooks a sistemas terceros</li>
-<li>Multi-moneda (solo VESB y VEBITDA/USD)</li>
-<li>SDK abierto para terceros</li>
+<li>Multi-moneda (solo VES)</li>
+<li>SDK abierto</li>
+<li>Transferencia entre aliados (UC-06, post-MVP)</li>
 </ul>
-<h2 id="7-métricas-de-éxito-kpis-del-mvp"><a class="header" href="#7-métricas-de-éxito-kpis-del-mvp">7. Métricas de éxito (KPIs) del MVP</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Métrica</th><th>Target MVP</th><th>Cómo se mide</th></tr></thead><tbody>
-<tr><td>Latencia de transacción offline (tap → confirmación)</td><td>&lt; 300 ms</td><td>Métrica en POS</td></tr>
-<tr><td>Transacciones por segundo (TPS) por nodo POS</td><td>≥ 5 TPS</td><td>Load test</td></tr>
-<tr><td>Sync time cuando vuelve la red (1000 tx pendientes)</td><td>&lt; 30 segundos</td><td>Métrica backend</td></tr>
-<tr><td>Tiempo CashIn (online)</td><td>&lt; 5 segundos</td><td>Métrica backend</td></tr>
-<tr><td>Tasa de éxito de CashIn</td><td>≥ 95%</td><td>Logs</td></tr>
-<tr><td>Tasa de éxito de transacciones offline</td><td>≥ 99%</td><td>Logs</td></tr>
-<tr><td>Tiempo medio de CashOut al banco</td><td>&lt; 24 horas</td><td>Logs bancarios</td></tr>
-<tr><td>Multi-tenancy simultáneo</td><td>10 comercios independientes</td><td>Test funcional</td></tr>
-<tr><td>Crash rate Android</td><td>&lt; 1%</td><td>Crashlytics</td></tr>
+<h2 id="10-métricas-de-éxito-kpis-del-mvp"><a class="header" href="#10-métricas-de-éxito-kpis-del-mvp">10. Métricas de éxito (KPIs) del MVP</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Métrica</th><th>Target MVP</th></tr></thead><tbody>
+<tr><td>Latencia transacción offline (tap → confirmación)</td><td>&lt; 300 ms</td></tr>
+<tr><td>Transacciones por segundo (TPS) por nodo POS</td><td>≥ 5 TPS</td></tr>
+<tr><td>Sync time (1000 tx pendientes)</td><td>&lt; 30 s</td></tr>
+<tr><td>CashIn response time</td><td>&lt; 5 s</td></tr>
+<tr><td>Tasa de éxito de CashIn</td><td>≥ 95%</td></tr>
+<tr><td>Tasa de éxito de transacciones offline</td><td>≥ 99%</td></tr>
+<tr><td>Crash rate Android</td><td>&lt; 1%</td></tr>
+<tr><td>0% pérdida de saldo por desinstalación</td><td>sin sync confirmado</td></tr>
 </tbody></table>
 </div>
-<h2 id="8-restricciones--asunción"><a class="header" href="#8-restricciones--asunción">8. Restricciones / Asunción</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>#</th><th>Restricción</th><th>Impacto</th></tr></thead><tbody>
-<tr><td>R-1</td><td>Sin internet garantizado en Venezuela</td><td>Diseño offline-first obligatorio</td></tr>
-<tr><td>R-2</td><td>Recursos limitados del equipo</td><td>Solo Android, sin iOS en MVP</td></tr>
-<tr><td>R-3</td><td>Multi-tenant desde día 1</td><td>Arquitectura debe separar datos por tenant</td></tr>
-<tr><td>R-4</td><td>Integración con APIs VIPPO existentes</td><td>CashIn/CashOut deben consumir las APIs existentes</td></tr>
-<tr><td>R-5</td><td>Despliegue en Google Play</td><td>Cumplir políticas de Play Store</td></tr>
-<tr><td>R-6</td><td>Datos sensibles financieros</td><td>Cumplimiento y encriptación de criptografía fuerte</td></tr>
-<tr><td>R-7</td><td>Costo infraestructura bajo</td><td>Serverless AWS SAM + PostgreSQL gestionado</td></tr>
-<tr><td>R-8</td><td>Multi-tenancy: cada comercio es tenant</td><td>Aislamiento de saldos, transacciones y reportes</td></tr>
-</tbody></table>
-</div>
-<h2 id="9-stakeholders"><a class="header" href="#9-stakeholders">9. Stakeholders</a></h2>
+<h2 id="11-stakeholders"><a class="header" href="#11-stakeholders">11. Stakeholders</a></h2>
 <ul>
-<li><strong>Product Owner:</strong> Francisco August (consultor externo VIPPO)</li>
-<li><strong>Sponsor VIPPO:</strong> Miguel León (fundador VIPPO)</li>
-<li><strong>Equipo técnico VIPPO:</strong> backend legacy (SmartCashier, FIS-CORTEX), APIs de pago</li>
-<li><strong>Usuarios piloto:</strong> operador de transporte La Bandera, primer comercio Chino</li>
-<li><strong>Audiencia beta:</strong> cerrada, &lt; 50 usuarios iniciales</li>
+<li>Product Owner: Francisco August (consultor externo VIPPO)</li>
+<li>Sponsor VIPPO: Miguel León (fundador VIPPO)</li>
+<li>Equipo técnico VIPPO: backend legacy, APIs de pago</li>
+<li>Usuarios piloto: operador de transporte La Bandera, primer aliado</li>
 </ul>
-<h2 id="10-definición-de-mvp-completo"><a class="header" href="#10-definición-de-mvp-completo">10. Definición de "MVP completo"</a></h2>
+<h2 id="12-definición-de-mvp-completo"><a class="header" href="#12-definición-de-mvp-completo">12. Definición de "MVP completo"</a></h2>
 <p>El MVP está completo cuando:</p>
 <ol>
-<li>Cliente puede hacer CashIn desde su banco VIPPO</li>
-<li>Cliente puede pagar a un comercio sin internet (NFC o dChip QR)</li>
-<li>Cliente puede pagar P2P (phone-to-phone) sin internet</li>
-<li>POS comercio registra transacción en bóveda local encriptada</li>
+<li>Cliente puede hacer CashIn desde su banco (vía VIPPO APIs)</li>
+<li>Dinero va directo a cuenta del Aliado</li>
+<li>Cliente puede gastar offline con NFC/QR después del CashIn</li>
+<li>Cliente puede gastar online también</li>
+<li>POS aliado registra transacción en bóveda local encriptada</li>
 <li>Cuando vuelve internet, sync automático de transacciones pendientes</li>
-<li>Comercio puede ver reporte de ventas y solicitar CashIn</li>
-<li>10 comercios pueden operar simultáneamente con sus salves y sep</li>
+<li>Aliado puede ver reporte de ventas (no saldo, solo ventas)</li>
 <li>App en Google Play cerrada (internal test track)</li>
+<li>Sincronización forzada antes de desinstalación funciona</li>
 </ol>
 <hr />
-<p><strong>Próximo documento:</strong> <code>02-architecture.md</code> — la arquitectura técnica del motor OffVi.</p>
+<p><strong>Próximo documento:</strong> <code>02-architecture.md</code> (corregido)</p>
 
                     </main>
 

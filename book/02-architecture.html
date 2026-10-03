@@ -179,25 +179,26 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="vicheck-mvp--arquitectura-técnica"><a class="header" href="#vicheck-mvp--arquitectura-técnica">ViCheck MVP — Arquitectura Técnica</a></h1>
+                        <h1 id="vicheck-mvp--arquitectura-técnica-modelo-corregido"><a class="header" href="#vicheck-mvp--arquitectura-técnica-modelo-corregido">ViCheck MVP — Arquitectura Técnica (Modelo corregido)</a></h1>
 <h2 id="1-visión-general"><a class="header" href="#1-visión-general">1. Visión general</a></h2>
-<p>ViCheck es una <strong>billetera offline-first</strong> con un <strong>Motor de Sincronización Asíncrono (OffVi)</strong> que desacopla el ciclo de pago en tres fases independientes. El sistema no asume conectividad; cada componente está diseñado para sobrevivir apagones, zonas sin señal y cortes de WiFi.</p>
+<p>ViCheck es una <strong>capa de orquestación offline-first</strong> para pagos entre Cliente → Aliado. ViCheck <strong>NO custodia dinero</strong> — solo registra, valida y sincroniza.</p>
 <pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
 │                            CLIENTE (App Android)                            │
+│  Wallet lógica (NO contiene dinero real, solo "autorización")                │
 │                                                                             │
 │  ┌──────────────────┐    ┌────────────────────────────────────┐            │
-│  │  NFC Module (NFC) │    │          Core App (Kotlin)         │            │
-│  │  - Read UID       │    │  - CashIn UI                       │            │
+│  │  NFC Module      │    │          Core App (Kotlin)         │            │
+│  │  - Read UID      │    │  - CashIn UI                       │            │
 │  │  - Foreground    │    │  - Payment UI                      │            │
-│  │    Dispatch        │    │  - QR Generator (dChip)            │            │
-│  └────────┬───────────┘    │  - State machine (online/offline)  │            │
-│           │                └─────────────────┬───────────────────┘            │
+│  │    Dispatch      │    │  - QR Generator (dChip)            │            │
+│  └────────┬─────────┘    │  - State machine (online/offline)  │            │
+│           │              └─────────────────┬───────────────────┘            │
 │           │                                  │                              │
 │  ┌────────▼──────────────────────────────────▼───────────────────┐         │
-│  │                   Offline-First Engine (Sec 3)                   │       │
+│  │                   Offline-First Engine                          │       │
 │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐│       │
 │  │  │ Local Ledger │  │ Tx Queue    │  │ Encrypted Vault (AES-256) ││       │
-│  │  │ (balances)   │  │ (pending)   │  │ - pending_transactions   ││       │
+│  │  │ (crédito)    │  │ (pending)   │  │ - pending_transactions   ││       │
 │  │  └─────────────┘  └─────────────┘  │ - keys, signatures       ││       │
 │  │                                      └─────────────────────────┘│       │
 │  └─────────────────────────────────────────────────────────────────┘       │
@@ -205,16 +206,17 @@
 └──────────────────────────────────┬───────────────────────────────────────────┘
                                    │ P2P / NFC tap / QR scan
 ┌──────────────────────────────────▼──────────────────────────────────────────┐
-│                          POS COMERCIO (App Android)                         │
-│                                                                             │
+│                          POS ALIADO (App Android)                            │
+│                                                                              │
 │  ┌─────────────────────────────────────────────────────────────────┐        │
 │  │                    POS Logic (Kotlin x Compose)                  │        │
 │  │  - read NFC UID from client                                      │        │
 │  │  - decode dChip QR from client                                   │        │
-│  │  - sign transaction (ECDSA P-256)                              │        │
+│  │  - sign transaction (ECDSA P-256)                               │        │
 │  │  - update local vault                                            │        │
+│  │  - (NO descuenta saldo: solo registra la venta)                 │        │
 │  └─────────────────────────────────────────────────────────────────┘        │
-│                                                                             │
+│                                                                              │
 └──────────────────────────────────┬───────────────────────────────────────────┘
                                    │ Internet when online
 ┌──────────────────────────────────▼───────────────────────────────────────────┐
@@ -222,84 +224,88 @@
 │                                                                              │
 │  ┌────────────────────┐  ┌────────────────────┐  ┌────────────────────┐  │
 │  │  API Gateway        │  │  Lambda Functions  │  │  EventBridge API     │  │
-│  │  (REST + WS)        │  │  (Python 3.14)    │  │  (async events)     │  │
+│  │  (REST + WS)        │  │  (Python 3.14)     │  │  (async events)     │  │
 │  └─────────┬────────────┘  └─────────┬──────────┘  └─────────┬──────────┘  │
 │            │                          │                       │                      │
 │  ┌─────────▼──────────────────────────▼───────────────────────▼──────────┐│
 │  │                          Core Services                                  ││
-│  │  - CashInService         - LedgerService         - SyncService          ││
-│  │  - CashOutService       - TenantService         - BankIntegration       ││
+│  │  - CashInService         - ReconciliationService    - SyncService       ││
+│  │  - TenantService        - BankIntegrationService   - NotificationSvc   ││
 │  └─────────┬──────────────────────────────────────────────┬──────────────┘│
 │            │                              │                              │        │
-│  ┌─────────▼───────────────┐  ┌────────▼────────────────┐                │
-│  │  PostgreSQL (RDS)        │  │  Redis (cache balances) │                │
-│  │  - tenants               │  │  - hot balance mirror   │                │
-│  │  - users                 │  │  - rate limit current    │                │
-│  │  - wallets               │  │  - session cache current  │                │
-│  │  - transactions          │  └──────────────────────────┘                │
-│  │  - ledger (append-only)  │                                                  │
-│  └──────────────────────────┘                                                  │
+│  ┌─────────▼───────────────┐  ┌────────▼────────────────┐                │        │
+│  │  PostgreSQL (RDS)        │  │  Redis (cache)            │                │        │
+│  │  - tenants               │  │  - hot balance mirror   │                │        │
+│  │  - users                 │  │  - rate limit            │                │        │
+│  │  - wallets (lógicas)     │  │  - session cache         │                │        │
+│  │  - transactions          │  └──────────────────────────┘                │        │
+│  │  - sync_log (append-only)│                                                  │        │
+│  └──────────────────────────┘                                                  │        │
 │                                                                              │
 │  ┌─────────────────────────────────────────────────────────────────┐        │
 │  │              External: VIPPO APIs                               │        │
-│  │  - /validacion de pago (CashIn flow existente)                 │        │
-│  │  - /cuentas (gestión bancaria de clientes)                     │        │
-│  │  - /liquidacion (entrega a cuenta del comercio)                │        │
+│  │  - /validacion de pago (validación contra banco del cliente)   │        │
+│  │  - /cuentas (gestión de cuentas bancarias)                    │        │
+│  │  - /transferencia (transferencia entre aliados)                │        │
 │  └─────────────────────────────────────────────────────────────────┘        │
-│                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 </code></pre>
 <h2 id="2-las-3-fases-del-offvi-sync-engine"><a class="header" href="#2-las-3-fases-del-offvi-sync-engine">2. Las 3 fases del OffVi Sync Engine</a></h2>
 <h3 id="fase-1-cashin-online"><a class="header" href="#fase-1-cashin-online">Fase 1: CashIn (Online)</a></h3>
-<p>El usuario final (cliente) o comercio (prestador) carga saldo en su billetera ViCheck. Esta fase <strong>requiere internet</strong> y consume las APIs existentes de VIPPO (<code>/validacion de pago</code> y <code>/cuentas</code>).</p>
+<p>El cliente carga saldo en su wallet ViCheck. Esta fase <strong>requiere internet</strong>. El dinero va directo del banco del cliente a la cuenta del Aliado. ViCheck solo registra.</p>
 <pre><code class="language-mermaid">sequenceDiagram
     participant U as Cliente (App)
     participant V as ViCheck API
     participant P as VIPPO API
-    participant B as Banco
+    participant BC as Banco del Cliente
+    participant BA as Banco del Aliado
 
-    U-&gt;&gt;V: POST /cashin {amount: 200, source: 'banco_x'}
-    V-&gt;&gt;P: POST /validacion de pago
-    P-&gt;&gt;B: initiate transfer
-    B--&gt;&gt;P: 200 OK
+    U-&gt;&gt;V: POST /cashin {amount: 200, aliado_id: 'x'}
+    V-&gt;&gt;P: POST /validacion de pago {user, amount}
+    P-&gt;&gt;BC: validar saldo
+    BC--&gt;&gt;P: 200 OK
     P--&gt;&gt;V: {validacion_id, status: 'pending'}
     V--&gt;&gt;U: 202 Accepted {cashin_id}
 
-    Note over V,P: webhook de VIPPO llega cuando se confirma
+    Note over P,BA: VIPPO ejecuta la transferencia
+    BC-&gt;&gt;BA: transferir(amount)
+    BA--&gt;&gt;BC: transfer OK
+    P--&gt;&gt;V: webhook {status: 'completed'}
 
-    P--&gt;&gt;V: webhook {validacion_id, status: 'completed'}
-    V-&gt;&gt;V: u saldo del usuario, genera tx ledger
+    V-&gt;&gt;V: registra en wallet lógica
+    V-&gt;&gt;V: crea transacción tipo 'cashin'
     V--&gt;&gt;U: push notification 'saldo disponible'
 </code></pre>
 <p><strong>Eventualidades:</strong></p>
 <ul>
 <li>Si el webhook no llega en 30s, el cliente puede pull con <code>GET /cashin/:id</code></li>
-<li>Si falla la carga, reversión completa (transactional)</li>
-<li>Auditoría: cada carga queda registrada en <code>ledger</code> con <code>source = 'vippo_cashin'</code></li>
+<li>Si falla la carga, no se acredita saldo en ViCheck</li>
+<li>Auditoría: cada carga queda registrada en <code>transactions</code> con <code>source = 'vippo_cashin'</code></li>
 </ul>
 <h3 id="fase-2-transacción-offline-void"><a class="header" href="#fase-2-transacción-offline-void">Fase 2: Transacción offline (Void)</a></h3>
-<p>El cliente paga al comercio sin internet. Hay dos medios físicos:</p>
+<p>El cliente paga al Aliado sin internet. Hay dos medios físicos:</p>
 <h4 id="2a-nfc-chip-to-phone"><a class="header" href="#2a-nfc-chip-to-phone">2a. NFC (chip-to-phone)</a></h4>
 <pre><code class="language-mermaid">sequenceDiagram
     participant C as Client App
     participant NFC as NFC Tag
-    participant P as POS Device
+    participant P as POS Aliado
     participant V as Local Vault
 
     C-&gt;&gt;NFC: tap (cliente acerca pulsera/tarjeta/celular)
     NFC--&gt;&gt;C: UID: 04:A3:B2:C1:D4:E5:F6
     C-&gt;&gt;C: search local wallet by UID
-    C-&gt;&gt;C: sign tx {from_uid, to_merchant, amount, nonce, ts}
+    C-&gt;&gt;C: valida saldo local (cache)
+    C-&gt;&gt;C: sign tx {from_uid, to_aliado, amount, nonce, ts}
     C-&gt;&gt;P: tx pushed via NFC (NDEF) o BLE
     P-&gt;&gt;P: verify signature
-    P-&gt;&gt;P: u balance, append pending tx
+    P-&gt;&gt;P: registra venta localmente (NO descuenta saldo)
     P-&gt;&gt;V: encrypt and store
     P--&gt;&gt;C: confirmation via NFC/NDEF
 </code></pre>
 <h4 id="2b-dchip-qr-phone-to-phone"><a class="header" href="#2b-dchip-qr-phone-to-phone">2b. dChip QR (phone-to-phone)</a></h4>
 <pre><code class="language-mermaid">sequenceDiagram
     participant C as Client App
-    participant P as POS Device
+    participant P as POS Aliado
 
     P-&gt;&gt;P: generates dChip QR (HMAC + nonce + ttl)
     Note over P: QR se renueva cada 30s
@@ -311,30 +317,29 @@
 <p><strong>El PIN de confirmación:</strong> Cada transacción offline con monto significativo (≥ configurable por tenant) requiere <strong>PIN entry en el celular del cliente</strong> antes de firmar.</p>
 <p><strong>Estado local:</strong></p>
 <ul>
-<li><code>Local Ledger (SQLite + SQLCipher)</code>: balance mirrorado por tenant</li>
+<li><code>Local Ledger (SQLite + SQLCipher)</code>: wallet lógica cacheada</li>
 <li><code>Pending Transactions Queue</code>: cola de TX firmadas esperando sync</li>
 <li><code>Key Store</code>: llaves ECDSA del dispositivo</li>
 </ul>
-<h3 id="fase-3-cashout--conciliación-online"><a class="header" href="#fase-3-cashout--conciliación-online">Fase 3: CashOut + Conciliación (Online)</a></h3>
-<p>Cuando el POS comercio detecta internet (NetworkCallback en Android), ejecuta el sync.</p>
+<h3 id="fase-3-sync--conciliación-online"><a class="header" href="#fase-3-sync--conciliación-online">Fase 3: Sync + Conciliación (Online)</a></h3>
+<p>Cuando el dispositivo detecta red (NetworkCallback en Android), ejecuta el sync. NO hay cashout del Aliado — el dinero ya está en su banco.</p>
 <pre><code class="language-mermaid">sequenceDiagram
-    participant P as POS Device
+    participant D as Cliente (o POS)
     participant V as ViCheck API
-    participant L as Ledger
-    participant B as Bank
+    participant DB as DB
+    participant P as VIPPO API
 
-    P-&gt;&gt;V: POST /sync {batch: [...pending_txs]}
+    D-&gt;&gt;V: POST /sync {batch: [...pending_txs]}
     V-&gt;&gt;V: validate batch (firmas, secuencia, no duplicados)
     loop for each tx
-        V-&gt;&gt;L: append entry (append-only)
-        V-&gt;&gt;V: update balances del usuario + comercio
+        V-&gt;&gt;DB: registra transacción (sync_log append-only)
+        V-&gt;&gt;DB: actualiza wallet lógica del cliente
     end
-    V--&gt;&gt;P: 200 OK {batch_result, new_balance}
+    V--&gt;&gt;D: 200 OK {batch_result, new_wallet_state}
 
-    Note over V,L: CashOut se triggea por separado
-    V-&gt;&gt;B: POST /liquidacion {merchant_id, amount}
-    B--&gt;&gt;V: {liquidacion_id, status}
-    V--&gt;&gt;P: notification 'fondos liquidados'
+    Note over V,P: Si hay transferencia entre aliados
+    V-&gt;&gt;P: POST /transferencia {aliado_a, aliado_b, amount}
+    P--&gt;&gt;V: {transfer_id, status}
 </code></pre>
 <h2 id="3-componentes-detallados"><a class="header" href="#3-componentes-detallados">3. Componentes detallados</a></h2>
 <h3 id="31-offline-first-engine-android"><a class="header" href="#31-offline-first-engine-android">3.1 Offline-First Engine (Android)</a></h3>
@@ -347,16 +352,17 @@ com.vippo.vicheck/
 │   ├── storage/              ← Room + SQLCipher
 │   └── sync/                 ← NetworkCallback, retry, backoff
 ├── data/
-│   ├── model/                ← Wallet, Transaction, User, Tenant
+│   ├── model/                ← Wallet (lógica), Transaction, User, Tenant
 │   └── repository/           ← Local + Remote data sources
 ├── domain/
-│   ├── usecase/              ← CashIn, Pay, Sync, CashOut
+│   ├── usecase/              ← CashIn, Pay, Sync, TransferBetweenAliados
 │   └── state/                ← State machine Online/Offline/Partial
 ├── feature/
 │   ├── onboarding/
-│   ├── wallet/                ← balance, history
-│   ├── pay/                  ← pagar a comercio
+│   ├── wallet/                ← balance (lógico), history
+│   ├── pay/                  ← pagar a aliado
 │   ├── topup/                ← cashin flow
+│   ├── transfer/              ← transferir entre aliados
 │   └── settings/
 └── di/                       ← Hilt modules
 </code></pre>
@@ -367,15 +373,15 @@ com.vippo.vicheck/
 │   ├── handlers/
 │   │   ├── cashin.py         ← POST /cashin
 │   │   ├── sync.py           ← POST /sync
-│   │   ├── cashout.py        ← POST /cashout
+│   │   ├── transfer.py       ← POST /transfer (entre aliados)
 │   │   ├── balance.py        ← GET /balance/:uid
 │   │   ├── webhook_vippo.py  ← inbound webhook
 │   │   └── reconciliation.py ← CRON
 │   ├── services/
-│   │   ├── ledger.py         ← append-only writes
+│   │   ├── wallet.py         ← wallet lógica (NO dinero real)
 │   │   ├── tenant.py
 │   │   ├── vippo_client.py   ← HTTP client a VIPPO APIs
-│   │   └── bank_client.py
+│   │   └── reconciliation.py
 │   ├── models/
 │   │   └── pydantic_models.py
 │   ├── db/
@@ -388,13 +394,15 @@ com.vippo.vicheck/
 └── requirements.txt
 </code></pre>
 <h3 id="33-base-de-datos-postgresql"><a class="header" href="#33-base-de-datos-postgresql">3.3 Base de datos (PostgreSQL)</a></h3>
-<pre><code class="language-sql">-- Multitenancy por tenant_id en cada tabla
-CREATE TABLE tenants (
+<pre><code class="language-sql">CREATE TABLE tenants (
   id UUID PRIMARY KEY,
   name TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
   vippo_merchant_id TEXT UNIQUE,
   bank_account_id TEXT,
   status TEXT DEFAULT 'active',
+  branding JSONB,
+  config JSONB,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -404,8 +412,12 @@ CREATE TABLE users (
   phone TEXT UNIQUE NOT NULL,
   email TEXT,
   full_name TEXT,
+  cedula TEXT,
   kyc_status TEXT DEFAULT 'pending',
   vippo_user_id TEXT UNIQUE,
+  pin_hash TEXT,
+  biometric_enabled BOOLEAN DEFAULT false,
+  status TEXT DEFAULT 'active',
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -413,10 +425,15 @@ CREATE TABLE wallets (
   id UUID PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES users(id),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
-  balance DECIMAL(18,4) NOT NULL DEFAULT 0,
+  balance DECIMAL(18,4) NOT NULL DEFAULT 0,  -- saldo lógico (crédito contra aliado)
   currency TEXT NOT NULL DEFAULT 'VES',
   status TEXT DEFAULT 'active',
+  daily_limit DECIMAL(18,4) DEFAULT 1000.00,
+  monthly_limit DECIMAL(18,4) DEFAULT 5000.00,
+  offline_pending DECIMAL(18,4) DEFAULT 0,  -- saldo reservado en offline
+  offline_max_amount DECIMAL(18,4) DEFAULT 500.00,  -- tope configurado (sincronizado backend)
   created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(user_id, tenant_id, currency)
 );
 
@@ -424,95 +441,122 @@ CREATE TABLE transactions (
   id UUID PRIMARY KEY,
   wallet_id UUID NOT NULL REFERENCES wallets(id),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
-  type TEXT NOT NULL,        -- 'cashin', 'pay', 'cashout', 'fee'
+  type TEXT NOT NULL,  -- 'cashin', 'pay', 'transfer', 'fee'
   amount DECIMAL(18,4) NOT NULL,
   currency TEXT NOT NULL,
-  counterparty_id UUID REFERENCES wallets(id),
-  status TEXT NOT NULL,       -- 'pending_sync', 'synced', 'reconciled', 'reversed'
-  offline_signature TEXT,     -- ECDSA signature hex
-  offline_nonce TEXT,
-  created_at TIMESTAMPTZ NOT NULL,
+  counterparty_aliado_id UUID REFERENCES tenants(id),
+  status TEXT NOT NULL DEFAULT 'pending_sync',
+  offline_signature TEXT,
+  offline_nonce UUID,
+  offline_timestamp TIMESTAMPTZ,
   synced_at TIMESTAMPTZ,
   vippo_cashin_id TEXT,
-  vippo_cashout_id TEXT
+  vippo_transfer_id TEXT,
+  device_id UUID REFERENCES devices(id),
+  metadata JSONB,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT chk_type CHECK (type IN ('cashin', 'pay', 'transfer', 'fee')),
+  CONSTRAINT chk_status CHECK (status IN ('pending_sync', 'synced', 'reconciled', 'reversed', 'failed'))
 );
 
-CREATE TABLE ledger (
+CREATE TABLE sync_log (
   id BIGSERIAL PRIMARY KEY,
-  tx_id UUID NOT NULL REFERENCES transactions(id),
-  tenant_id UUID NOT NULL,
-  wallet_id UUID NOT NULL,
-  direction TEXT NOT NULL,    -- 'debit' o 'credit'
-  amount DECIMAL(18,4) NOT NULL,
-  balance_after DECIMAL(18,4) NOT NULL,
-  recorded_at TIMESTAMPTZ DEFAULT NOW()
+  device_id UUID NOT NULL,
+  user_id UUID NOT NULL,
+  batch_id UUID NOT NULL,
+  tx_count INTEGER NOT NULL,
+  first_tx_id UUID,
+  last_tx_id UUID,
+  sync_started_at TIMESTAMPTZ,
+  sync_completed_at TIMESTAMPTZ,
+  status TEXT NOT NULL,
+  error_detail TEXT
 );
 
-CREATE INDEX idx_tx_wallet_pending ON transactions(wallet_id, status) WHERE status = 'pending_sync';
+CREATE TABLE transfers (
+  id UUID PRIMARY KEY,
+  from_aliado_id UUID NOT NULL REFERENCES tenants(id),
+  to_aliado_id UUID NOT NULL REFERENCES tenants(id),
+  user_id UUID NOT NULL REFERENCES users(id),
+  amount DECIMAL(18,4) NOT NULL,
+  status TEXT NOT NULL,  -- 'pending', 'completed', 'failed'
+  vippo_transfer_id TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  completed_at TIMESTAMPTZ,
+  metadata JSONB
+);
+
+CREATE INDEX idx_tx_wallet_pending ON transactions(wallet_id) WHERE status = 'pending_sync';
 CREATE INDEX idx_tx_tenant_created ON transactions(tenant_id, created_at DESC);
+CREATE INDEX idx_tx_offline_nonce ON transactions(offline_nonce) WHERE offline_nonce IS NOT NULL;
+CREATE INDEX idx_transfers_user ON transfers(user_id, created_at DESC);
 </code></pre>
-<p><strong>Modelo append-only:</strong> <code>ledger</code> nunca se modifica. Cualquier corrección genera <code>tx_terminal_type = 'reversal'</code>.</p>
 <h3 id="34-criptografía"><a class="header" href="#34-criptografía">3.4 Criptografía</a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Uso</th><th>Algoritmo</th><th>Implementación</th></tr></thead><tbody>
 <tr><td>Firma tx offline</td><td>ECDSA P-256</td><td>Bouncy Castle (Android) / python-ecdsa (backend)</td></tr>
 <tr><td>Encriptación vault local</td><td>AES-256-GCM</td><td>Tink (Android) / cryptography (Python)</td></tr>
 <tr><td>Hash dChip</td><td>HMAC-SHA256</td><td>libsodium / Tink</td></tr>
-<tr><td>Llave dispositivo↔backend</td><td>ECDH P-256</td><td>Curva25519 / secp256r1</td></tr>
+<tr><td>Llave dispositivo↔backend</td><td>ECDH P-256</td><td>secp256r1</td></tr>
 <tr><td>Storage password</td><td>Argon2id</td><td>argon2-cffi (Python)</td></tr>
 </tbody></table>
 </div>
 <p><strong>Generación de llaves:</strong> El backend genera el par de llaves ECDSA en el registro del dispositivo. La llave privada se entrega al dispositivo sobre un canal seguro (autenticación mutua con TLS) y se almacena en <code>EncryptedSharedPreferences</code> de Android.</p>
 <h2 id="4-flujo-de-datos-completo-pago-offline--sync"><a class="header" href="#4-flujo-de-datos-completo-pago-offline--sync">4. Flujo de datos completo (pago offline + sync)</a></h2>
-<pre><code>CLIENTE                                        COMERCIO                              BACKEND
-   │                                              │                                    │
-   │ 1. Tap pulsera al POS                        │  │                                    │
-   │────────────────────────────────────────────►│  │                                    │
-   │                                              │  │                                    │
-   │   2. POS lee UID                             │  │                                    │
-   │   3. POS consulta balance del UID           │  │                                    │
-   │      (lookup local + cache)                 │  │                                    │
-   │                                              │  │                                    │
-   │   4. POS muestra monto + comercio            │  │                                    │
-   │◄─────────────────────────────────────────────│  │                                    │
-   │                                              │                                    │
-   │   5. Cliente ingresa PIN                     │  │                                    │
-   │   6. Cliente firma tx (con llave priv)      │  │                                    │
-   │────────────────────────────────────────────►│  │                                    │
-   │                                              │                                    │
-   │   7. POS verifica firma                      │  │                                    │
-   │   8. POS descuenta local                    │  │                                    │
-   │   9. POS almacena en vault local            │  │                                    │
-   │                                              │                                    │
-   │   10. POS muestra OK al comercio + cliente   │  │                                    │
-   │◄─────────────────────────────────────────────│  │                                    │
-   │                                              │                                    │
-   │                                       [NO INTERNET]    [INTERNET VUELVE]           │
-   │                                              │                                    │
-   │                                              │  11. POST /sync {batch: [...tx]}   │
-   │                                              │────────────────────────────────► │
-   │                                              │                                    │
-   │                                              │  12. Backend valida batch          │
-   │                                              │  13. Backend append-only           │
-   │                                              │  14. Backend update balance         │
-   │                                              │                                    │
-   │                                              │  15. 200 OK {new_balance}           │
-   │                                              │◄──────────────────────────────── │
-   │                                              │                                    │
-   │                                              │  16. (opcional) CashOut si         │
-   │                                              │     balance &gt; threshold            │
+<pre><code>CLIENTE                              POS ALIADO                              BACKEND
+   │                                      │                                    │
+   │ 1. Tap pulsera al POS                │                                    │
+   │─────────────────────────────────────►│                                    │
+   │                                      │                                    │
+   │   2. POS lee UID                     │                                    │
+   │   3. POS consulta balance local     │                                    │
+   │      (wallet lógica cacheada)        │                                    │
+   │                                      │                                    │
+   │   4. POS muestra monto + aliado       │                                    │
+   │◄─────────────────────────────────────┤                                    │
+   │                                      │                                    │
+   │   5. Cliente ingresa PIN             │                                    │
+   │   6. Cliente firma tx                │                                    │
+   │─────────────────────────────────────►│                                    │
+   │                                      │                                    │
+   │   7. POS verifica firma              │                                    │
+   │   8. POS REGISTRA la venta           │                                    │
+   │      (NO descuenta saldo aquí)       │                                    │
+   │   9. POS almacena en vault local     │                                    │
+   │                                      │                                    │
+   │   10. POS muestra OK al comercio +   │                                    │
+   │       cliente                        │                                    │
+   │◄─────────────────────────────────────┤                                    │
+   │                                      │                                    │
+   │                            [NO INTERNET]    [INTERNET VUELVE]            │
+   │                                      │                                    │
+   │                                      │  11. POST /sync {batch: [...tx]}  │
+   │                                      ├──────────────────────────────────► │
+   │                                      │                                    │
+   │                                      │  12. Backend valida batch         │
+   │                                      │  13. Backend registra tx          │
+   │                                      │  14. Backend actualiza wallet      │
+   │                                      │      lógica del cliente            │
+   │                                      │                                    │
+   │                                      │  15. 200 OK {new_wallet_state}    │
+   │                                      │◄──────────────────────────────────┤
+   │                                      │                                    │
+   │                                      │  [Si hay transferencia entre     │
+   │                                      │   aliados, se ejecuta vía VIPPO]  │
 </code></pre>
 <h2 id="5-seguridad"><a class="header" href="#5-seguridad">5. Seguridad</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Capa</th><th>Medida</th></tr></thead><tbody>
 <tr><td><strong>Transporte</strong></td><td>TLS 1.3 en todas las llamadas HTTP/HTTPS</td></tr>
 <tr><td><strong>Autenticación</strong></td><td>JWT firmado por backend, refresh tokens con rotación</td></tr>
-<tr><td><strong>Autorización</strong></td><td>RBAC por tenant: cliente solo ve su balance, comercio ve sus ventas</td></tr>
+<tr><td><strong>Autorización</strong></td><td>RBAC por tenant: cliente solo ve su wallet lógica, aliado ve sus ventas</td></tr>
 <tr><td><strong>Vault local</strong></td><td>AES-256-GCM, llave derivada de master + device-bound key</td></tr>
 <tr><td><strong>Firmas tx</strong></td><td>Cada tx tiene nonce + firma ECDSA, previene duplicación</td></tr>
 <tr><td><strong>Anti-replay</strong></td><td>Nonce + timestamp en cada tx, ventana de aceptación configurable</td></tr>
 <tr><td><strong>Device binding</strong></td><td>Cada dispositivo tiene par de llaves único registrado en backend</td></tr>
-<tr><td><strong>Audit log</strong></td><td>Ledger append-only, todas las operaciones registradas</td></tr>
+<tr><td><strong>Audit log</strong></td><td>sync_log append-only, todas las operaciones registradas</td></tr>
 <tr><td><strong>Rate limiting</strong></td><td>Por usuario, por tenant, configurable</td></tr>
 <tr><td><strong>Multi-tenancy</strong></td><td><code>tenant_id</code> en todas las queries, nunca cruzado</td></tr>
+<tr><td><strong>Pre-desinstalación</strong></td><td>App fuerza sync + muestra alerta explícita "perderás X Bs"</td></tr>
 </tbody></table>
 </div>
 <h2 id="6-performance-y-capacidad-esperada"><a class="header" href="#6-performance-y-capacidad-esperada">6. Performance y capacidad esperada</a></h2>

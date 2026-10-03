@@ -352,31 +352,30 @@
 <li><strong>Salidas:</strong> tx no se pierden</li>
 </ul>
 <hr />
-<h2 id="rf-005-cashout-liquidación"><a class="header" href="#rf-005-cashout-liquidación">RF-005: CashOut (liquidación)</a></h2>
-<h3 id="rf-005-001-p0-cashout-de-comercio-a-banco"><a class="header" href="#rf-005-001-p0-cashout-de-comercio-a-banco">RF-005-001 [P0] CashOut de comercio a banco</a></h3>
-<p>El comercio puede transferir su saldo disponible a su cuenta bancaria registrada.</p>
+<h2 id="rf-005-reportes-del-aliado-sin-cashout"><a class="header" href="#rf-005-reportes-del-aliado-sin-cashout">RF-005: Reportes del Aliado (sin CashOut)</a></h2>
+<p><strong>ELIMINADO:</strong> El Aliado no tiene CashOut. El dinero llega directo a su cuenta bancaria cuando el cliente hace CashIn.</p>
+<h3 id="rf-005-001-p0-dashboard-de-ventas-del-aliado"><a class="header" href="#rf-005-001-p0-dashboard-de-ventas-del-aliado">RF-005-001 [P0] Dashboard de ventas del Aliado</a></h3>
+<p>El Aliado puede ver todas las ventas recibidas (online + offline sincronizadas).</p>
 <ul>
-<li><strong>Entradas:</strong> monto a liquidar</li>
-<li><strong>Proceso:</strong> POST <code>/cashout</code> → VIPPO <code>/liquidacion</code> → webhook confirma</li>
-<li><strong>Salidas:</strong> saldo descontado, tx <code>cashout</code> completada, fondos en banco</li>
+<li><strong>Entradas:</strong> sesión del Aliado</li>
+<li><strong>Proceso:</strong> GET <code>/pos/dashboard</code> con filtros por rango</li>
+<li><strong>Salidas:</strong> ventas hoy/semana/mes, # tx, ticket promedio</li>
 </ul>
-<h3 id="rf-005-002-p0-cashout-programado--automático"><a class="header" href="#rf-005-002-p0-cashout-programado--automático">RF-005-002 [P0] CashOut programado / automático</a></h3>
-<p>El sistema puede liquidar automáticamente cuando el saldo acumulado &gt; umbral.</p>
+<h3 id="rf-005-002-p0-reporte-de-ventas-por-período"><a class="header" href="#rf-005-002-p0-reporte-de-ventas-por-período">RF-005-002 [P0] Reporte de ventas por período</a></h3>
+<p>El Aliado puede ver ventas por rango de fechas específico.</p>
 <ul>
-<li><strong>Entradas:</strong> umbral configurable por tenant</li>
-<li><strong>Proceso:</strong> CRON backend evalúa diariamente</li>
-<li><strong>Salidas:</strong> liquidación automática</li>
+<li><strong>Entradas:</strong> fecha inicio, fecha fin</li>
+<li><strong>Salidas:</strong> lista de ventas, totales, gráficos</li>
 </ul>
-<h3 id="rf-005-003-p0-reporte-de-liquidación"><a class="header" href="#rf-005-003-p0-reporte-de-liquidación">RF-005-003 [P0] Reporte de liquidación</a></h3>
-<p>El comercio recibe reporte de liquidaciones.</p>
+<h3 id="rf-005-003-p0-detalle-de-cada-venta"><a class="header" href="#rf-005-003-p0-detalle-de-cada-venta">RF-005-003 [P0] Detalle de cada venta</a></h3>
+<p>El Aliado puede ver detalle de cada venta: cliente UID (si fue NFC), monto, hora, firma.</p>
 <ul>
-<li><strong>Salidas:</strong> dashboard con histórico, próximo CashOut programado, balance retenido</li>
+<li><strong>Salidas:</strong> vista detallada de transacción + firma</li>
 </ul>
-<h3 id="rf-005-004-p1-cashout-parcial"><a class="header" href="#rf-005-004-p1-cashout-parcial">RF-005-004 [P1] CashOut parcial</a></h3>
-<p>El comercio puede elegir cuánto liquidar (no todo).</p>
+<h3 id="rf-005-004-p1-exportar-ventas-a-csv"><a class="header" href="#rf-005-004-p1-exportar-ventas-a-csv">RF-005-004 [P1] Exportar ventas a CSV</a></h3>
+<p>El Aliado puede exportar ventas en CSV para contabilidad.</p>
 <ul>
-<li><strong>Entradas:</strong> monto o "todo"</li>
-<li><strong>Salidas:</strong> el resto queda en balance del tenant</li>
+<li><strong>Salidas:</strong> archivo CSV descargable</li>
 </ul>
 <hr />
 <h2 id="rf-006-multi-tenancy"><a class="header" href="#rf-006-multi-tenancy">RF-006: Multi-tenancy</a></h2>
