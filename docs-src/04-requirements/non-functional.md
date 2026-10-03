@@ -104,10 +104,11 @@ Multi-region deployment (us-east-1 + us-west-2)
 
 ## 4. Compliance y regulatorio
 
-### RNF-COMP-001 [P0] Cumplimiento SUDEBAN
-ViCheck opera bajo licencia de VIPPO que ya tiene permiso de SUDEBAN.
-- **Documentación:** delegada a VIPPO
-- **Validación:** No requerimos permisos propios, operamos como feature de VIPPO
+### RNF-COMP-001 [P0] NO aplica SUDEBAN
+ViCheck NO custodia dinero, opera como capa de orquestación.
+- **SUDEBAN no aplica directamente** sobre nosotros (supervisa bancos)
+- Operamos como feature de VIPPO, quien tiene la licencia necesaria
+- Validación regulatoria delegada a VIPPO
 
 ### RNF-COMP-002 [P0] Cumplimiento SENIAT (impuestos)
 - Reporte de operaciones generadas al cliente mensualmente (factura fiscal)

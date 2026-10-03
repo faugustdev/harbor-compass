@@ -10,68 +10,16 @@
 
 ## 2. Endpoints públicos
 
-### 2.1 Auth
+## 2.1 Auth
 
 #### `POST /auth/request-otp`
-Solicita código OTP al teléfono.
-
-**Request:**
-```json
-{
-  "phone": "+584121234567"
-}
-```
-
-**Response 202:**
-```json
-{
-  "request_id": "uuid",
-  "expires_at": "2026-10-02T14:30:00Z"
-}
-```
-
 #### `POST /auth/verify-otp`
-Verifica OTP y emite JWT.
-
-**Request:**
-```json
-{
-  "request_id": "uuid",
-  "otp": "123456"
-}
-```
-
-**Response 200:**
-```json
-{
-  "access_token": "eyJ...",
-  "refresh_token": "uuid",
-  "expires_in": 900,
-  "user": {
-    "id": "uuid",
-    "phone": "+584121234567",
-    "tenant_id": "uuid",
-    "full_name": "Francisco August"
-  }
-}
-```
-
 #### `POST /auth/refresh`
-Renueva access token.
 
-**Request:**
-```json
-{
-  "refresh_token": "uuid"
-}
-```
-
-**Response 200:** mismo formato que verify-otp.
-
-### 2.2 CashIn
+### 2.2 CashIn (online)
 
 #### `POST /cashin`
-Inicia una carga de saldo.
+Inicia CashIn. Valida contra banco del cliente, transfiere dinero a cuenta del Aliado, acredita wallet lógica del cliente.
 
 **Request:**
 ```json
@@ -79,39 +27,15 @@ Inicia una carga de saldo.
   "amount": "200.00",
   "currency": "VES",
   "source_bank_account_id": "uuid",
-  "source_bank_code": "0102"
+  "source_bank_code": "0102",
+  "aliado_id": "uuid"
 }
 ```
 
-**Response 202:**
-```json
-{
-  "cashin_id": "uuid",
-  "status": "pending",
-  "expires_at": "2026-10-02T14:35:00Z"
-}
-```
-
-#### `GET /cashin/{cashin_id}`
-Consulta el estado del cuerpo CashIn.
-
-**Response 200:**
-```json
-{
-  "cashin_id": "uuid",
-  "status": "completed",
-  "amount": "200.00",
-  "currency": "VES",
-  "new_balance": "12500.00",
-  "completed_at": "2026-10-02T14:32:15Z",
-  "vippo_cashin_id": "vippo-uuid"
-}
-```
-
-### 2.3 Payments (Offline-first)
+### 2.3 Sync (pagos offline)
 
 #### `POST /sync`
-Sincroniza transacciones offline pendientes.
+Sincroniza transacciones offline pendientes. NO descuenta saldo aquí — ya se descontó en el dispositivo. Aquí solo registra y concilia.
 
 **Request:**
 ```json
@@ -123,7 +47,7 @@ Sincroniza transacciones offline pendientes.
       "type": "pay",
       "amount": "45.00",
       "currency": "VES",
-      "counterparty_external": "uuid-merchant",
+      "counterparty_aliado_id": "uuid-aliado",
       "timestamp": "2026-10-02T14:00:00Z",
       "nonce": "uuid",
       "signature": "0x9f4a..."
@@ -252,10 +176,9 @@ POS consulta historial de ventas.
 #### `GET /pos/dashboard`
 Métricas del POS: ventas hoy, semana, mes.
 
-### 3.3 POS CashOut
+### 3.3 POS Reporte (NO hay CashOut)
 
-#### `POST /pos/cashout`
-Solicita liquidación.
+**NO existe `/pos/cashout`** — el dinero del Aliado ya está en su banco desde el CashIn. El Aliado solo consulta reportes de ventas.
 
 ## 4. Endpoints Admin (interno)
 

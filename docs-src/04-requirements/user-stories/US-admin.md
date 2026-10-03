@@ -190,10 +190,10 @@
 
 ## US-A-007 — Reportes regulatorios
 
-**HU-360 [P0]** Como admin, quiero generar reporte de operaciones para SUDEBAN, para cumplimiento regulatorio.
+**HU-360 [P0]** Como admin, quiero generar reporte fiscal para SENIAT, para declaración de impuestos. (SUDEBAN no aplica — no custodiamos dinero)
 
 **Criterios de aceptación:**
-- [ ] Formato compatible con SUDEBAN
+- [ ] Formato compatible con SENIAT
 - [ ] Generación por rango de fechas
 - [ ] Incluye todas las operaciones del período
 

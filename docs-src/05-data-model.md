@@ -1,4 +1,6 @@
-# ViCheck MVP — Modelo de Datos (PostgreSQL)
+# ViCheck MVP — Modelo de Datos (PostgreSQL) — Modelo corregido
+
+> **IMPORTANTE:** ViCheck NO custodia dinero. El "balance" en `wallets` es un **crédito lógico** contra el Aliado. El dinero real está en cuentas bancarias externas (del cliente y del aliado).
 
 ## Diagrama ER simplificado
 
@@ -7,240 +9,233 @@
 │   tenants    │       │    users     │       │   wallets    │
 ├──────────────┤       ├──────────────┤       ├──────────────┤
 │ id (PK)      │◄──┐   │ id (PK)      │◄──┐   │ id (PK)      │
-│ name         │   │   │            │   │   │ user_id (FK) │─┘
-│ vippo_merchant_id ││  tenant_id (FK)│   │   │ tenant_id (FK)│
-│ bank_account_id  ││  phone (UNIQUE) │   │   │ balance      │
-│ status        ││   │ email          │   │   │ currency     │
-│ created_at    ││   │ full_name      │   │   │ status       │
-└──────────────┘│  │ kyc_status       │   │   │ created_at   │
-                │  │ vippo_user_id    │   │   └──────┬───────┘
-                │  │ created_at       │   │          │
-                │  └──────────────┘   │   │          │
-                │                     │   │          │
-                │  ┌──────────────────┘   │          ▼
-                │  │                      │   ┌──────────────┐
-                │  │                      │   │ transactions │
-                │  │                      │   ├──────────────┤
-                │  │                      │   │ id (PK)      │
-                │  │                      │   │ wallet_id(FK)│
-                │  │                      │   │ tenant_id(FK)│
-                │  │                      │   │ type         │
-                │  │                      │   │ amount       │
-                │  │                      │   │ currency     │
-                │  │                      │   │ counterparty │
-                │  │                      │   │ status       │
-                │  │                      │   │ offline_sig  │
-                │  │                      │   │ nonce        │
-                │  │                      │   │ created_at   │
-                │  │                      │   │ synced_at    │
-                │  │                      │   │ vippo_cashin_id│
-                │  │                      │   │ vippo_cashout_id│
-                │  │                      │   └──────┬───────┘
-                │  │                      │          │
-                │  │                      │          ▼
-                │  │                      │   ┌──────────────┐
-                │  │                      │   │   ledger     │
-                │  │                      │   ├──────────────┤
-                │  │                      │   │ id (PK)      │
-                │  │                      │   │ tx_id (FK)   │
-                │  │                      │   │ wallet_id    │
-                │  │                      │   │ direction    │
-                │  │                      │   │ amount       │
-                │  │                      │   │ balance_after│
-                │  │                      │   │ recorded_at  │
-                │  │                      │   └──────────────┘
-                │  │                      │
-                ▼  └──────────────────────┘
-                
-┌──────────────┐       ┌──────────────┐
-│  devices     │       │  audit_log   │
-├──────────────┤       ├──────────────┤
-│ id (PK)      │       │ id (PK)      │
-│ user_id (FK) │       │ tenant_id    │
-│ tenant_id    │       │ actor_id     │
-│ device_type  │       │ action       │
-│ public_key   │       │ resource     │
-│ device_name  │       │ details (JSON)│
-│ status       │       │ created_at   │
-│ last_seen_at │       └──────────────┘
-│ created_at   │
-└──────────────┘
+│ name         │   │   │ tenant_id    │   │   │ user_id (FK) │─┘
+│ slug         │   │   │ phone        │   │   │ tenant_id (FK)│
+│ vippo_merchant│  │   │ email        │   │   │ balance      │ ← saldo LÓGICO
+│ bank_account │   │   │ full_name    │   │   │ offline_pending│
+│ status       │   │   │ kyc_status   │   │   │ offline_max  │
+│ branding     │   │   │ vippo_user_id│   │   │ currency     │
+└──────────────┘│  │  └──────────────┘   │   │ status       │
+                │  └─────────────────────┘   │ daily_limit  │
+                │                            │ monthly_limit│
+                │                            └──────┬───────┘
+                │                                   │
+                │                                   ▼
+                │                            ┌──────────────┐
+                │                            │ transactions │
+                │                            ├──────────────┤
+                │                            │ id (PK)      │
+                │                            │ wallet_id(FK)│
+                │                            │ tenant_id(FK)│
+                │                            │ type         │
+                │                            │ amount       │
+                │                            │ counterparty_aliado│
+                │                            │ status       │
+                │                            │ offline_sig  │
+                │                            │ nonce        │
+                │                            │ vippo_cashin_id│
+                │                            │ vippo_transfer_id│
+                │                            └──────┬───────┘
+                │                                   │
+                │                                   ▼
+                │                            ┌──────────────┐
+                │                            │  sync_log    │
+                │                            ├──────────────┤
+                │                            │ id (PK)      │
+                │                            │ device_id    │
+                │                            │ user_id      │
+                │                            │ batch_id     │
+                │                            │ tx_count     │
+                │                            │ status       │
+                │                            └──────────────┘
 
 ┌──────────────┐       ┌──────────────┐
-│   cashouts   │       │  anomalies   │
+│  transfers   │       │  devices     │
 ├──────────────┤       ├──────────────┤
 │ id (PK)      │       │ id (PK)      │
-│ tenant_id    │       │ wallet_id    │
-│ amount       │       │ rule         │
-│ status       │       │ severity     │
-│ vippo_cashout│       │ description  │
-│ requested_at │       │ created_at   │
-│ completed_at │       │ resolved_at  │
-│ destination  │       └──────────────┘
+│ from_aliado  │       │ user_id (FK) │
+│ to_aliado    │       │ tenant_id    │
+│ user_id      │       │ device_type  │
+│ amount       │       │ public_key   │
+│ status       │       │ last_seen_at │
+│ vippo_id     │       │ status       │
+│ created_at   │       └──────────────┘
 └──────────────┘
 ```
 
 ## Tablas detalladas
 
 ### tenants
-Representa cada comercio/prestador afiliado a ViCheck.
+Representa cada aliado/comercio afiliado a ViCheck.
 
 ```sql
 CREATE TABLE tenants (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
-  slug TEXT UNIQUE NOT NULL,                    -- URL-friendly identifier
-  vippo_merchant_id TEXT UNIQUE,                -- FK al sistema VIPPO
-  vippo_bank_account_id TEXT,                   -- cuenta destino CashOut
-  fee_percentage DECIMAL(5,4) DEFAULT 0.0200,   -- fee base 2%
-  pin_required_threshold DECIMAL(18,4) DEFAULT 5.00, -- USD threshold
-  status TEXT NOT NULL DEFAULT 'active',        -- active, suspended, closed
-  branding JSONB,                    -- { logo_url, primary_color, ... }
-  config JSONB,                      -- { auto_cashout_threshold, ... }
+  slug TEXT UNIQUE NOT NULL,
+  vippo_merchant_id TEXT UNIQUE,
+  vippo_bank_account_id TEXT,
+  fee_percentage DECIMAL(5,4) DEFAULT 0.0050,  -- 0.5%
+  pin_required_threshold DECIMAL(18,4) DEFAULT 5.00,
+  status TEXT NOT NULL DEFAULT 'active',
+  branding JSONB,
+  config JSONB,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
-CREATE INDEX idx_tenants_status ON tenants(status) WHERE status = 'active';
-CREATE INDEX idx_tenants_vippo ON tenants(vippo_merchant_id);
 ```
 
 ### users
-Usuarios finales (clientes) que usan ViCheck como billetera.
+Usuarios finales (clientes) que usan ViCheck como wallet lógica.
 
 ```sql
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
-  phone TEXT UNIQUE NOT NULL,         -- +58412XXXXXXX
+  phone TEXT UNIQUE NOT NULL,
   email TEXT,
   full_name TEXT NOT NULL,
-  cedula TEXT,                       -- V-12345678
-  kyc_status TEXT NOT NULL DEFAULT 'pending',  -- pending, basic, full
-  vippo_user_id TEXT UNIQUE,         -- FK al user de VIPPO
-  pin_hash TEXT,                     -- bcrypt del PIN
+  cedula TEXT,
+  kyc_status TEXT NOT NULL DEFAULT 'pending',
+  vippo_user_id TEXT UNIQUE,
+  pin_hash TEXT,
   biometric_enabled BOOLEAN DEFAULT false,
-  status TEXT NOT NULL DEFAULT 'active',  -- active, blocked, deleted
+  status TEXT NOT NULL DEFAULT 'active',
   language TEXT DEFAULT 'es',
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
-CREATE INDEX idx_users_phone ON users(phone);
-CREATE INDEX idx_users_tenant ON users(tenant_id);
-CREATE INDEX idx_users_vippo ON users(vippo_user_id);
 ```
 
 ### wallets
-Billetera del usuario. Un usuario tiene 1 wallet por tenant (multi-tenancy).
+**Wallet LÓGICA del cliente, NO dinero real**. Es un crédito contra el Aliado.
 
 ```sql
 CREATE TABLE wallets (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
-  balance DECIMAL(18,4) NOT NULL DEFAULT 0.0000,  -- balance synced
-  balance_offline DECIMAL(18,4),                   -- balance local reportado
-  pending_sync_count INTEGER DEFAULT 0,
+  balance DECIMAL(18,4) NOT NULL DEFAULT 0.0000,  -- saldo LÓGICO
   currency TEXT NOT NULL DEFAULT 'VES',
-  status TEXT NOT NULL DEFAULT 'active',          -- active, frozen, blocked
+  status TEXT NOT NULL DEFAULT 'active',
   daily_limit DECIMAL(18,4) DEFAULT 1000.00,
   monthly_limit DECIMAL(18,4) DEFAULT 5000.00,
+  offline_pending DECIMAL(18,4) DEFAULT 0,
+  offline_max_amount DECIMAL(18,4) DEFAULT 500.00,  -- tope configurado por backend
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(user_id, tenant_id, currency)
 );
-
-CREATE INDEX idx_wallets_user ON wallets(user_id);
-CREATE INDEX idx_wallets_tenant ON wallets(tenant_id);
 ```
 
 ### transactions
-Registro de cada transacción (cashin, pago, cashout).
+Registro de cada transacción (cashin, pago, transferencia).
 
 ```sql
 CREATE TABLE transactions (
-  id UUID PRIMARY KEY,                -- UUID generado en cliente
+  id UUID PRIMARY KEY,
   wallet_id UUID NOT NULL REFERENCES wallets(id),
   tenant_id UUID NOT NULL REFERENCES tenants(id),
-  type TEXT NOT NULL,                 -- cashin, pay, cashout, fee, reversal
+  type TEXT NOT NULL,  -- 'cashin', 'pay', 'transfer', 'fee'
   amount DECIMAL(18,4) NOT NULL,
   currency TEXT NOT NULL,
-  counterparty_wallet_id UUID REFERENCES wallets(id),
-  counterparty_external TEXT,         -- para merchants o bancos
+  counterparty_aliado_id UUID REFERENCES tenants(id),
   status TEXT NOT NULL DEFAULT 'pending_sync',
-                                     -- pending_sync, synced, reversed, failed
-  offline_signature TEXT,             -- ECDSA signature hex
-  offline_nonce UUID,                 -- UUID v4 generado en dispositivo
-  offline_timestamp TIMESTAMPTZ,      -- cuando se firmó offline
+  offline_signature TEXT,
+  offline_nonce UUID,
+  offline_timestamp TIMESTAMPTZ,
   synced_at TIMESTAMPTZ,
   vippo_cashin_id TEXT,
-  vippo_cashout_id TEXT,
+  vippo_transfer_id TEXT,
   device_id UUID REFERENCES devices(id),
-  location JSONB,                     -- { lat, lng } opcional
   metadata JSONB,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
-  
-  CONSTRAINT chk_type CHECK (type IN ('cashin', 'pay', 'cashout', 'fee', 'reversal')),
-  CONSTRAINT chk_status CHECK (status IN ('pending_sync', 'synced', 'reversed', 'failed')),
-  CONSTRAINT chk_amount_positive CHECK (amount > 0)
+  CONSTRAINT chk_type CHECK (type IN ('cashin', 'pay', 'transfer', 'fee')),
+  CONSTRAINT chk_status CHECK (status IN ('pending_sync', 'synced', 'reconciled', 'reversed', 'failed'))
 );
 
-CREATE UNIQUE INDEX idx_tx_nonce ON transactions(offline_nonce) WHERE offline_nonce IS NOT NULL;
+CREATE UNIQUE INDEX idx_tx_offline_nonce ON transactions(offline_nonce) WHERE offline_nonce IS NOT NULL;
 CREATE INDEX idx_tx_wallet_pending ON transactions(wallet_id) WHERE status = 'pending_sync';
 CREATE INDEX idx_tx_tenant_created ON transactions(tenant_id, created_at DESC);
-CREATE INDEX idx_tx_status ON transactions(status, created_at DESC);
 ```
 
-### ledger
-Append-only. Una transacción genera 2+ entries (debit + credit).
-
-### devices
-Dispositivos autorizados por usuario (móvil, tablet POS).
-
-### cashouts
-Liquidaciones del tenant hacia su banco.
-
-### audit_log
-Log de auditoría de operaciones sensibles.
-
-## Row-Level Security (RLS)
-
-PostgreSQL RLS policies para multi-tenancy:
+### sync_log
+Log append-only de cada sync realizado.
 
 ```sql
--- Habilitar RLS en todas las tablas
+CREATE TABLE sync_log (
+  id BIGSERIAL PRIMARY KEY,
+  device_id UUID NOT NULL,
+  user_id UUID NOT NULL,
+  batch_id UUID NOT NULL,
+  tx_count INTEGER NOT NULL,
+  first_tx_id UUID,
+  last_tx_id UUID,
+  sync_started_at TIMESTAMPTZ,
+  sync_completed_at TIMESTAMPTZ,
+  status TEXT NOT NULL,
+  error_detail TEXT
+);
+```
+
+### transfers
+Transferencias de saldo entre aliados (cuando cliente gasta crédito con aliado A en aliado B).
+
+```sql
+CREATE TABLE transfers (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  from_aliado_id UUID NOT NULL REFERENCES tenants(id),
+  to_aliado_id UUID NOT NULL REFERENCES tenants(id),
+  user_id UUID NOT NULL REFERENCES users(id),
+  amount DECIMAL(18,4) NOT NULL,
+  currency TEXT NOT NULL DEFAULT 'VES',
+  status TEXT NOT NULL DEFAULT 'pending',
+  vippo_transfer_id TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  completed_at TIMESTAMPTZ,
+  metadata JSONB
+);
+
+CREATE INDEX idx_transfers_user ON transfers(user_id, created_at DESC);
+```
+
+### devices
+Dispositivos autorizados por usuario (móvil).
+
+```sql
+CREATE TABLE devices (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id),
+  tenant_id UUID NOT NULL REFERENCES tenants(id),
+  device_type TEXT,
+  public_key TEXT NOT NULL,
+  device_name TEXT,
+  status TEXT NOT NULL DEFAULT 'active',
+  last_seen_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+## Multi-tenancy (RLS)
+
+```sql
 ALTER TABLE wallets ENABLE ROW LEVEL SECURITY;
 ALTER TABLE transactions ENABLE ROW LEVEL SECURITY;
-ALTER TABLE ledger ENABLE ROW LEVEL SECURITY;
+ALTER TABLE sync_log ENABLE ROW LEVEL SECURITY;
 ALTER TABLE devices ENABLE ROW LEVEL SECURITY;
-ALTER TABLE audit_log ENABLE ROW LEVEL SECURITY;
+ALTER TABLE transfers ENABLE ROW LEVEL SECURITY;
 
--- Política: cada query debe filtrar por tenant_id
 CREATE POLICY tenant_isolation_wallets ON wallets
   USING (tenant_id = current_setting('app.current_tenant_id')::UUID);
-
 -- (similar para las demás tablas)
 ```
 
-**En el código de Lambda:**
-```python
-# Antes de cada query, setear el tenant
-await conn.execute(f"SET app.current_tenant_id = '{tenant_id}'")
-```
-
-## Multi-currency
-
-- Soporte futuro: COP, MXN, USD
-- Por ahora: solo VES (bolívar venezolano)
-- `wallets.currency` permite escalabilidad
-
 ## Auditoría y retención
 
-- `transactions`: 7 años (regulatorio VE)
-- `ledger`: 7 años
-- `audit_log`: 7 años
+- `transactions`: 7 años (regulatorio)
+- `sync_log`: 7 años
+- `transfers`: 7 años
 - `wallets.balance` snapshots mensuales para auditoría
 
 ---

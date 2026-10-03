@@ -49,10 +49,13 @@ Documento para reunión de alineación técnica. Llevar a la primera reunión co
 
 ## 3. Compliance y regulatorio
 
-### 3.1 SUDEBAN
-- ¿Qué licencia tiene VIPPO actualmente?
-- ¿Necesitamos alguna autorización nueva para operar ViCheck?
-- ¿Hay restricciones para NFC/QR payments?
+### 3.1 Regulación general (SUDEBAN no aplica)
+
+**ViCheck NO custodia dinero** — opera como capa de orquestación. SUDEBAN supervisa bancos e instituciones financieras, no nos aplica directamente.
+
+- ¿VIPPO confirma que ViCheck opera como feature de su licencia existente?
+- ¿Hay algún aspecto regulatorio específico para agregadores de pago en VE?
+- ¿Necesitamos alguna autorización nueva para la capa offline?
 
 ### 3.2 SENIAT
 - ¿Cómo reporta VIPPO impuestos actualmente?

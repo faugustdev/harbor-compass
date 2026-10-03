@@ -83,7 +83,7 @@
 - [F-W-08] Anti-fraude: congelar wallet
 - [F-W-09] Anti-fraude: reversar transacción
 - [F-W-10] Conciliación manual
-- [F-W-11] Reportes regulatorios (SUDEBAN, SENIAT)
+- [F-W-11] Reportes regulatorios (SENIAT)
 - [F-W-12] Configuración global de fees y límites
 
 ---
@@ -215,7 +215,7 @@
 └─────────────────────────────────────┘
 ```
 
-- Validación KYC automática con SENIAT/SUDEBAN
+- Validación KYC automática con SENIAT (SUDEBAN no aplica — no custodiamos dinero)
 - Email opcional
 - Si KYC falla → mensaje "Verifica tu cédula"
 
@@ -1945,7 +1945,7 @@ Cuando un cliente recarga saldo desde su banco, **el aliado recibe una notificac
 
 ---
 
-## F-W-11: Reportes regulatorios (SUDEBAN, SENIAT)
+## F-W-11: Reportes regulatorios (SENIAT)
 
 **Pantallas:** nuevas [W-100] a [W-105]
 
@@ -1953,7 +1953,7 @@ Cuando un cliente recarga saldo desde su banco, **el aliado recibe una notificac
 [Reportes] → [Regulatorios]
    ↓
 [W-100 Seleccionar tipo de reporte]
-   ├→ [W-101 Reporte SUDEBAN]
+   ├→ [W-101 Reporte SENIAT]
    ├→ [W-102 Reporte SENIAT]
    └→ [W-103 Auditoría LOPDP]
 ```

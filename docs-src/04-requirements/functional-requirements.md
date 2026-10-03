@@ -155,28 +155,28 @@ La cola de tx pendientes sobrevive cierre de app, batería baja, reinicio.
 
 ---
 
-## RF-005: CashOut (liquidación)
+## RF-005: Reportes del Aliado (sin CashOut)
 
-### RF-005-001 [P0] CashOut de comercio a banco
-El comercio puede transferir su saldo disponible a su cuenta bancaria registrada.
-- **Entradas:** monto a liquidar
-- **Proceso:** POST `/cashout` → VIPPO `/liquidacion` → webhook confirma
-- **Salidas:** saldo descontado, tx `cashout` completada, fondos en banco
+**ELIMINADO:** El Aliado no tiene CashOut. El dinero llega directo a su cuenta bancaria cuando el cliente hace CashIn.
 
-### RF-005-002 [P0] CashOut programado / automático
-El sistema puede liquidar automáticamente cuando el saldo acumulado > umbral.
-- **Entradas:** umbral configurable por tenant
-- **Proceso:** CRON backend evalúa diariamente
-- **Salidas:** liquidación automática
+### RF-005-001 [P0] Dashboard de ventas del Aliado
+El Aliado puede ver todas las ventas recibidas (online + offline sincronizadas).
+- **Entradas:** sesión del Aliado
+- **Proceso:** GET `/pos/dashboard` con filtros por rango
+- **Salidas:** ventas hoy/semana/mes, # tx, ticket promedio
 
-### RF-005-003 [P0] Reporte de liquidación
-El comercio recibe reporte de liquidaciones.
-- **Salidas:** dashboard con histórico, próximo CashOut programado, balance retenido
+### RF-005-002 [P0] Reporte de ventas por período
+El Aliado puede ver ventas por rango de fechas específico.
+- **Entradas:** fecha inicio, fecha fin
+- **Salidas:** lista de ventas, totales, gráficos
 
-### RF-005-004 [P1] CashOut parcial
-El comercio puede elegir cuánto liquidar (no todo).
-- **Entradas:** monto o "todo"
-- **Salidas:** el resto queda en balance del tenant
+### RF-005-003 [P0] Detalle de cada venta
+El Aliado puede ver detalle de cada venta: cliente UID (si fue NFC), monto, hora, firma.
+- **Salidas:** vista detallada de transacción + firma
+
+### RF-005-004 [P1] Exportar ventas a CSV
+El Aliado puede exportar ventas en CSV para contabilidad.
+- **Salidas:** archivo CSV descargable
 
 ---
 
